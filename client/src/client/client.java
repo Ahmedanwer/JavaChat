@@ -20,12 +20,11 @@ public class client {
 			           //1.Create Server Socket
 			           ServerSocket mySocket = new ServerSocket(1243);
 			           //Server is always On
-			           Socket c;
-			           c = mySocket.accept();
+			       
 
 			           while (true) {
-			               
-			                                            
+			        	    Socket c;
+					        c = mySocket.accept();                          
 			               DataInputStream dis = new DataInputStream(c.getInputStream());
 			               //4.Perform IO Operations with the client
 			               while (true) {
@@ -52,11 +51,10 @@ public class client {
     public static void main(String[] args) {
         {
         	client Client2=new client();
-        	
         	receiver myReceiver = Client2.new receiver();
         	myReceiver.start();
         	
-        	 String otherPairIP = "localhost";
+        	 String otherPairIP = "192.168.1.19";
 
             try {
             
