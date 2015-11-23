@@ -5,6 +5,12 @@
  */
 package client;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Scanner;
+
 /**
  *
  * @author ShoroukHamed
@@ -81,14 +87,102 @@ public class conversationInterface extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+      public class receiver extends Thread
+   {
+	   @Override
+		public void run() {
+			// TODO Auto-generated method stub
+			super.run();
+			
+			 try 
+				{
+			           //1.Create Server Socket
+			           ServerSocket mySocket = new ServerSocket(1243);
+			           //Server is always On
+			          
+			           while (true) {
+			        	   Socket c;
+				           c = mySocket.accept();
+
+			                                            
+			               DataInputStream dis = new DataInputStream(c.getInputStream());
+			               //4.Perform IO Operations with the client
+			               while (true) {
+			                   String clientMsg;
+			                   clientMsg = dis.readUTF();//read from the client
+                                           jTextArea1.append(clientMsg);
+                                           System.out.println(clientMsg);
+			                  
+			                   if (clientMsg.equalsIgnoreCase("Bye")) {
+			                        break;
+			                    }
+			               }
+			               //5.Close/release resources
+			               dis.close();
+			             
+			               c.close();
+			           }
+
+			       } catch (Exception e) {
+			           System.out.println(e.getMessage());
+			       }
+			
+		}  
+   }
+    
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        	
+
+            try {
+            
+                //1.Create Client Socket and connect to the server
+
+                Socket otherClient = new Socket(otherPairIP, 1243);
+
+                //2.if accepted create IO streams
+                DataOutputStream dos = new DataOutputStream(otherClient.getOutputStream());
+                               //Create a Scanner to read inputs from the user
+                //Scanner sc = new Scanner(System.in);
+                String msgToBeSent;
+                //3.Perform IO operations with the server
+               
+                    //read from the user
+                    
+                	//msgToBeSent = sc.nextLine();
+                        msgToBeSent = jTextArea2.getText();
+                        jTextArea1.append(msgToBeSent);
+                      
+                    dos.writeUTF(msgToBeSent);
+                    
+                   
+              
+
+                //4.Close/release resources
+                
+                dos.close();
+                otherClient.close();
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
+     String otherPairIP = "192.168.1.21";
     public static void main(String args[]) {
+        
+        conversationInterface conv1=new conversationInterface();
+        	
+        	conversationInterface.receiver myReceiver = conv1.new receiver();
+        	myReceiver.start();
+        	
+        	
+
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
