@@ -54,11 +54,8 @@ public class client {
         	receiver myReceiver = Client2.new receiver();
         	myReceiver.start();
         	
-<<<<<<< HEAD
         	 String otherPairIP = "192.168.1.19";
-=======
-        	 String otherPairIP = "192.168.1.41";
->>>>>>> 1f2949793446ddd35652e316bb76fba3ebe2b6f1
+
 
             try {
             
