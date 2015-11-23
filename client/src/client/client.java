@@ -12,7 +12,7 @@ public class client {
         {
             try {
                 //1.Create Client Socket and connect to the server
-                Socket client = new Socket("localhost", 1243);
+                Socket client = new Socket("192.168.1.41", 1243);
                 //2.if accepted create IO streams
                 DataOutputStream dos = new DataOutputStream(client.getOutputStream());
                 DataInputStream dis = new DataInputStream(client.getInputStream());
