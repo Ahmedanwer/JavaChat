@@ -20,22 +20,20 @@ public class clientThread extends Thread {
 	public void run() {
 		try{
 			
-        //indicate the arrival of a new client
-        System.out.println("New Client Arrived");
         
         //3.Create IO Streams
         DataOutputStream dos = new DataOutputStream(c.getOutputStream());
+        DataInputStream dis = new DataInputStream(c.getInputStream());
         
         //say Hi
         dos.writeUTF("Server: Welcome new user");
-        
-        DataInputStream dis = new DataInputStream(c.getInputStream());
         
         
         //4.Perform IO Operations with the client
         while (true) {
             String clientMsg; 
             clientMsg = dis.readUTF();//read from the client
+            System.out.println(clientMsg);
             //dos.writeUTF(clientMsg);//Echo the msg back to the client            
             if (clientMsg.equalsIgnoreCase("Bye")) {
                 break;

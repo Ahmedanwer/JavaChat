@@ -19,8 +19,20 @@ public class BCMsg extends Thread{
 		try{
 			
 			for (int i = 0; i < activeGroupClients.size(); i++) {
-			 DataOutputStream dos = new DataOutputStream(activeGroupClients.get(i).getOutputStream());
-			 dos.writeUTF(msg);
+				System.out.println(i+" "+msg);
+
+			// DataOutputStream dos = new DataOutputStream(activeGroupClients.get(i).getOutputStream());
+			 //dos.writeUTF(msg);
+			 
+			 
+			  Socket otherClient = new Socket("192.168.1.21", 1243);
+              //2.if accepted create IO streams
+              DataOutputStream dos = new DataOutputStream(otherClient.getOutputStream());
+              //Create a Scanner to read inputs from the user
+              dos.writeUTF("In Response to: "+msg);
+              
+              dos.close();
+              otherClient.close();
 			}
 			
 		}catch(Exception e){

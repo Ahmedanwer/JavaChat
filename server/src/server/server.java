@@ -42,6 +42,7 @@ public class server {
             //2.Listen for Clients
                 Socket c;
                 c = sv.accept();
+                System.out.println("new client arrived ");
                 activeClients.add(c);
                 clientThread arrivedClient=new clientThread(c, activeClients);// later activeClients will be replaced by active members in group
                 arrivedClient.run();
