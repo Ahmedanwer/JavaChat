@@ -25,10 +25,12 @@ public class clientThread extends Thread {
         
         //3.Create IO Streams
         DataOutputStream dos = new DataOutputStream(c.getOutputStream());
-        DataInputStream dis = new DataInputStream(c.getInputStream());
         
         //say Hi
-        dos.writeUTF("Server: Ahlan new user");
+        dos.writeUTF("Server: Welcome new user");
+        
+        DataInputStream dis = new DataInputStream(c.getInputStream());
+        
         
         //4.Perform IO Operations with the client
         while (true) {
