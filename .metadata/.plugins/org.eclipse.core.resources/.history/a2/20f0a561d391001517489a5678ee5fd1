@@ -1,0 +1,47 @@
+package client;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
+import java.util.Scanner;
+
+
+public class client {
+
+   
+    public static void main(String[] args) {
+        {
+        	 String otherPairIP = "localhost";
+
+            try {
+            
+                //1.Create Client Socket and connect to the server
+                Socket otherClient = new Socket(otherPairIP, 1243);
+                //2.if accepted create IO streams
+                DataOutputStream dos = new DataOutputStream(otherClient.getOutputStream());
+                               //Create a Scanner to read inputs from the user
+                Scanner sc = new Scanner(System.in);
+                String msgToBeSent;
+                //3.Perform IO operations with the server
+                while (true) {
+                    //read from the user
+                	msgToBeSent = sc.nextLine();
+                    dos.writeUTF(msgToBeSent);
+                   
+                    if (msgToBeSent.equalsIgnoreCase("Bye")) {
+                        break;
+                    }
+                }
+
+                //4.Close/release resources
+                
+                dos.close();
+                otherClient.close();
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        
+        }
+
+    }
+}
