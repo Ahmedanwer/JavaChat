@@ -10,6 +10,7 @@ public class client {
 
     public static void main(String[] args) {
         {
+        	login newLogin=new login();
             try {
                 //1.Create Client Socket and connect to the server
                 Socket client = new Socket("192.168.42.1", 1243);
