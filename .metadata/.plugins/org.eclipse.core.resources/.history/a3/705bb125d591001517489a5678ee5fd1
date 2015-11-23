@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class client {
 
-   private class receiver extends Thread
+   class receiver extends Thread
    {
 	   @Override
 		public void run() {
@@ -51,11 +51,6 @@ public class client {
 
     public static void main(String[] args) {
         {
-        	client Client2=new client();
-        	
-        	receiver myReceiver = Client2.new receiver();
-        	myReceiver.start();
-        	
         	 String otherPairIP = "localhost";
 
             try {

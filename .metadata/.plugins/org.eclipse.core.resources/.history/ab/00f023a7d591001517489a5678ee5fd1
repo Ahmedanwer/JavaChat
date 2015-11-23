@@ -51,9 +51,7 @@ public class client {
 
     public static void main(String[] args) {
         {
-        	client Client2=new client();
-        	
-        	receiver myReceiver = Client2.new receiver();
+        	receiver myReceiver = new receiver();
         	myReceiver.start();
         	
         	 String otherPairIP = "localhost";
