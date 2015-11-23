@@ -12,6 +12,11 @@ public class client {
         {
         	loginInterface login=new loginInterface(); 
                 login.show();
+                homePageInterface homePage = new homePageInterface();
+                homePage.show();
+                conversationInterface conv = new conversationInterface();
+                conv.show();
+                
             try {
                 //1.Create Client Socket and connect to the server
                 Socket client = new Socket("192.168.42.1", 1243);
