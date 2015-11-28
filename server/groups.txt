@@ -1,0 +1,12 @@
+<groups>
+    <group id="1">
+        <groupName>team</groupName>
+        
+        
+    </group>
+    <group id="2">
+        <groupName>project</groupName>
+        
+    </group>
+    
+</groups>
