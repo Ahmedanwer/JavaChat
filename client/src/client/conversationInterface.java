@@ -130,21 +130,22 @@ public class conversationInterface extends javax.swing.JFrame {
 		}  
    }
     
-    
+      
+      
+
+    static  Socket otherClient ;
+     static DataOutputStream dos;
+                  
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+    
         	
 
             try {
             
                 //1.Create Client Socket and connect to the server
 
-                Socket otherClient = new Socket(otherPairIP, 1243);
-
-                //2.if accepted create IO streams
-                DataOutputStream dos = new DataOutputStream(otherClient.getOutputStream());
-                               //Create a Scanner to read inputs from the user
-                //Scanner sc = new Scanner(System.in);
+             
                 String msgToBeSent;
                 //3.Perform IO operations with the server
                
@@ -162,17 +163,18 @@ public class conversationInterface extends javax.swing.JFrame {
                 //4.Close/release resources
                 
                 dos.close();
-                otherClient.close();
+            
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
+            
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-     String otherPairIP = "192.168.1.19";
+    static String otherPairIP = "192.168.1.3";
     public static void main(String args[]) {
         
         conversationInterface conv1=new conversationInterface();
@@ -180,8 +182,15 @@ public class conversationInterface extends javax.swing.JFrame {
         	conversationInterface.receiver myReceiver = conv1.new receiver();
         	myReceiver.start();
         	
-        	
+        	try{
+             otherClient = new Socket(otherPairIP, 1243);
 
+            //2.if accepted create IO streams
+             dos = new DataOutputStream(otherClient.getOutputStream());
+        	
+        	}catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
