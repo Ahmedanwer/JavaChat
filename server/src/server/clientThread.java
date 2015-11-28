@@ -39,7 +39,7 @@ public class clientThread extends Thread {
                 break;
             }else  {
             	BCMsg CurrentBC= new BCMsg(clientMsg,activeGroupClients);
-            	CurrentBC.run();
+            	CurrentBC.start();
             	}
             }
         

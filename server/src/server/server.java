@@ -45,7 +45,7 @@ public class server {
                 System.out.println("new client arrived ");
                 activeClients.add(c);
                 clientThread arrivedClient=new clientThread(c, activeClients);// later activeClients will be replaced by active members in group
-                arrivedClient.run();
+                arrivedClient.start();
                 
             }
 
