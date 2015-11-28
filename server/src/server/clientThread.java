@@ -27,7 +27,7 @@ public class clientThread extends Thread {
         
         //say Hi
         dos.writeUTF("Server: Welcome new user");
-        dos.close();
+      
         
         //4.Perform IO Operations with the client
         while (true) {
@@ -45,6 +45,7 @@ public class clientThread extends Thread {
         
         //5.Close/release resources
         dis.close();
+        dos.close();
        
         c.close();
         System.out.println("Client Left");

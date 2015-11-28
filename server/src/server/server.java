@@ -35,7 +35,7 @@ public class server {
         	
         	
             //1.Create Server Socket
-            ServerSocket sv = new ServerSocket(1243);
+            ServerSocket sv = new ServerSocket(1555);
             
             //Server is always On
             while (true) {

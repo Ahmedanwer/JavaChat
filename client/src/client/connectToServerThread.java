@@ -19,10 +19,11 @@ public class connectToServerThread extends Thread{
 		// TODO Auto-generated method stub
 	
 		try {
-			Socket serverConnection = new Socket (serverIP, 1243);
+			Socket serverConnection = new Socket (serverIP, 1555);
 			ReadFromServerThread r1=new ReadFromServerThread(serverConnection);
 			WriteToServerThread w1= new WriteToServerThread (serverConnection);
-			
+			r1.run();
+			w1.run();
 			
 		} catch (Exception e) {
 			e.printStackTrace();

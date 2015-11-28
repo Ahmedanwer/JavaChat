@@ -57,9 +57,11 @@ public class client {
         	myReceiver.start();
         	
         	 String otherPairIP = "192.168.1.19";
+        	 String ServerIP="192.168.1.3";
 
             try {
-            	connectToServerThread s= new connectToServerThread("192.168.1.13");
+            	connectToServerThread s= new connectToServerThread(ServerIP);
+            	s.run();
                 //1.Create Client Socket and connect to the server
                 Socket otherClient = new Socket(otherPairIP, 1243);
                 //2.if accepted create IO streams
