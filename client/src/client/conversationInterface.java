@@ -172,7 +172,7 @@ public class conversationInterface extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-     String otherPairIP = "192.168.1.21";
+     String otherPairIP = "192.168.1.19";
     public static void main(String args[]) {
         
         conversationInterface conv1=new conversationInterface();
