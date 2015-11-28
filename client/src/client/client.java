@@ -1,6 +1,8 @@
 package client;
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -51,24 +53,47 @@ public class client {
 
     public static void main(String[] args) {
         {
-        	client Client2=new client();
+       // 	client Client2=new client();
         	
-        	receiver myReceiver = Client2.new receiver();
-        	myReceiver.start();
+        //	receiver myReceiver = Client2.new receiver();
+       // 	myReceiver.start();
         	
         	 String otherPairIP = "192.168.1.19";
-        	 String ServerIP="192.168.1.3";
+        	 String ServerIP="192.168.1.13";
 
             try {
-            	connectToServerThread s= new connectToServerThread(ServerIP);
-            	s.run();
-                //1.Create Client Socket and connect to the server
+            //	connectToServerThread s= new connectToServerThread(ServerIP);
+            //	s.run();
+            	
+            	//  test
+            	
+            	
+            	Socket serverConnection = new Socket (ServerIP, 1555);
+            	System.out.println("Client started");
+    			ReadFromServerThread r1=new ReadFromServerThread(serverConnection);
+    			WriteToServerThread w1= new WriteToServerThread (serverConnection);
+    			w1.start();
+    			r1.start();
+    			
+    	   //2.if accepted create IO streams
+    		               		        } catch (Exception e) {
+    		            System.out.println(e.getMessage());
+    		        }
+
+            	
+            	//end test
+            	
+            	
+            	
+            	
+            	
+      /*          //1.Create Client Socket and connect to the server
                 Socket otherClient = new Socket(otherPairIP, 1243);
                 //2.if accepted create IO streams
                 DataOutputStream dos = new DataOutputStream(otherClient.getOutputStream());
                                //Create a Scanner to read inputs from the user
                 Scanner sc = new Scanner(System.in);
-                String msgToBeSent;
+               String msgToBeSent;
                 //3.Perform IO operations with the server
                 while (true) {
                     //read from the user
@@ -84,10 +109,8 @@ public class client {
                 
                 dos.close();
                 otherClient.close();
-
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+*/
+      
         
         }
 

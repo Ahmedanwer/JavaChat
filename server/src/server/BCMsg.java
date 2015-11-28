@@ -19,7 +19,7 @@ public class BCMsg extends Thread{
 		try{
 			
 			for (int i = 0; i < activeGroupClients.size(); i++) {
-				System.out.println(i+" "+msg);
+				System.out.println( "Server Sent to Client No.  "+i+" :"+msg);
 
 			DataOutputStream dos = new DataOutputStream(activeGroupClients.get(i).getOutputStream());
 			 dos.writeUTF(msg);
@@ -34,7 +34,7 @@ public class BCMsg extends Thread{
               //Create a Scanner to read inputs from the user
              // dos.writeUTF("In Response to: "+msg);
               
-              dos.close();
+     
              // otherClient.close();
 			}
 			
