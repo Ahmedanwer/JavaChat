@@ -25,7 +25,10 @@ public class BCMsg extends Thread{
 			 dos.writeUTF(msg);
 			 
 			 
+
 			//  Socket otherClient = new Socket("192.168.1.21", 1243);
+
+			//  Socket otherClient = new Socket("192.168.1.3", 1243);
               //2.if accepted create IO streams
               //DataOutputStream dos = new DataOutputStream(otherClient.getOutputStream());
               //Create a Scanner to read inputs from the user
