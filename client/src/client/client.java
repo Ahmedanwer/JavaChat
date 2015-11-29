@@ -4,9 +4,45 @@ import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 
 public class client {
+	   private JFrame mainFrame;
+	   private JLabel headerLabel;
+	   private JTextArea ChatArea;
+	   private JLabel statusLabel;
+	
+	   public client(){
+		      prepareGUI();
+		   }
+	   private void prepareGUI(){
+		      mainFrame = new JFrame("Java SWING Examples");
+		      mainFrame.setSize(400,400);
+		      mainFrame.setLayout(new GridLayout(3, 1));
+
+		      headerLabel = new JLabel("Test",JLabel.CENTER );
+		      statusLabel = new JLabel("Test2",JLabel.CENTER);        
+		      ChatArea = new JTextArea();
+		      ChatArea.setLineWrap(true);
+		      ChatArea.setWrapStyleWord(true);
+		      ChatArea.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+
+		      statusLabel.setSize(350,100);
+		      mainFrame.addWindowListener(new WindowAdapter() {
+		         public void windowClosing(WindowEvent windowEvent){
+			        System.exit(0);
+		         }        
+		      });    
+		     
+		      mainFrame.add(headerLabel);
+		      mainFrame.add(ChatArea);
+		      mainFrame.add(statusLabel);
+		      mainFrame.setVisible(true);  
+		   }
+
 
    private class receiver extends Thread
    {
@@ -31,6 +67,7 @@ public class client {
 			               while (true) {
 			                   String clientMsg;
 			                   clientMsg = dis.readUTF();//read from the client
+			                   ChatArea.append(clientMsg);
 			                   System.out.println("B says "+clientMsg);
 			                   if (clientMsg.equalsIgnoreCase("Bye")) {
 			                        break;
@@ -57,7 +94,7 @@ public class client {
         	myReceiver.start();
         	
 
-        	 String otherPairIP = "192.168.1.18";
+        	 String otherPairIP = "192.168.1.23";
 
 
             try {
