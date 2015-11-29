@@ -45,8 +45,17 @@ public class clientThread extends Thread {
             	BCMsg CurrentBC= new BCMsg(clientMsg,activeGroupClients);
             	CurrentBC.start();
             	}
-            else if (clientMsg.equalsIgnoreCase("login")){}
+            else if (clientMsg.equalsIgnoreCase("login")){
+            	System.out.println("if conditon of login enterd");
+            	String userName, password;
+            	userName = dis.readUTF();
+            	password = dis.readUTF();
+            	System.out.println("User NAme Received: "+userName+" & Password: "+password);
             }
+            else {
+            	dos.writeUTF("Server: please enter a valid command, available commands are: bye, bcm, and login");
+            }
+          }
         
         //5.Close/release resources
         dis.close();

@@ -21,11 +21,9 @@ public class BCMsg extends Thread{
 	public void run() {
 		try{
 		
-			DataInputStream dis = new DataInputStream(SendingClientSocket.getInputStream());
-			msg = dis.readUTF();//read from the client
-			System.out.println("recevied msg and commencing BC-ing "+msg);
+			System.out.println("recevied msg and commencing BC-ing (inside) "+msg);
 			for (int i = 0; i < activeGroupClients.size(); i++) {
-				System.out.println( "Server Sent to Client No.  "+i+" :"+msg);
+				System.out.println( "Server Sent to Client No."+i+": "+msg);
 
 			DataOutputStream dos = new DataOutputStream(activeGroupClients.get(i).getOutputStream());
 			 dos.writeUTF(msg);

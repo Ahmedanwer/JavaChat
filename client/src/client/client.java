@@ -61,7 +61,7 @@ public class client {
 
         	
         	 String otherPairIP = "192.168.1.19";
-        	 String ServerIP="192.168.1.13";
+        	 String ServerIP="192.168.1.2";
 
             try {
             //	connectToServerThread s= new connectToServerThread(ServerIP);

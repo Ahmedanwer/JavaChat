@@ -22,8 +22,8 @@ public class connectToServerThread extends Thread{
 			Socket serverConnection = new Socket (serverIP, 1555);
 			ReadFromServerThread r1=new ReadFromServerThread(serverConnection);
 			WriteToServerThread w1= new WriteToServerThread (serverConnection);
-			r1.run();
-			w1.run();
+			r1.start();
+			w1.start();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
