@@ -14,6 +14,7 @@ public class client {
 	
 	   private JTextArea writingArea;
 	   private JTextArea ChatArea;
+	   JButton sendButton;
 	   
 	 
 	   public client(){
@@ -21,14 +22,20 @@ public class client {
 		   }
 	   private void prepareGUI(){
 		      mainFrame = new JFrame("Java SWING Examples");
-		      mainFrame.setSize(400,400);
-		      mainFrame.setLayout(new GridLayout(5, 5));
-
+		      mainFrame.setLayout(new FlowLayout());
+		      mainFrame.setSize(410,410);
+		    
+		     
+		      JPanel myPanel=new JPanel(); 
+		      
+		      myPanel.setLayout(new GridBagLayout());
+		      myPanel.setSize(400,400);
+		      
 		            
 		      JTextArea writingArea = new JTextArea();
-		      writingArea.setSize(1,4);
 		      writingArea.setLineWrap(true);
 		      writingArea.setWrapStyleWord(true);
+		      writingArea.setPreferredSize(new Dimension(300,30));
 		   
 		      
 		      
@@ -36,30 +43,59 @@ public class client {
 		      
 		      JTextArea ChatArea = new JTextArea();
 		      ChatArea.setLineWrap(true);
+		      ChatArea.setEditable(false);
+		      ChatArea.setPreferredSize(new Dimension(390,370));
 		      ChatArea.setWrapStyleWord(true);
-		      ChatArea.setColumns(4);
-		      ChatArea.setRows(1);
-		      
-		      JButton sendButton = new JButton("Send");
-		      
-		     sendButton.setSize(1,1);
 		     
-		     
+		      JScrollPane scroll = new JScrollPane (ChatArea, 
+		    		   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		      
+		    
+		   
+		      
+		      sendButton = new JButton("Send");
+
+		      
+		      sendButton.addActionListener(new ActionListener() {
+		    	
+		            public void actionPerformed(ActionEvent e)
+		            {
+		            	
+		            	// System.out.println(c.writingArea.getText());
+		            	 System.out.println("test");
+		            }
+		        });      		    
+		      
 		      mainFrame.addWindowListener(new WindowAdapter() {
 		         public void windowClosing(WindowEvent windowEvent){
 			        System.exit(0);
 		         }        
 		      });    
 		     
+		      GridBagConstraints gBC = new GridBagConstraints();
+		      gBC.fill = GridBagConstraints.HORIZONTAL;
 		     
-		      mainFrame.add(ChatArea);
+		      gBC.gridx = 0;
+		       gBC.gridy = 0;
+		       gBC.gridwidth = 2;
+		      myPanel.add(scroll,gBC);
+		      gBC.gridwidth = 1;
+		      gBC.gridx = 0;
+		       gBC.gridy = 1;
+		       
+		      myPanel.add(writingArea,gBC); 
+		      gBC.gridx = 1;
+		       gBC.gridy = 1;
+			  myPanel.add(sendButton,gBC); ;
+			   
+		     
+		      mainFrame.add(myPanel);
 		     // mainFrame.add(Box.createRigidArea(new Dimension(5,0)));
-		      mainFrame.add(writingArea);
-		    //  mainFrame.add(Box.createRigidArea(new Dimension(5,0)));
-		      mainFrame.add(sendButton);
+		    
 		     
 		      mainFrame.setVisible(true);  
 		   }
+
 
 
    private class receiver extends Thread
@@ -85,7 +121,7 @@ public class client {
 			               while (true) {
 			                   String clientMsg;
 			                   clientMsg = dis.readUTF();//read from the client
-			                   ChatArea.append(clientMsg);
+			                   ChatArea.append("\n"+clientMsg);
 			                   System.out.println("B says "+clientMsg);
 			                   if (clientMsg.equalsIgnoreCase("Bye")) {
 			                        break;
