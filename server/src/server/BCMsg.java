@@ -1,5 +1,6 @@
 package server;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -9,15 +10,20 @@ public class BCMsg extends Thread{
 	String msg;
 	ArrayList<Socket> activeGroupClients;
 
-	public BCMsg(String msg, ArrayList<Socket> activeGroupClients) {
+
+	public BCMsg(String msg,ArrayList<Socket> activeGroupClients) {
+		this.activeGroupClients = activeGroupClients;
 		this.msg = msg;
-		this.activeGroupClients=activeGroupClients;
 	}
+
 
 	@Override
 	public void run() {
 		try{
-			
+		
+			DataInputStream dis = new DataInputStream(SendingClientSocket.getInputStream());
+			msg = dis.readUTF();//read from the client
+			System.out.println("recevied msg and commencing BC-ing "+msg);
 			for (int i = 0; i < activeGroupClients.size(); i++) {
 				System.out.println( "Server Sent to Client No.  "+i+" :"+msg);
 

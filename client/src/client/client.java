@@ -58,6 +58,8 @@ public class client {
         //	receiver myReceiver = Client2.new receiver();
        // 	myReceiver.start();
         	
+
+        	
         	 String otherPairIP = "192.168.1.19";
         	 String ServerIP="192.168.1.13";
 

@@ -1,0 +1,18 @@
+<users>
+    <user id="100">
+        <username>aya</username>
+        <password>123</password>
+        <status>1</status>
+        
+    </user>
+    <user id="101">
+        <username>shrouk</username>
+        <password>1111</password>
+        <status>0</status>
+    </user>
+    <user id="103">
+        <username>ahmed</username>
+        <password>2222</password>
+        <status>1</status>
+    </user>
+</users>

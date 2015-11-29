@@ -37,10 +37,15 @@ public class clientThread extends Thread {
             //dos.writeUTF(clientMsg);//Echo the msg back to the client            
             if (clientMsg.equalsIgnoreCase("Bye")) {
                 break;
-            }else  {
+            }else if (clientMsg.equalsIgnoreCase("BCM")) {
+            	System.out.println("if conditon of bcm enterd");
+            	clientMsg = dis.readUTF();
+            	System.out.println("recevied msg and commencing BC-ing "+clientMsg);
+    			
             	BCMsg CurrentBC= new BCMsg(clientMsg,activeGroupClients);
             	CurrentBC.start();
             	}
+            else if (clientMsg.equalsIgnoreCase("login")){}
             }
         
         //5.Close/release resources
