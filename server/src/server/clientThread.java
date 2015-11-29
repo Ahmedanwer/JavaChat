@@ -33,8 +33,10 @@ public class clientThread extends Thread {
         while (true) {
             String clientMsg; 
             clientMsg = dis.readUTF();//read from the client
+            
             System.out.println(clientMsg);
-            //dos.writeUTF(clientMsg);//Echo the msg back to the client            
+            //dos.writeUTF(clientMsg);//Echo the msg back to the client     
+            
             if (clientMsg.equalsIgnoreCase("Bye")) {
                 break;
             }else if (clientMsg.equalsIgnoreCase("BCM")) {
