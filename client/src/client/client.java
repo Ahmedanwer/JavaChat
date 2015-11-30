@@ -12,13 +12,14 @@ import javax.swing.*;
 public class client {
 	   private JFrame mainFrame;
 	
-	   private JTextArea writingArea;
-	   private JTextArea ChatArea;
+	   static JTextArea writingArea;
+	   static JTextArea ChatArea;
 	   JButton sendButton;
-	   
+	   String otherPairIP = "localhost";
 	 
 	   public client(){
 		      prepareGUI();
+		    
 		   }
 	   private void prepareGUI(){
 		      mainFrame = new JFrame("Java SWING Examples");
@@ -32,7 +33,7 @@ public class client {
 		      myPanel.setSize(400,400);
 		      
 		            
-		      JTextArea writingArea = new JTextArea();
+		      writingArea = new JTextArea();
 		      writingArea.setLineWrap(true);
 		      writingArea.setWrapStyleWord(true);
 		      writingArea.setPreferredSize(new Dimension(300,30));
@@ -41,7 +42,7 @@ public class client {
 		      
 		      
 		      
-		      JTextArea ChatArea = new JTextArea();
+		      ChatArea = new JTextArea();
 		      ChatArea.setLineWrap(true);
 		      ChatArea.setEditable(false);
 		      ChatArea.setPreferredSize(new Dimension(390,370));
@@ -62,7 +63,9 @@ public class client {
 		            {
 		            	
 		            	// System.out.println(c.writingArea.getText());
-		            	 System.out.println("test");
+		            	SendMessege(writingArea.getText());
+		            	writingArea.setText("");
+		            	
 		            }
 		        });      		    
 		      
@@ -111,33 +114,58 @@ public class client {
 			           ServerSocket mySocket = new ServerSocket(1243);
 			           //Server is always On
 			          
-			           while (true) {
+			          
 			        	   Socket c;
-				           c = mySocket.accept();
-
-			                                            
-			               DataInputStream dis = new DataInputStream(c.getInputStream());
+				        
 			               //4.Perform IO Operations with the client
 			               while (true) {
+			            	   c = mySocket.accept();       
+				               DataInputStream dis = new DataInputStream(c.getInputStream());
 			                   String clientMsg;
+			                   System.out.println("Before");
 			                   clientMsg = dis.readUTF();//read from the client
 			                   ChatArea.append("\n"+clientMsg);
 			                   System.out.println("B says "+clientMsg);
 			                   if (clientMsg.equalsIgnoreCase("Bye")) {
 			                        break;
 			                    }
+			                   System.out.println("after");
+
+				               dis.close();
 			               }
-			               //5.Close/release resources
-			               dis.close();
 			             
 			               c.close();
-			           }
+			           
 
 			       } catch (Exception e) {
 			           System.out.println(e.getMessage());
 			       }
 			
 		}  
+   }
+   
+   public void SendMessege(String Messege){
+
+       try {
+       
+           //1.Create Client Socket and connect to the server
+           Socket otherClient = new Socket(otherPairIP, 1243);
+           //2.if accepted create IO streams
+           DataOutputStream dos = new DataOutputStream(otherClient.getOutputStream());
+                          //Create a Scanner to read inputs from the user
+          
+     
+           dos.writeUTF(Messege);
+           ChatArea.append("\n"+"You :"+Messege);
+
+           //4.Close/release resources
+           
+           dos.close();
+           otherClient.close();
+
+       } catch (Exception e) {
+           System.out.println(e.getMessage());
+       }
    }
 
     public static void main(String[] args) {
@@ -146,39 +174,9 @@ public class client {
         	
         	receiver myReceiver = Client2.new receiver();
         	myReceiver.start();
-        	
-
-        	 String otherPairIP = "192.168.1.13";
+        	 
 
 
-            try {
-            
-                //1.Create Client Socket and connect to the server
-                Socket otherClient = new Socket(otherPairIP, 1243);
-                //2.if accepted create IO streams
-                DataOutputStream dos = new DataOutputStream(otherClient.getOutputStream());
-                               //Create a Scanner to read inputs from the user
-                Scanner sc = new Scanner(System.in);
-                String msgToBeSent;
-                //3.Perform IO operations with the server
-                while (true) {
-                    //read from the user
-                	msgToBeSent = sc.nextLine();
-                    dos.writeUTF(msgToBeSent);
-                   
-                    if (msgToBeSent.equalsIgnoreCase("Bye")) {
-                        break;
-                    }
-                }
-
-                //4.Close/release resources
-                
-                dos.close();
-                otherClient.close();
-
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
         
         }
 
