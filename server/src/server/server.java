@@ -33,59 +33,55 @@ import org.w3c.dom.Element;
 
 
 public class server {
-	ArrayList<User> users;
-	ArrayList<Group> groups;
-	ArrayList<groupRecords.groupRecord> records;
+
 	
-	public server() throws FileNotFoundException
-	{
-		File xmlFile = new File("users.txt");
-        File xmlGroupsFile = new File("groups.txt");
-        File xmlrecordsFile = new File("grouprecords.txt");
-       
-        
-        //Create the parser instance
-        XmlParser parser = new XmlParser();
- 
-        //Parse the file
-      users = parser.parseXml(new FileInputStream(xmlFile));
-        groups = parser.parseGroupsXml(new FileInputStream(xmlGroupsFile));
-        records = parser.parseRecordsXml(new FileInputStream(xmlrecordsFile));
-       
-      for(int i=0; i<users.size(); i++)
-       {  
-           
-          System.out.print(users.get(i).toString());
-       }
-      for(int i=0; i<groups.size(); i++)
-       {  
-           
-          System.out.print(groups.get(i).toString());
-       }
-      for(int i=0; i<records.size(); i++)
-       {  
-           
-          System.out.print(records.get(i).toString());
-       }
-	}
-   
+	 public static   ArrayList<User> users;
+	 public static ArrayList<Group> groups;
+	 public static	ArrayList<Socket> activeClients;
+	 
+   /* public server() throws FileNotFoundException
+    {
+    	 
+    	        //Locate the file
+    	     
+    	        File xmlFile = new File("users.txt");
+    	        File xmlGroupsFile = new File("groups.txt");
+    	        //System.out.print(xmlFile);
+    	        
+    	        //Create the parser instance
+    	        XmlParser parser = new XmlParser();
+    	 
+    	        //Parse the file
+    	       ArrayList users = parser.parseXml(new FileInputStream(xmlFile));
+    	       ArrayList groups = parser.parseGroupsXml(new FileInputStream(xmlGroupsFile));
+    	       
+    	      for(int i=0; i<users.size(); i++)
+    	       {  
+    	           
+    	          System.out.print((users.toArray())[i].toString());
+    	       }
+    	      for(int i=0; i<groups.size(); i++)
+    	       {  
+    	           
+    	          System.out.print((groups.toArray())[i].toString());
+    	       }
+    	              
+    	 
+    	        //Verify the result
+    	        
+    	    
+    }*/
+
 	
 
     public static void main(String[] args) throws IOException { 
     	
     	
     	leaveServer();
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
+
 	    
         // TODO code application logic here
-      //  try {
+        try {
         /*	//initiate list of groups
         	ArrayList<group> groups= new ArrayList<group>();
         	groups.add(new group("Test Group 1"));
@@ -102,29 +98,32 @@ public class server {
         	admins.add(new admin("hamda","adminPASS",false,"192.168.1.5"));
        */ 	
         	//list of logged in clients
-        	//ArrayList<Socket> activeClients=new ArrayList<Socket>();
+        	activeClients=new ArrayList<Socket>();
         	
         	
         	
             //1.Create Server Socket
+
+            ServerSocket sv = new ServerSocket(1555);
+
             //ServerSocket sv = new ServerSocket(1243);
-            
+
             //Server is always On
-           /* while (true) {
+            while (true) {
             //2.Listen for Clients
                 Socket c;
                 c = sv.accept();
                 System.out.println("new client arrived ");
                 activeClients.add(c);
-                clientThread arrivedClient=new clientThread(c, activeClients);// later activeClients will be replaced by active members in group
-                arrivedClient.run();
+                clientThread arrivedClient=new clientThread(c);// later activeClients will be replaced by active members in group
+                arrivedClient.start();
                 
             }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }*/
+    
 
 }
     
