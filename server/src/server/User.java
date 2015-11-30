@@ -9,6 +9,7 @@ class User {
     
     private String password;
     private int status;
+    private String IP;
  
     public int getId() {
         return id;
@@ -33,6 +34,14 @@ class User {
     }
     public void setStatus(int status) {
         this.status = status;
+        
+        
+    }
+    public String getIP() {
+        return IP;
+    }
+    public void setIP(String IP) {
+        this.IP = IP;
     }
  
     @Override
