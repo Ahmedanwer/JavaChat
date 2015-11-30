@@ -25,15 +25,25 @@ public class peerTopeer {
 	   static JTextArea writingArea;
 	   static JTextArea ChatArea;
 	   JButton sendButton;
-	   String otherPairIP = "192.168.43.64";
+	   String otherPairIP;
+	   User ReciverUser;
 	 
 	   public peerTopeer(){
 		      prepareGUI();     
 		      receiver myReceiver = new receiver();
 		      myReceiver.start();
 		   }
+	   
+	   public peerTopeer(User user){
+		   ReciverUser=user;
+		   otherPairIP=user.getIP();
+		      prepareGUI();     
+		      receiver myReceiver = new receiver();
+		      myReceiver.start();
+		     
+		   }
 	   private void prepareGUI(){
-		      mainFrame = new JFrame("Java SWING Examples");
+		      mainFrame = new JFrame("Chatting with "+(ReciverUser!=null?ReciverUser.getUsername():"Your Self"));
 		      mainFrame.setLayout(new FlowLayout());
 		      mainFrame.setSize(410,410);
 		    
@@ -80,11 +90,7 @@ public class peerTopeer {
 		            }
 		        });      		    
 		      
-		      mainFrame.addWindowListener(new WindowAdapter() {
-		         public void windowClosing(WindowEvent windowEvent){
-			        System.exit(0);
-		         }        
-		      });    
+		     
 		     
 		      GridBagConstraints gBC = new GridBagConstraints();
 		      gBC.fill = GridBagConstraints.HORIZONTAL;
