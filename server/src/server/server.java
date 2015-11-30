@@ -37,47 +37,232 @@ public class server {
 	
 	 public static   ArrayList<User> users;
 	 public static ArrayList<Group> groups;
+	 public static ArrayList<groupRecords.groupRecord> records;
 	 public static	ArrayList<Socket> activeClients;
 	 
-   /* public server() throws FileNotFoundException
+    public server() throws FileNotFoundException
     {
     	 
     	        //Locate the file
     	     
     	        File xmlFile = new File("users.txt");
     	        File xmlGroupsFile = new File("groups.txt");
-    	        //System.out.print(xmlFile);
+    	        File xmlGroupRecordsFile = new File("grouprecords.txt");
+    	     
     	        
     	        //Create the parser instance
     	        XmlParser parser = new XmlParser();
     	 
     	        //Parse the file
-    	       ArrayList users = parser.parseXml(new FileInputStream(xmlFile));
-    	       ArrayList groups = parser.parseGroupsXml(new FileInputStream(xmlGroupsFile));
+    	       users = parser.parseXml(new FileInputStream(xmlFile));
+    	       groups = parser.parseGroupsXml(new FileInputStream(xmlGroupsFile));
+    	       records = parser.parseRecordsXml(new FileInputStream(xmlGroupRecordsFile));
     	       
-    	      for(int i=0; i<users.size(); i++)
+    	     /* for(int i=0; i<users.size(); i++)
     	       {  
     	           
-    	          System.out.print((users.toArray())[i].toString());
+    	          System.out.print((users.get(i).toString()));
     	       }
     	      for(int i=0; i<groups.size(); i++)
     	       {  
     	           
-    	          System.out.print((groups.toArray())[i].toString());
+    	          System.out.print((groups.get(i).toString()));
+    	       }*/
+    	      for(int i=0; i<records.size(); i++)
+    	       {  
+    	           
+    	          System.out.print((records.get(i).toString()));
     	       }
     	              
     	 
     	        //Verify the result
     	        
     	    
-    }*/
+    }
+    //destructor
+    protected void finalize() throws FileNotFoundException
+    {
+    	try {  //building users file
+
+    		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+    		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+    		// root elements
+    		Document usersFile = docBuilder.newDocument();
+    		Document groupsFile = docBuilder.newDocument();
+    		Document groupRecordsFile = docBuilder.newDocument();
+    		
+    		
+    		
+    		Element userRoot = usersFile.createElement("users");
+    		Element groupRoot = groupsFile.createElement("groups");
+    		Element recordRoot = groupRecordsFile.createElement("records");
+    		
+    		
+    		usersFile.appendChild(userRoot);
+    		groupsFile.appendChild(groupRoot);
+    		groupRecordsFile.appendChild(recordRoot);
+
+
+    	//for users file
+    		for(int i=0; i<users.size();i++)
+    		{
+    		Element user = usersFile.createElement("user");
+    		userRoot.appendChild(user);
+
+    		// set attribute to staff element
+    		
+    		Attr attr = usersFile.createAttribute("id");
+    		
+    			
+    		attr.setValue(String.valueOf(users.get(i).getId()));
+    		user.setAttributeNode(attr);
+    		
+
+    		
+    		Element username = usersFile.createElement("username");
+    		username.appendChild(usersFile.createTextNode(users.get(i).getUsername()));
+    		
+    		user.appendChild(username);
+
+    		
+    		Element password = usersFile.createElement("password");
+    		password.appendChild(usersFile.createTextNode(users.get(i).getPassword()));
+    		user.appendChild(password);
+
+    		// nickname elements
+    		Element status = usersFile.createElement("status");
+    		status.appendChild(usersFile.createTextNode(String.valueOf(users.get(i).getStatus())));
+    		user.appendChild(status);
+
+    		
+
+    		// write the content into xml file
+    		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+    		Transformer transformer = transformerFactory.newTransformer();
+    		DOMSource source = new DOMSource(usersFile);
+    		PrintWriter users = new PrintWriter("users.txt");
+    		StreamResult result = new StreamResult(users);
+    		
+
+    		// Output to console for testing
+    		//StreamResult result = new StreamResult(System.out);
+
+    		transformer.transform(source, result);
+    		}
+    		
+    		
+    		//for groups file
+    		for(int i=0; i<groups.size();i++)
+    		{
+    		Element group = groupsFile.createElement("group");
+    		groupRoot.appendChild(group);
+
+    		
+    		
+    		Attr attr = groupsFile.createAttribute("id");
+    		
+    			
+    		attr.setValue(String.valueOf(groups.get(i).getId()));
+    		group.setAttributeNode(attr);
+    		
+
+    		
+    		Element groupName = groupsFile.createElement("groupName");
+    		groupName.appendChild(groupsFile.createTextNode(groups.get(i).getGroupName()));
+    		
+    		group.appendChild(groupName);
+
+    		
+    		// write the content into xml file
+    		TransformerFactory transformerFactorygroups = TransformerFactory.newInstance();
+    		Transformer transformer1 = transformerFactorygroups.newTransformer();
+    		DOMSource source1 = new DOMSource(groupsFile);
+    		PrintWriter groups = new PrintWriter("groups.txt");
+    		StreamResult result1 = new StreamResult(groups);
+    		
+
+    		// Output to console for testing
+    		//StreamResult result = new StreamResult(System.out);
+
+    		transformer1.transform(source1, result1);
+    		}
+    		
+    		
+    		//for groupRecords file
+    		for(int i=0; i<records.size();i++)
+    		{
+    		Element record = groupRecordsFile.createElement("record");
+    		recordRoot.appendChild(record);
+
+    		
+    		
+    		Attr attr = groupRecordsFile.createAttribute("id");
+    		
+    			
+    		attr.setValue(String.valueOf(records.get(i).getId()));
+    		record.setAttributeNode(attr);
+    		
+
+    		
+    		Element userID = groupRecordsFile.createElement("userID");
+    		userID.appendChild(groupRecordsFile.createTextNode(String.valueOf(records.get(i).getUserID())));
+    		
+    		record.appendChild(userID);
+    		
+    		Element groupID = groupRecordsFile.createElement("groupID");
+    		groupID.appendChild(groupRecordsFile.createTextNode(String.valueOf(records.get(i).getGroupID())));
+    		
+    		record.appendChild(groupID);
+
+    		
+    		
+
+    		
+
+    		// write the content into xml file
+    		TransformerFactory transformerFactoryrecords = TransformerFactory.newInstance();
+    		Transformer transformer2 = transformerFactoryrecords.newTransformer();
+    		DOMSource source2 = new DOMSource(groupRecordsFile);
+    		PrintWriter records = new PrintWriter("grouprecords.txt");
+    		StreamResult result2 = new StreamResult(records);
+    		
+
+    		// Output to console for testing
+    		//StreamResult result = new StreamResult(System.out);
+
+    		transformer2.transform(source2, result2);
+    		}
+
+
+    		//System.out.println("File saved!");
+
+    	  } catch (ParserConfigurationException pce) {
+    		pce.printStackTrace();
+    	  } catch (TransformerException tfe) {
+    		tfe.printStackTrace();
+    	  }
+    	
+   
+    	
+    }
+   
+    
 
 	
 
     public static void main(String[] args) throws IOException { 
     	
+    	server s = new server();
+    	users.get(0).setUsername("Ahmed Anwar"); //changing certain elements
+    	groups.get(0).setGroupName("Minions");
+    	records.get(0).setGroupID(65788757);
     	
-    	leaveServer();
+    	
+    	
+    	s.finalize();
+    	
+    	
 
 	    
         // TODO code application logic here
@@ -127,72 +312,6 @@ public class server {
 
 }
     
-    public  void leaveServer() throws IOException
-    {
-    	try {
-
-    		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-    		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-
-    		// root elements
-    		Document doc = docBuilder.newDocument();
-    		Element rootElement = doc.createElement("users");
-    		doc.appendChild(rootElement);
-
-    		// staff elements
-    		for(int i=0; i<users.size();i++)
-    		{
-    		Element user = doc.createElement("user");
-    		rootElement.appendChild(user);
-
-    		// set attribute to staff element
-    		
-    		Attr attr = doc.createAttribute("id");
-    		
-    			
-    		attr.setValue(String.valueOf(users.get(i).getId()));
-    		user.setAttributeNode(attr);
-    		
-
-    		
-    		Element username = doc.createElement("username");
-    		username.appendChild(doc.createTextNode(users.get(i).getUsername()));
-    		//username.appendChild(doc.createTextNode("aya bs"));
-    		user.appendChild(username);
-
-    		
-    		Element password = doc.createElement("password");
-    		password.appendChild(doc.createTextNode(users.get(i).getPassword()));
-    		user.appendChild(password);
-
-    		// nickname elements
-    		Element status = doc.createElement("status");
-    		status.appendChild(doc.createTextNode(String.valueOf(users.get(i).getStatus())));
-    		user.appendChild(status);
-
-    		
-
-    		// write the content into xml file
-    		TransformerFactory transformerFactory = TransformerFactory.newInstance();
-    		Transformer transformer = transformerFactory.newTransformer();
-    		DOMSource source = new DOMSource(doc);
-    		PrintWriter users = new PrintWriter("users.txt");
-    		StreamResult result = new StreamResult(users);
-    		
-
-    		// Output to console for testing
-    		//StreamResult result = new StreamResult(System.out);
-
-    		transformer.transform(source, result);
-    		}
-
-    		//System.out.println("File saved!");
-
-    	  } catch (ParserConfigurationException pce) {
-    		pce.printStackTrace();
-    	  } catch (TransformerException tfe) {
-    		tfe.printStackTrace();
-    	  }
-    }
-   
+    
+    	
 }
