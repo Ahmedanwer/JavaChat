@@ -5,14 +5,19 @@ import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
+import com.sun.javafx.scene.paint.GradientUtils.Parser;
+
 public class clientThread extends Thread {
 
 	Socket c;
 	ArrayList<Socket> activeGroupClients;
 	
-	public clientThread(Socket clinetArrived, ArrayList<Socket> activeClients) {
+	public clientThread(Socket clinetArrived) {
 		this.c = clinetArrived;
-		this.activeGroupClients=activeClients;
+		this.activeGroupClients=server.activeClients;
 	}
 
 
@@ -33,28 +38,40 @@ public class clientThread extends Thread {
         while (true) {
             String clientMsg; 
             clientMsg = dis.readUTF();//read from the client
-            
-            System.out.println(clientMsg);
+            JSONObject obj=(JSONObject) JSONValue.parse(clientMsg);
             //dos.writeUTF(clientMsg);//Echo the msg back to the client     
             
             if (clientMsg.equalsIgnoreCase("Bye")) {
+            	
                 break;
-            }else if (clientMsg.equalsIgnoreCase("BCM")) {
+            }else if (obj.get("header").toString().equalsIgnoreCase("BCM")) {
+            	
             	System.out.println("if conditon of bcm enterd");
-            	clientMsg = dis.readUTF();
+            	clientMsg = obj.get("msg").toString();
             	System.out.println("recevied msg and commencing BC-ing "+clientMsg);
-    			
-            	BCMsg CurrentBC= new BCMsg(clientMsg,activeGroupClients);
+            	System.out.println("Sender IP = "+obj.get("senderIP").toString());
+            	BCMsg CurrentBC= new BCMsg(clientMsg);
             	CurrentBC.start();
             	}
-            else if (clientMsg.equalsIgnoreCase("login")){
+            else if (obj.get("header").toString().equalsIgnoreCase("login")){
+            	
             	System.out.println("if conditon of login enterd");
             	String userName, password;
-            	userName = dis.readUTF();
-            	password = dis.readUTF();
+            	userName = obj.get("username").toString();
+            	password = obj.get("password").toString();
             	System.out.println("User NAme Received: "+userName+" & Password: "+password);
+            	String id="0";
+            	for (int j=0;j<server.users.size();j++)
+            	{
+            		if (server.users.get(j).getUsername().equals(userName) && server.users.get(j).getPassword().equals(password)){
+            			id= String.valueOf(server.users.get(j).getId());
+            			break;
+            		}
+            	}
+            	 dos.writeUTF(id);
             }
             else {
+            	
             	dos.writeUTF("Server: please enter a valid command, available commands are: bye, bcm, and login");
             }
           }

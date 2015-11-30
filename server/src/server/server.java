@@ -17,6 +17,11 @@ import java.io.IOException;
 
 
 public class server {
+	
+	 public static   ArrayList<User> users;
+	 public static ArrayList<Group> groups;
+	 public static	ArrayList<Socket> activeClients;
+	 
    /* public server() throws FileNotFoundException
     {
     	 
@@ -61,8 +66,8 @@ public class server {
 	        XmlParser parser = new XmlParser();
 	 
 	        //Parse the file
-	       ArrayList users = parser.parseXml(new FileInputStream(xmlFile));
-	       ArrayList groups = parser.parseGroupsXml(new FileInputStream(xmlGroupsFile));
+	      users = parser.parseXml(new FileInputStream(xmlFile));
+	      groups = parser.parseGroupsXml(new FileInputStream(xmlGroupsFile));
 	       
 	      for(int i=0; i<users.size(); i++)
 	       {  
@@ -97,7 +102,7 @@ public class server {
         	admins.add(new admin("hamda","adminPASS",false,"192.168.1.5"));
        */ 	
         	//list of logged in clients
-        	ArrayList<Socket> activeClients=new ArrayList<Socket>();
+        	activeClients=new ArrayList<Socket>();
         	
         	
         	
@@ -114,7 +119,7 @@ public class server {
                 c = sv.accept();
                 System.out.println("new client arrived ");
                 activeClients.add(c);
-                clientThread arrivedClient=new clientThread(c, activeClients);// later activeClients will be replaced by active members in group
+                clientThread arrivedClient=new clientThread(c);// later activeClients will be replaced by active members in group
                 arrivedClient.start();
                 
             }

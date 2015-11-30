@@ -1,15 +1,25 @@
 package client;
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.InputStreamReader;
+import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
+import java.net.UnknownHostException;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import com.sun.xml.internal.bind.v2.runtime.RuntimeUtil.ToStringAdapter;
 
 public class client {
 
+	private String userName,password;
+	static Socket serverConnection;
+	static DataOutputStream Sdos;
+	static DataInputStream Sdis;
+	static String id;
+	
    private class receiver extends Thread
    {
 	   @Override
@@ -51,7 +61,60 @@ public class client {
 		}  
    }
 
-    public static void main(String[] args) {
+   public static String Login(String user, String pass){
+
+	   JSONObject obj = new JSONObject();
+	   		
+	   	  obj.put("header", "login");
+	      obj.put("username", user);
+	      obj.put("password", pass);
+	      try {
+			Sdos.writeUTF(obj.toJSONString());
+			id=Sdis.readUTF();
+			if (id!="0") {
+				System.out.println("Login Successful");
+				return id;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	      System.out.println("login failed");
+		return "0";
+		  
+   }
+   
+   public static Boolean BCMsg (String msg) {
+
+	   JSONObject obj = new JSONObject();
+	   		
+	   	  obj.put("header", "BCM");
+	      obj.put("msg", msg);
+	      try {
+			obj.put("SenderIP", InetAddress.getLocalHost());
+		} catch (UnknownHostException e1) {
+			e1.printStackTrace();
+		}
+	      try {
+			
+			Sdos.writeUTF(obj.toJSONString());
+			if (Sdis.readUTF().equalsIgnoreCase("login successful")) {
+				System.out.println("BCM Successful");
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	      System.out.println("BCM failed");
+		return false;
+		  
+}
+   
+   public static JSONArray getAllGroups (){
+	return null;
+	   
+   }
+   
+   public static void main(String[] args) {
         {
        // 	client Client2=new client();
         	
@@ -61,33 +124,28 @@ public class client {
 
         	
         	 String otherPairIP = "192.168.1.19";
-        	 String ServerIP="192.168.1.2";
+        	 String ServerIP="192.168.1.3";
 
             try {
-            //	connectToServerThread s= new connectToServerThread(ServerIP);
-            //	s.run();
+         	
             	
-            	//  test
-            	
-            	
-            	Socket serverConnection = new Socket (ServerIP, 1555);
+            	serverConnection = new Socket (ServerIP, 1555);
+            	Sdos=new DataOutputStream(serverConnection.getOutputStream()) ;
+    			Sdis=new DataInputStream(serverConnection.getInputStream());
             	System.out.println("Client started");
-    			ReadFromServerThread r1=new ReadFromServerThread(serverConnection);
+            	
+            	System.out.println(Login("aya","123"));
+            	System.out.println(BCMsg("Teseting BCming"));
+            	
+    			//ReadFromServerThread r1=new ReadFromServerThread(serverConnection);
     			WriteToServerThread w1= new WriteToServerThread (serverConnection);
     			w1.start();
-    			r1.start();
+    			//r1.start();
     			
-    	   //2.if accepted create IO streams
-    		               		        } catch (Exception e) {
-    		            System.out.println(e.getMessage());
-    		        }
+    	 
+    		   } catch (Exception e) {System.out.println(e.getMessage());}
 
-            	
-            	//end test
-            	
-            	
-            	
-            	
+          
             	
       /*          //1.Create Client Socket and connect to the server
                 Socket otherClient = new Socket(otherPairIP, 1243);

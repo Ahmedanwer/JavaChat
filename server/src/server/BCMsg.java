@@ -11,8 +11,8 @@ public class BCMsg extends Thread{
 	ArrayList<Socket> activeGroupClients;
 
 
-	public BCMsg(String msg,ArrayList<Socket> activeGroupClients) {
-		this.activeGroupClients = activeGroupClients;
+	public BCMsg(String msg) {
+		this.activeGroupClients = server.activeClients;
 		this.msg = msg;
 	}
 
