@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package testsaxparser;
 
-public class User
-{
-    //XML attribute id
+package server;
+
+class User {
+	 //XML attribute id
     private int id;
   
     private String username ;
@@ -44,4 +39,5 @@ public class User
     public String toString() {
         return this.id + ":" + this.username +  ":" +this.password +  ":" +this.status + "\n" ;
     }
+
 }
