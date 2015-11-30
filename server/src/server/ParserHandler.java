@@ -8,12 +8,16 @@ import java.util.Stack;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import server.groupRecords.groupRecord;
  
 public class ParserHandler extends DefaultHandler
 {
     //This is the list which shall be populated while parsing the XML.
-    private ArrayList userList = new ArrayList();
-    private ArrayList GroupList = new ArrayList();
+    private ArrayList<User> userList = new ArrayList();
+    private ArrayList<Group> GroupList = new ArrayList();
+    private ArrayList<groupRecord> recordsList = new ArrayList();
+    
  
     //As we read any XML element we will push that in this stack
     private Stack elementStack = new Stack();
@@ -25,8 +29,13 @@ public class ParserHandler extends DefaultHandler
     boolean password = false;
     boolean status = false;
     boolean groupName = false;
+    boolean userID = false;
+    boolean groupID = false;
     private Group group=null;
     private User user=null;
+    private groupRecords records= null;
+    private groupRecords.groupRecord record = null;
+    
  
     public void startDocument() throws SAXException
     {
@@ -87,6 +96,25 @@ public class ParserHandler extends DefaultHandler
         { 
            groupName = true;
         }
+         
+        else if ("record".equals(qName))
+         {
+             //New User instance
+        	records =new groupRecords();
+             record = records.new groupRecord(0,0);
+  
+             //Set all required attributes in any XML element here itself
+             
+             this.objectStack.push(record);
+         }
+        else if("groupID".equals(qName))
+        { 
+           groupID = true;
+        }
+        else if("userID".equals(qName))
+        { 
+           userID = true;
+        }
     }
  
     public void endElement(String uri, String localName, String qName) throws SAXException
@@ -105,6 +133,11 @@ public class ParserHandler extends DefaultHandler
             Group object = (Group) this.objectStack.pop();
             this.GroupList.add(object);
         }
+         if ("record".equals(qName))
+         {
+             groupRecord object = (groupRecord) this.objectStack.pop();
+             this.recordsList.add(object);
+         }
     }
  
     /**
@@ -138,6 +171,16 @@ public class ParserHandler extends DefaultHandler
             group.setGroupName(value);
             groupName = false;
          }
+         else if (userID) {
+             //age element, set Employee age
+             record.setUserID(Integer.parseInt(value));
+             userID = false;
+          }
+         else if (groupID) {
+             //age element, set Employee age
+             record.setGroupID(Integer.parseInt(value));
+             groupID = false;
+          }
  
         //handle the value based on to which element it belongs
        /* if ("firstName".equals(currentElement()))
@@ -175,4 +218,9 @@ public class ParserHandler extends DefaultHandler
     {
         return GroupList;
     }
+     
+     public ArrayList getRecords()
+     {
+    	 return recordsList;
+     }
 }
