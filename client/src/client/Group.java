@@ -1,15 +1,14 @@
-package server;
+package client;
 
 class Group {
 	 private int id;
-	  
 	 public Group(){}
 	    public Group(int id, String groupName) {
-		super();
-		this.id = id;
-		this.groupName = groupName;
-	}
-		private String groupName ;
+			super();
+			this.id = id;
+			this.groupName = groupName;
+		}
+	    private String groupName ;
 	    
 	     public int getId() {
 	        return id;
