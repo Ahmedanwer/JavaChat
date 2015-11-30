@@ -25,7 +25,7 @@ public class peerTopeer {
 	   static JTextArea writingArea;
 	   static JTextArea ChatArea;
 	   JButton sendButton;
-	   String otherPairIP = "localhost";
+	   String otherPairIP = "192.168.43.64";
 	 
 	   public peerTopeer(){
 		      prepareGUI();     
