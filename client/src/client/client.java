@@ -72,13 +72,13 @@ public class client {
 			Sdos.writeUTF(obj.toJSONString());
 			id=Sdis.readUTF();
 			if (id!="0") {
-				System.out.println("Login Successful");
+				System.out.println("Login Successful, ID Retrived= "+id);
 				return id;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	      System.out.println("login failed");
+	      System.out.println("login failed,ID Retrived= "+id );
 		return "0";
 		  
    }
@@ -95,7 +95,7 @@ public class client {
 			e1.printStackTrace();
 		}
 	      try {
-			
+			System.out.println(obj.toJSONString());
 			Sdos.writeUTF(obj.toJSONString());
 			if (Sdis.readUTF().equalsIgnoreCase("login successful")) {
 				System.out.println("BCM Successful");
@@ -109,7 +109,7 @@ public class client {
 		  
 }
    
-   public static JSONArray getAllGroups (){
+   public static JSONArray getAllUsers (){
 	return null;
 	   
    }
@@ -124,7 +124,7 @@ public class client {
 
         	
         	 String otherPairIP = "192.168.1.19";
-        	 String ServerIP="192.168.1.3";
+        	 String ServerIP="192.168.43.64";
 
             try {
          	
@@ -133,7 +133,7 @@ public class client {
             	Sdos=new DataOutputStream(serverConnection.getOutputStream()) ;
     			Sdis=new DataInputStream(serverConnection.getInputStream());
             	System.out.println("Client started");
-            	
+            	System.out.println(Sdis.readUTF());
             	System.out.println(Login("aya","123"));
             	System.out.println(BCMsg("Teseting BCming"));
             	
