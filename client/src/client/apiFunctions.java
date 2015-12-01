@@ -2,6 +2,7 @@ package client;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -17,7 +18,27 @@ public class apiFunctions {
 	static String id;
 
 
-	   public static String Login(String user, String pass){
+	
+	
+	
+	public apiFunctions(String userName, String password ,String ip ) {
+		
+		this.userName = userName;
+		this.password = password;
+		try {
+			serverConnection = new Socket (ip, 1555);
+			Sdis =new DataInputStream(serverConnection.getInputStream());
+			Sdos= new DataOutputStream(serverConnection.getOutputStream());
+			login(userName, password);
+		} catch (Exception e) {e.printStackTrace();}
+	}
+
+	public static Boolean connect (String ip){
+	
+		return false;
+	}
+	
+	   public static String login(String user, String pass){
 
 		   JSONObject obj = new JSONObject();
 		   		
