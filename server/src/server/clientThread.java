@@ -40,8 +40,9 @@ public class clientThread extends Thread {
         while (true) {
             String clientMsg; 
             clientMsg = dis.readUTF();//read from the client
+            System.out.println(clientMsg);
             JSONObject obj=(JSONObject) JSONValue.parse(clientMsg);
-            //dos.writeUTF(clientMsg);//Echo the msg back to the client     
+            System.out.println("header of msg recevied " +obj.get("header").toString());
             
             if (clientMsg.equalsIgnoreCase("Bye")) {
             	
@@ -51,7 +52,7 @@ public class clientThread extends Thread {
             	System.out.println("if conditon of bcm enterd");
             	clientMsg = obj.get("msg").toString();
             	System.out.println("recevied msg and commencing BC-ing "+clientMsg);
-            	System.out.println("Sender IP = "+obj.get("senderIP").toString());
+            	System.out.println("Sender IP = "+obj.get("SenderIP").toString());
             	BCMsg CurrentBC= new BCMsg(obj.get("msg").toString());
             	CurrentBC.start();
             	}
@@ -76,30 +77,16 @@ public class clientThread extends Thread {
             else if (obj.get("header").toString().equalsIgnoreCase("getallusers")){
             	
             	Gson gson = new Gson();
-
-     		   // Serializing to a JSON element node
-     		  // JsonElement jsonElement = gson.toJsonTree(server.users);
-     		   //System.out.println(jsonElement.isJsonArray()); // true
-     		   // Or, directly to JSON string
      		   String json = gson.toJson(server.users);
-     		   System.out.println(json);
      		   dos.writeUTF(json);
-
             }
             
             
             else if (obj.get("header").toString().equalsIgnoreCase("getallgroups")){
             	
             	Gson gson = new Gson();
-
-     		   // Serializing to a JSON element node
-     		   //JsonElement jsonElement = gson.toJsonTree(server.groups);
-     		   //System.out.println(jsonElement.isJsonArray()); // true
-     		   // Or, directly to JSON string
-     		   String json = gson.toJson(server.groups);
-     		   System.out.println(json);
-     		  dos.writeUTF(json);
-
+     		    String json = gson.toJson(server.groups);
+    		    dos.writeUTF(json);
             }
 
             

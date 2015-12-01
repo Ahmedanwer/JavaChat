@@ -67,29 +67,19 @@ public class apiFunctions {
 			  
 	   }
 	   
-	   public static Boolean BCMsg (String msg) {
+	   public static void BCMsg (String msg) {
 
 		   JSONObject obj = new JSONObject();
-		   		
+		   
+		   try {	
 		   	  obj.put("header", "BCM");
 		      obj.put("msg", msg);
-		      try {
-				obj.put("SenderIP", InetAddress.getLocalHost());
-			} catch (UnknownHostException e1) {
-				e1.printStackTrace();
-			}
-		      try {
-				System.out.println(obj.toJSONString());
-				Sdos.writeUTF(obj.toJSONString());
-				if (Sdis.readUTF().equalsIgnoreCase("login successful")) {
-					System.out.println("BCM Successful");
-					return true;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		      System.out.println("BCM failed");
-			return false;
+		      obj.put("SenderIP", InetAddress.getLocalHost().toString());
+		      System.out.println(obj.toJSONString());
+		      Sdos.writeUTF(obj.toJSONString());
+		      System.out.println(Sdis.readUTF());
+			} 
+		   catch (Exception e) {	e.printStackTrace();}
 			  
 	}
 	   
@@ -106,8 +96,10 @@ public class apiFunctions {
 		   
 				Gson gson = new Gson();
 				String json=Sdis.readUTF();
-				java.lang.reflect.Type type = new TypeToken<ArrayList<String>>(){}.getType();
+				
+				java.lang.reflect.Type type = new TypeToken<ArrayList<User>>(){}.getType();
 				arrayList = gson.fromJson(json, type);
+				
 		   }catch (Exception e){e.printStackTrace();}
 				return arrayList;
 		   
@@ -115,21 +107,22 @@ public class apiFunctions {
 	
 	   
 	   
-	   public static ArrayList<User> getAllUsers (){
+	   public static ArrayList<Group> getAllGroups (){
 			
-		   ArrayList<User> arrayList= new ArrayList<>();
+		   ArrayList<Group> arrayList= new ArrayList<>();
 		   try {
 		   JSONObject obj = new JSONObject();
 	   		
 		   	  obj.put("header", "getallgroups");
 		      
-				System.out.println(obj.toJSONString());
 				Sdos.writeUTF(obj.toJSONString());
 		   
 				Gson gson = new Gson();
 				String json=Sdis.readUTF();
-				java.lang.reflect.Type type = new TypeToken<ArrayList<String>>(){}.getType();
+				
+				java.lang.reflect.Type type = new TypeToken<ArrayList<Group>>(){}.getType();
 				arrayList = gson.fromJson(json, type);
+				
 		   }catch (Exception e){e.printStackTrace();}
 				return arrayList;
 		   
