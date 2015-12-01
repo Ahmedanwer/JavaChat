@@ -47,7 +47,9 @@ public class clientThread extends Thread {
             if (clientMsg.equalsIgnoreCase("Bye")) {
             	
                 break;
-            }else if (obj.get("header").toString().equalsIgnoreCase("BCM")) {
+            }
+            
+            else if (obj.get("header").toString().equalsIgnoreCase("BCM")) {
             	
             	System.out.println("if conditon of bcm enterd");
             	clientMsg = obj.get("msg").toString();
@@ -56,6 +58,7 @@ public class clientThread extends Thread {
             	BCMsg CurrentBC= new BCMsg(obj.get("msg").toString());
             	CurrentBC.start();
             	}
+            
             else if (obj.get("header").toString().equalsIgnoreCase("login")){
             	
             	System.out.println("if conditon of login enterd");
@@ -81,14 +84,19 @@ public class clientThread extends Thread {
      		   dos.writeUTF(json);
             }
             
-            
             else if (obj.get("header").toString().equalsIgnoreCase("getallgroups")){
             	
             	Gson gson = new Gson();
      		    String json = gson.toJson(server.groups);
     		    dos.writeUTF(json);
             }
-
+            
+            else if (obj.get("header").toString().equalsIgnoreCase("getmygroups")){
+            	
+            	Gson gson = new Gson();
+     		    String json = gson.toJson(server.groups);
+    		    dos.writeUTF(json);
+            }
             
             else {
             	

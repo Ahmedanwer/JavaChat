@@ -40,10 +40,13 @@ public class apiFunctions {
 		} catch (Exception e) {e.printStackTrace();}
 	}
 
-	public static Boolean connect (String ip){
-	
-		return false;
-	}
+	public static void connect (String ip){
+		try {
+		serverConnection = new Socket (ip, 1555);
+		Sdis =new DataInputStream(serverConnection.getInputStream());
+		Sdos= new DataOutputStream(serverConnection.getOutputStream());
+		} catch (Exception e) {e.printStackTrace();}
+		}
 	
 	   public static String login(String user, String pass){
 
@@ -79,7 +82,7 @@ public class apiFunctions {
 		      Sdos.writeUTF(obj.toJSONString());
 		      System.out.println(Sdis.readUTF());
 			} 
-		   catch (Exception e) {	e.printStackTrace();}
+		   catch (Exception e) {e.printStackTrace();}
 			  
 	}
 	   
@@ -128,5 +131,27 @@ public class apiFunctions {
 		   
 	   }
 	   
+	   
+	   public static ArrayList<Group> getMyGroups (String userID){
+			
+		   ArrayList<Group> arrayList= new ArrayList<>();
+		   try {
+		   JSONObject obj = new JSONObject();
+	   		
+		   	  obj.put("header", "getmygroups");
+		      
+				Sdos.writeUTF(obj.toJSONString());
+		   
+				Gson gson = new Gson();
+				String json=Sdis.readUTF();
+				
+				java.lang.reflect.Type type = new TypeToken<ArrayList<Group>>(){}.getType();
+				arrayList = gson.fromJson(json, type);
+				
+		   }catch (Exception e){e.printStackTrace();}
+				return arrayList;
+		   
+	   }
+
 	   
 }
