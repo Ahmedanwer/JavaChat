@@ -115,9 +115,9 @@ public class apiFunctions {
 	
 	   
 	   
-	   public static ArrayList<User> getAllUsers (){
+	   public static ArrayList<Group> getAllGroups (){
 			
-		   ArrayList<User> arrayList= new ArrayList<>();
+		   ArrayList<Group> arrayList= new ArrayList<>();
 		   try {
 		   JSONObject obj = new JSONObject();
 	   		
@@ -129,6 +129,27 @@ public class apiFunctions {
 				Gson gson = new Gson();
 				String json=Sdis.readUTF();
 				java.lang.reflect.Type type = new TypeToken<ArrayList<String>>(){}.getType();
+				arrayList = gson.fromJson(json, type);
+		   }catch (Exception e){e.printStackTrace();}
+				return arrayList;
+		   
+	   }
+	   
+	   
+	   public static ArrayList<Group> getMyGroups (String userID){
+			
+		   ArrayList<Group> arrayList= new ArrayList<>();
+		   try {
+		   JSONObject obj = new JSONObject();
+	   		
+		   	  obj.put("header", "getusergroups");
+		      
+				//System.out.println(obj.toJSONString());
+				Sdos.writeUTF(obj.toJSONString());
+		   
+				Gson gson = new Gson();
+				String json=Sdis.readUTF();
+				java.lang.reflect.Type type = new TypeToken<ArrayList<Group>>(){}.getType();
 				arrayList = gson.fromJson(json, type);
 		   }catch (Exception e){e.printStackTrace();}
 				return arrayList;

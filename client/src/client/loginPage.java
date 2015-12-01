@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +20,9 @@ class loginPage {
 	   static JTextArea ipAddress;
 	   JButton loginButton;
 	   String UserID="";
+	   ArrayList<User> users;
+	   ArrayList<Group> allGroups;
+	   ArrayList<Group> myGroups;
 	   
 	   public loginPage()
 	   {
@@ -59,7 +63,9 @@ class loginPage {
 		            {
 		            	
 		            	SendUserData(username.getText(),password.getText(),ipAddress.getText());
-		            	perpareData( UserID);
+		            	perpareUsersData( );
+		            	prepareGroupsData();
+		            	GetMyGroups(UserID);
 		            	
 		            	//username.setText("");
 		            	
@@ -101,10 +107,24 @@ class loginPage {
 		     
 		  }
 	   
-	   public void perpareData(String id)
+	   public void perpareUsersData()
 	   {
+		   users=apiFunctions.getAllUsers();
 		   
 	   }
-		}
+	   
+	   public void prepareGroupsData()
+	   {
+		   allGroups = apiFunctions.getAllGroups();
+		   
+	   }
+	   
+	   public void GetMyGroups(String userID)
+	   {
+		   myGroups= apiFunctions.getMyGroups(userID);
+	   }
+		
+
+}
 
 
