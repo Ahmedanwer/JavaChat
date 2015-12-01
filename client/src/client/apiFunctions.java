@@ -6,8 +6,15 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
+import com.sun.glass.ui.CommonDialogs.Type;
 
 public class apiFunctions {
 
@@ -86,9 +93,47 @@ public class apiFunctions {
 			  
 	}
 	   
-	   public static JSONArray getAllUsers (){
-		return null;
+	   public static ArrayList<User> getAllUsers (){
+		
+		   ArrayList<User> arrayList= new ArrayList<>();
+		   try {
+		   JSONObject obj = new JSONObject();
+	   		
+		   	  obj.put("header", "getallusers");
+		      
+				System.out.println(obj.toJSONString());
+				Sdos.writeUTF(obj.toJSONString());
+		   
+				Gson gson = new Gson();
+				String json=Sdis.readUTF();
+				java.lang.reflect.Type type = new TypeToken<ArrayList<String>>(){}.getType();
+				arrayList = gson.fromJson(json, type);
+		   }catch (Exception e){e.printStackTrace();}
+				return arrayList;
 		   
 	   }
 	
+	   
+	   
+	   public static ArrayList<User> getAllUsers (){
+			
+		   ArrayList<User> arrayList= new ArrayList<>();
+		   try {
+		   JSONObject obj = new JSONObject();
+	   		
+		   	  obj.put("header", "getallgroups");
+		      
+				System.out.println(obj.toJSONString());
+				Sdos.writeUTF(obj.toJSONString());
+		   
+				Gson gson = new Gson();
+				String json=Sdis.readUTF();
+				java.lang.reflect.Type type = new TypeToken<ArrayList<String>>(){}.getType();
+				arrayList = gson.fromJson(json, type);
+		   }catch (Exception e){e.printStackTrace();}
+				return arrayList;
+		   
+	   }
+	   
+	   
 }

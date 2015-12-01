@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.sun.javafx.scene.paint.GradientUtils.Parser;
 
 public class clientThread extends Thread {
@@ -70,6 +72,37 @@ public class clientThread extends Thread {
             	}
             	 dos.writeUTF(id);
             }
+            
+            else if (obj.get("header").toString().equalsIgnoreCase("getallusers")){
+            	
+            	Gson gson = new Gson();
+
+     		   // Serializing to a JSON element node
+     		  // JsonElement jsonElement = gson.toJsonTree(server.users);
+     		   //System.out.println(jsonElement.isJsonArray()); // true
+     		   // Or, directly to JSON string
+     		   String json = gson.toJson(server.users);
+     		   System.out.println(json);
+     		   dos.writeUTF(json);
+
+            }
+            
+            
+            else if (obj.get("header").toString().equalsIgnoreCase("getallgroups")){
+            	
+            	Gson gson = new Gson();
+
+     		   // Serializing to a JSON element node
+     		   //JsonElement jsonElement = gson.toJsonTree(server.groups);
+     		   //System.out.println(jsonElement.isJsonArray()); // true
+     		   // Or, directly to JSON string
+     		   String json = gson.toJson(server.groups);
+     		   System.out.println(json);
+     		  dos.writeUTF(json);
+
+            }
+
+            
             else {
             	
             	dos.writeUTF("Server: please enter a valid command, available commands are: bye, bcm, and login");
