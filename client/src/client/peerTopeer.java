@@ -19,21 +19,34 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import org.json.simple.JSONObject;
+
 public class peerTopeer {
 	  private JFrame mainFrame;
 		
-	   static JTextArea writingArea;
-	   static JTextArea ChatArea;
-	   JButton sendButton;
-	   String otherPairIP = "192.168.43.64";
+	  private JTextArea writingArea;
+	  private JTextArea ChatArea;
+	  private  JButton sendButton;
+	   String otherPairIP;
+	   User ReciverUser;
+	   User thisUser;
+	   peerTopeer ThisPeer;
 	 
 	   public peerTopeer(){
 		      prepareGUI();     
-		      receiver myReceiver = new receiver();
-		      myReceiver.start();
+		      ThisPeer=this;
+		   }
+	   
+	   public peerTopeer(User Reciver,User Sender){
+		   ReciverUser=Reciver;
+		   thisUser=Sender;
+		   otherPairIP=Reciver.getIP();
+		      prepareGUI();     
+		      ThisPeer=this;
+		     
 		   }
 	   private void prepareGUI(){
-		      mainFrame = new JFrame("Java SWING Examples");
+		      mainFrame = new JFrame("Chatting with "+(ReciverUser!=null?ReciverUser.getUsername():"Your Self"));
 		      mainFrame.setLayout(new FlowLayout());
 		      mainFrame.setSize(410,410);
 		    
@@ -74,17 +87,13 @@ public class peerTopeer {
 		            {
 		            	
 		            	// System.out.println(c.writingArea.getText());
-		            	SendMessege(writingArea.getText());
+		            	SendMessege(ThisPeer.writingArea.getText());
 		            	writingArea.setText("");
 		            	
 		            }
 		        });      		    
 		      
-		      mainFrame.addWindowListener(new WindowAdapter() {
-		         public void windowClosing(WindowEvent windowEvent){
-			        System.exit(0);
-		         }        
-		      });    
+		     
 		     
 		      GridBagConstraints gBC = new GridBagConstraints();
 		      gBC.fill = GridBagConstraints.HORIZONTAL;
@@ -112,49 +121,14 @@ public class peerTopeer {
 
 
 
-  private class receiver extends Thread
-  {
-	   @Override
-		public void run() {
-			// TODO Auto-generated method stub
-			super.run();
-			
-			 try 
-				{
-			           //1.Create Server Socket
-			           ServerSocket mySocket = new ServerSocket(1243);
-			           //Server is always On
-			          
-			          
-			        	   Socket c;
-				        
-			               //4.Perform IO Operations with the client
-			               while (true) {
-			            	   c = mySocket.accept();       
-				               DataInputStream dis = new DataInputStream(c.getInputStream());
-			                   String clientMsg;
-			                   System.out.println("Before");
-			                   clientMsg = dis.readUTF();//read from the client
-			                   ChatArea.append("\n"+clientMsg);
-			                   System.out.println("B says "+clientMsg);
-			                   if (clientMsg.equalsIgnoreCase("Bye")) {
-			                        break;
-			                    }
-			                   System.out.println("after");
-
-				               dis.close();
-			               }
-			             
-			               c.close();
-			           
-
-			       } catch (Exception e) {
-			           System.out.println(e.getMessage());
-			       }
-			
-		}  
-  }
-  
+ public void setTextofChat(String Messege){
+	 if(ThisPeer.ChatArea.getText()==""){
+		 ThisPeer.ChatArea.append(Messege);
+	 }else{
+		 ThisPeer.ChatArea.append("\n"+Messege);
+	 }
+	
+ }
   public void SendMessege(String Messege){
 
       try {
@@ -165,10 +139,13 @@ public class peerTopeer {
           DataOutputStream dos = new DataOutputStream(otherClient.getOutputStream());
                          //Create a Scanner to read inputs from the user
          
-    
-          dos.writeUTF(Messege);
+          JSONObject obj = new JSONObject();
+       
+          obj.put("senderID", thisUser.getId());
+          obj.put("messege", Messege);
+          dos.writeUTF(obj.toJSONString());
           
-          ChatArea.append("\n"+"You :"+Messege);
+          ThisPeer.ChatArea.append("\n"+"You :"+Messege);
 
           //4.Close/release resources
           
