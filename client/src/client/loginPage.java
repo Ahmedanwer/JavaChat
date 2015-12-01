@@ -18,6 +18,7 @@ class loginPage {
 	   static JTextArea password;
 	   static JTextArea ipAddress;
 	   JButton loginButton;
+	   String UserID="";
 	   
 	   public loginPage()
 	   {
@@ -58,6 +59,8 @@ class loginPage {
 		            {
 		            	
 		            	SendUserData(username.getText(),password.getText(),ipAddress.getText());
+		            	perpareData( UserID);
+		            	
 		            	//username.setText("");
 		            	
 		            }
@@ -69,13 +72,15 @@ class loginPage {
 	   }
 	   
 	   public String SendUserData(String username,String password, String ip){
+		   
+		 
 
 		      try {
 		      
 		          //1.Create Client Socket and connect to the server
 		         
 		          apiFunctions login = new apiFunctions(username,password,ip);
-		         String UserID= login.login(username, password);
+		          UserID= apiFunctions.login(username, password);
 		    
 		          //dos.writeUTF(Message);
 		          
@@ -86,12 +91,20 @@ class loginPage {
 		          
 		         // dos.close();
 		         // otherClient.close();
+		        
 
 		      } catch (Exception e) {
 		          System.out.println(e.getMessage());
+		          
 		      }
 		      return UserID;
+		     
 		  }
+	   
+	   public void perpareData(String id)
+	   {
+		   
+	   }
 		}
 
 
