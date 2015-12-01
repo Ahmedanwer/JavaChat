@@ -31,7 +31,7 @@ public class clientThread extends Thread {
         DataInputStream dis = new DataInputStream(c.getInputStream());
         
         //say Hi
-        dos.writeUTF("Server: Welcome new user");
+        //dos.writeUTF("Server: Welcome new user");
       
         
         //4.Perform IO Operations with the client
@@ -50,7 +50,7 @@ public class clientThread extends Thread {
             	clientMsg = obj.get("msg").toString();
             	System.out.println("recevied msg and commencing BC-ing "+clientMsg);
             	System.out.println("Sender IP = "+obj.get("senderIP").toString());
-            	BCMsg CurrentBC= new BCMsg(clientMsg);
+            	BCMsg CurrentBC= new BCMsg(obj.get("msg").toString());
             	CurrentBC.start();
             	}
             else if (obj.get("header").toString().equalsIgnoreCase("login")){
