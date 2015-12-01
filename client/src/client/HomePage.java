@@ -21,9 +21,15 @@ public class HomePage {
 	  
 	HomePage(){
 		users=new ArrayList<User>();
-		users.add(new User(1,"hamada",1));
-		users.add(new User(2,"Mohsen",1));
-		users.add(new User(3,"Sarhan",1));
+		
+		
+		User Som3a=new User(5,"Sherouk ",1);
+		Som3a.setIP("192.168.1.21");
+		User Anwar=new User(5,"Anwar",1);
+		Anwar.setIP("192.168.1.19");
+		
+		users.add(Anwar);
+		users.add(Som3a);
 		users.add(new User(4,"Hussien",1));
 		users.add(new User(5,"Ashraf",1));
 		User YourSelf=new User(5,"yourSelf",1);
