@@ -31,7 +31,7 @@ public class clientThread extends Thread {
         DataInputStream dis = new DataInputStream(c.getInputStream());
         
         //say Hi
-        dos.writeUTF("Server: Welcome new user");
+       // dos.writeUTF("Server: Welcome new user");
       
         
         //4.Perform IO Operations with the client
@@ -55,7 +55,7 @@ public class clientThread extends Thread {
             	}
             else if (obj.get("header").toString().equalsIgnoreCase("login")){
             	
-            	System.out.println("if conditon of login enterd");
+            	//System.out.println("if conditon of login enterd");
             	String userName, password;
             	userName = obj.get("username").toString();
             	password = obj.get("password").toString();

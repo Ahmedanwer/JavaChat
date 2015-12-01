@@ -48,7 +48,7 @@ public class apiFunctions {
 		      try {
 				Sdos.writeUTF(obj.toJSONString());
 				id=Sdis.readUTF();
-				if (id!="0") {
+				if (!(id.equals("0"))) {
 					System.out.println("Login Successful, ID Retrived= "+id);
 					return id;
 				}
