@@ -35,11 +35,13 @@ public class HomePage {
 		User YourSelf=new User(5,"yourSelf",1);
 		YourSelf.setIP("localhost");
 		users.add(YourSelf);
+		
 		groups=new ArrayList<Group>();
-		groups.add(new Group(1,"ASU"));
-		groups.add(new Group(2,"BUE"));
-		groups.add(new Group(3,"AUC"));
-		groups.add(new Group(4,"GUC"));
+		groups.add(new Group(0,"ASU"));
+		groups.add(new Group(1,"BUE"));
+		groups.add(new Group(2,"AUC"));
+		groups.add(new Group(3,"GUC"));
+		
 	     prepareGUI();     
 	}
 	 private void prepareGUI(){
@@ -61,6 +63,8 @@ public class HomePage {
 		            	new peerTopeer(thisUser);
 		            	
 		            }
+		            
+		            
 		        });     
 	    	  
 	    	  Contacts.add(contact);
@@ -70,6 +74,17 @@ public class HomePage {
 	      Groups.setLayout(new GridLayout(0,1));
 	      for(int i=0;i<groups.size();i++){
 	    	  JButton group=new JButton(groups.get(i).getGroupName());
+	    	  final Group thisGroup=groups.get(i);
+	    	  group.addActionListener(new ActionListener()
+	    			  {
+	    		  public void actionPerformed(ActionEvent e)
+		            {
+		            	
+		            	new groupChat(thisGroup);
+		            	
+		            }
+	    		  
+	    			  });
 	    	  Groups.add(group);
 	      }
 	      
