@@ -3,5 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/amr/Desktop/project/JavaChat/json-simple-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ShoroukHamed/Desktop/json_simple-1.1-all/lib/json_simple-1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

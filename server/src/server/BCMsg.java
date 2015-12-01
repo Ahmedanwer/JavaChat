@@ -23,6 +23,7 @@ public class BCMsg extends Thread{
 		
 			System.out.println("recevied msg and commencing BC-ing (inside) "+msg);
 			for (int i = 0; i < activeGroupClients.size(); i++) {
+				
 				System.out.println( "Server Sent to Client No."+i+": "+msg);
 
 			DataOutputStream dos = new DataOutputStream(activeGroupClients.get(i).getOutputStream());
