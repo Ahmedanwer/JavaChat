@@ -12,6 +12,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.sun.javafx.scene.paint.GradientUtils.Parser;
 
+import server.groupRecords.groupRecord;
+
 public class clientThread extends Thread {
 
 	Socket c;
@@ -22,6 +24,12 @@ public class clientThread extends Thread {
 		this.activeGroupClients=server.activeClients;
 	}
 
+	public Group getGroupByID (int x){
+		
+		for (Group temp : server.groups) {
+			if (temp.getId()==x) return temp;
+		} return null;
+	}
 
 	@Override
 	public void run() {
@@ -71,6 +79,9 @@ public class clientThread extends Thread {
             	{
             		if (server.users.get(j).getUsername().equals(userName) && server.users.get(j).getPassword().equals(password)){
             			id= String.valueOf(server.users.get(j).getId());
+            			server.users.get(j).setStatus(1);
+            			server.users.get(j).setIP(c.getLocalAddress().toString().substring(1));
+            			System.out.println( "ip of connected client is "+c.getLocalAddress().toString().substring(1));
             			break;
             		}
             	}
@@ -93,8 +104,16 @@ public class clientThread extends Thread {
             
             else if (obj.get("header").toString().equalsIgnoreCase("getmygroups")){
             	
+            	ArrayList<Group> myGroups =new ArrayList<Group>();
+            	int userID=Integer.parseInt((String) obj.get("id".toString()));
+            	System.out.println(String.valueOf(userID));
+            	for (groupRecord temp : server.records){
+            		if (temp.getUserID()==userID) myGroups.add(getGroupByID(temp.getGroupID()));
+            	}
+            	System.out.println("grorup size "+ myGroups.size());
+            	
             	Gson gson = new Gson();
-     		    String json = gson.toJson(server.groups);
+     		    String json = gson.toJson(myGroups);
     		    dos.writeUTF(json);
             }
             

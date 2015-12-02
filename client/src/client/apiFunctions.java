@@ -33,42 +33,47 @@ public class apiFunctions {
 		this.userName = userName;
 		this.password = password;
 		try {
-			serverConnection = new Socket (ip, 1555);
-			Sdis =new DataInputStream(serverConnection.getInputStream());
-			Sdos= new DataOutputStream(serverConnection.getOutputStream());
+			
+			connect(ip);
 			login(userName, password);
 		} catch (Exception e) {e.printStackTrace();}
 	}
-
-	public static void connect (String ip){
-		try {
-		serverConnection = new Socket (ip, 1555);
-		Sdis =new DataInputStream(serverConnection.getInputStream());
-		Sdos= new DataOutputStream(serverConnection.getOutputStream());
-		} catch (Exception e) {e.printStackTrace();}
-		}
 	
+
+	public apiFunctions() {}
+	
+		// connect to server by server ip
+		public static void connect (String ip){
+			
+			try {
+			serverConnection = new Socket (ip, 1555);
+			Sdis =new DataInputStream(serverConnection.getInputStream());
+			Sdos= new DataOutputStream(serverConnection.getOutputStream());
+			} catch (Exception e) {e.printStackTrace();}
+			}
+		
+		// takes user name and password and login to server and return user id; if id=o then login failed
 	   public static String login(String user, String pass){
 
 		   JSONObject obj = new JSONObject();
 		   		
-		   	  obj.put("header", "login");
-		      obj.put("username", user);
-		      obj.put("password", pass);
-		      try {
+	   	  obj.put("header", "login");
+	      obj.put("username", user);
+	      obj.put("password", pass);
+	      
+	      try {
 				Sdos.writeUTF(obj.toJSONString());
 				id=Sdis.readUTF();
 				if (!(id.equals("0"))) {
 					System.out.println("Login Successful, ID Retrived= "+id);
 					return id;
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			} catch (Exception e) {e.printStackTrace();}
+	      
 		      System.out.println("login failed,ID Retrived= "+id );
-			return "0";
-			  
+			return "0";  
 	   }
+	   
 	   
 	   public static void BCMsg (String msg) {
 
@@ -82,66 +87,60 @@ public class apiFunctions {
 		      Sdos.writeUTF(obj.toJSONString());
 		      System.out.println(Sdis.readUTF());
 			} 
-		   catch (Exception e) {e.printStackTrace();}
-			  
+		   catch (Exception e) {e.printStackTrace();}		  
 	}
 	   
+	   //return all registered users in server
 	   public static ArrayList<User> getAllUsers (){
 		
 		   ArrayList<User> arrayList= new ArrayList<>();
+		   
 		   try {
-		   JSONObject obj = new JSONObject();
-	   		
-		   	  obj.put("header", "getallusers");
-		      
-				System.out.println(obj.toJSONString());
-				Sdos.writeUTF(obj.toJSONString());
+			   JSONObject obj = new JSONObject();
+		   	   obj.put("header", "getallusers");
+		   	   Sdos.writeUTF(obj.toJSONString());
 		   
-				Gson gson = new Gson();
-				String json=Sdis.readUTF();
+		   	   Gson gson = new Gson();
+		   	   String json=Sdis.readUTF();
 				
-				java.lang.reflect.Type type = new TypeToken<ArrayList<User>>(){}.getType();
-				arrayList = gson.fromJson(json, type);
-				
+		   	   java.lang.reflect.Type type = new TypeToken<ArrayList<User>>(){}.getType();
+		   	   arrayList = gson.fromJson(json, type);
 		   }catch (Exception e){e.printStackTrace();}
-				return arrayList;
 		   
+				return arrayList;
 	   }
 	
 	   
-	   
+	   //return all groups in server
 	   public static ArrayList<Group> getAllGroups (){
 			
 		   ArrayList<Group> arrayList= new ArrayList<>();
 		   try {
-		   JSONObject obj = new JSONObject();
-	   		
-		   	  obj.put("header", "getallgroups");
-		      
-				Sdos.writeUTF(obj.toJSONString());
+			   JSONObject obj = new JSONObject();
+		   	   obj.put("header", "getallgroups");
+		   	   Sdos.writeUTF(obj.toJSONString());
 		   
-				Gson gson = new Gson();
-				String json=Sdis.readUTF();
+		   	   Gson gson = new Gson();
+		   	   String json=Sdis.readUTF();
 				
-				java.lang.reflect.Type type = new TypeToken<ArrayList<Group>>(){}.getType();
-				arrayList = gson.fromJson(json, type);
-				
+		   	   java.lang.reflect.Type type = new TypeToken<ArrayList<Group>>(){}.getType();
+		   	   arrayList = gson.fromJson(json, type);
 		   }catch (Exception e){e.printStackTrace();}
-				return arrayList;
 		   
+				return arrayList;
 	   }
 	   
-	   
+	   //takes user id and return list of groups that contain that user
 	   public static ArrayList<Group> getMyGroups (String userID){
 			
 		   ArrayList<Group> arrayList= new ArrayList<>();
 		   try {
-		   JSONObject obj = new JSONObject();
-	   		
-		   	  obj.put("header", "getmygroups");
-		      
+
+			    JSONObject obj = new JSONObject();
+		   	  	obj.put("header", "getmygroups"); 
+		   	  	obj.put("id", userID);
 				Sdos.writeUTF(obj.toJSONString());
-		   
+				
 				Gson gson = new Gson();
 				String json=Sdis.readUTF();
 				
