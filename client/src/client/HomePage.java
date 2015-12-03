@@ -1,6 +1,8 @@
 package client;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+<<<<<<< HEAD
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,8 +11,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+=======
+import java.util.ArrayList;
+>>>>>>> 4680d29c20443b4bb3e95750c3bbed67311f21a2
 
 import javax.swing.JFrame;
+import javax.swing.JTextArea;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -23,51 +29,52 @@ import org.json.simple.JSONValue;
 
 public class HomePage {
 	  private JFrame mainFrame;
+
 	  ArrayList<User> users;
 	  ArrayList<Group> groups;
 	  ArrayList<groupRecords> records;
 	  HashMap<Integer,peerTopeer> PeerChatWindows;
 	  User ThisUser;
 	  
-	HomePage(){
+	HomePage(ArrayList<User> users, ArrayList<Group> groups, ArrayList<Group> mygroups){
 		
 		receiver myReceiver = new receiver();
 	      myReceiver.start();
 	      
 		
 		 
-		users=new ArrayList<User>();
+		//users=new ArrayList<User>();
 		PeerChatWindows=new   HashMap<Integer,peerTopeer>();
 		
 		
 
-		 ThisUser=new User(1,"Anwar",1);
-		 ThisUser.setIP("192.168.1.19");
-		User Som3a=new User(2,"Sherouk ",1);
-		Som3a.setIP("192.168.1.21");
+		 ThisUser=new User(1,"Anwar","1234",1,"192.168.1.19");
+		
+
+		User Som3a=new User(2,"Sherouk ","1",1,"192.168.1.21");
+	
 		 
 		
 		users.add(ThisUser);
 		users.add(Som3a);
-		users.add(new User(3,"Hussien",1));
-		users.add(new User(4,"Ashraf",1));
+	//	users.add(new User(3,"Hussien",1));
+		//users.add(new User(4,"Ashraf",1));
 		
 		
 		
 		
-		groups=new ArrayList<Group>();
+		/*groups=new ArrayList<Group>();
 		groups.add(new Group(1,"ASU"));
 		groups.add(new Group(2,"BUE"));
 		groups.add(new Group(3,"AUC"));
-		groups.add(new Group(4,"GUC"));
-	     prepareGUI();     
+		groups.add(new Group(4,"GUC"));*/
+		
+	     prepareGUI(users,groups,mygroups);     
 	}
 	
-	 private void prepareGUI(){
-	      mainFrame = new JFrame("Home Page");
-	      mainFrame.setLayout(new GridLayout(1,2));
-	      mainFrame.setSize(600,400);
-	      
+	 private void prepareGUI(ArrayList<User> users, ArrayList<Group> groups, ArrayList<Group> mygroups){
+
+	
 	      JPanel Contacts=new JPanel();
 	      Contacts.setLayout(new GridLayout(0,1));
 	      for(int i=0;i<users.size();i++){
@@ -99,6 +106,7 @@ public class HomePage {
 	      mainFrame.add(Groups);
 	      
 	      mainFrame.setVisible(true);  
+
 	 }
 	 public User GetUserByID(int id){
 		 for(int i=0;i<users.size();i++){

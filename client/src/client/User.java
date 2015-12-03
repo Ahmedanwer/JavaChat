@@ -10,7 +10,7 @@ class User {
     private String password;
     private int status;
     private String IP;
-    public User(){}
+
     public User(int id, String username, String password, int status, String iP) {
 		super();
 		this.id = id;
@@ -19,14 +19,11 @@ class User {
 		this.status = status;
 		IP = iP;
 	}
-    public User(int id, String username, int status) {
-  		super();
-  		this.id = id;
-  		this.username = username;	
-  		this.status = status;
-  	
-  	}
-	public int getId() {
+  
+	
+
+ 
+    public int getId() {
         return id;
     }
     public void setId(int id) {

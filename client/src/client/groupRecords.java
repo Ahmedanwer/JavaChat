@@ -6,6 +6,8 @@ class groupRecords {
 	class groupRecord{
 		 private int groupID;
 	     private  int userID;
+
+	
 		public groupRecord(int groupID,int userID){
 			this.groupID=groupID;
 			this.userID=userID;
@@ -21,6 +23,9 @@ class groupRecords {
 		{
 			userID=ID;
 		}
+
+	 
+
 		public void setGroupID(int ID)
 		{
 			groupID=ID;
