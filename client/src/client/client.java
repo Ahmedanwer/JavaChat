@@ -12,10 +12,17 @@ public class client {
 
         	//new peerTopeer();
         	new HomePage();
-        	apiFunctions api = new apiFunctions("ahmed", "2222", "192.168.1.3");
+        	apiFunctions api = new apiFunctions("ahmed", "2222", "192.168.1.95");
+        	String userid=apiFunctions.login("ahmed", "2222");
+        	System.out.println(apiFunctions.getOtherClientIP(userid));
+        	
+           	/*	//testing 
         	apiFunctions.BCMsg("test bcm");
         	
-        	/*	//testing 
+        	System.out.println(apiFunctions.getMyIP(userid));
+        	
+        	apiFunctions.BCMsgToGroup("testing bcming group", "100", "1");
+     
         	ArrayList<Group> groups= apiFunctions.getMyGroups("101");
         	System.out.println("Size of group retreived "+groups.size());
         	

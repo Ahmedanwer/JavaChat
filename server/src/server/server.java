@@ -59,7 +59,7 @@ public class server {
     	       users = parser.parseXml(new FileInputStream(xmlFile));
     	       groups = parser.parseGroupsXml(new FileInputStream(xmlGroupsFile));
     	       records = parser.parseRecordsXml(new FileInputStream(xmlGroupRecordsFile));
-    	       
+    	       activeLoggedInClients=  new HashMap();
     	     /* for(int i=0; i<users.size(); i++)
     	       {  
     	           
