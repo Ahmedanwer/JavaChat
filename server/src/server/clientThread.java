@@ -57,7 +57,7 @@ public class clientThread extends Thread {
             	String userName, password;
             	userName = obj.get("username").toString();
             	password = obj.get("password").toString();
-            	System.out.println("User NAme Received: "+userName+" & Password: "+password);
+            	//System.out.println("User NAme Received: "+userName+" & Password: "+password);
             	String id="0";
             	for (int j=0;j<server.users.size();j++)
             	{

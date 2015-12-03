@@ -94,6 +94,8 @@ public class apiFunctions {
 	}
 	   
 	   public static ArrayList<User> getAllUsers (){
+
+			
 		
 		   ArrayList<User> arrayList= new ArrayList<>();
 		   try {
@@ -101,13 +103,13 @@ public class apiFunctions {
 	   		
 		   	  obj.put("header", "getallusers");
 		      
-				System.out.println(obj.toJSONString());
 				Sdos.writeUTF(obj.toJSONString());
 		   
 				Gson gson = new Gson();
 				String json=Sdis.readUTF();
-				java.lang.reflect.Type type = new TypeToken<ArrayList<String>>(){}.getType();
+				java.lang.reflect.Type type = new TypeToken<ArrayList<User>>(){}.getType();
 				arrayList = gson.fromJson(json, type);
+				
 		   }catch (Exception e){e.printStackTrace();}
 				return arrayList;
 		   
@@ -123,12 +125,11 @@ public class apiFunctions {
 	   		
 		   	  obj.put("header", "getallgroups");
 		      
-				System.out.println(obj.toJSONString());
 				Sdos.writeUTF(obj.toJSONString());
 		   
 				Gson gson = new Gson();
 				String json=Sdis.readUTF();
-				java.lang.reflect.Type type = new TypeToken<ArrayList<String>>(){}.getType();
+				java.lang.reflect.Type type = new TypeToken<ArrayList<Group>>(){}.getType();
 				arrayList = gson.fromJson(json, type);
 		   }catch (Exception e){e.printStackTrace();}
 				return arrayList;
@@ -142,7 +143,7 @@ public class apiFunctions {
 		   try {
 		   JSONObject obj = new JSONObject();
 	   		
-		   	  obj.put("header", "getusergroups");
+		   	  obj.put("header", "getmygroups");
 		      
 				//System.out.println(obj.toJSONString());
 				Sdos.writeUTF(obj.toJSONString());

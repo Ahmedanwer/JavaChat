@@ -57,23 +57,26 @@ class loginPage {
               myPanel.add(loginButton);
               
 		      
+		      
+		      
+		      mainFrame.add(myPanel);
+		      mainFrame.setVisible(true);  
 		      loginButton.addActionListener(new ActionListener() {
-		    	
+			    	
 		            public void actionPerformed(ActionEvent e)
 		            {
 		            	
 		            	SendUserData(username.getText(),password.getText(),ipAddress.getText());
 		            	perpareUsersData( );
 		            	prepareGroupsData();
-		            	GetMyGroups(UserID);
+		            	//GetMyGroups(UserID);
+		            	mainFrame.setVisible(false);
+		            	new HomePage(users,allGroups,myGroups);
 		            	
-		            	//username.setText("");
+		            
 		            	
 		            }
-		        });   
-		      
-		      mainFrame.add(myPanel);
-		      mainFrame.setVisible(true);  
+		        });  
 		      
 	   }
 	   
@@ -86,17 +89,9 @@ class loginPage {
 		          //1.Create Client Socket and connect to the server
 		         
 		          apiFunctions login = new apiFunctions(username,password,ip);
-		          UserID= apiFunctions.login(username, password);
+		          UserID= apiFunctions.id;
 		    
-		          //dos.writeUTF(Message);
 		          
-		         
-		         // System.out.print(username+ " "+ password);
-
-		          //4.Close/release resources
-		          
-		         // dos.close();
-		         // otherClient.close();
 		        
 
 		      } catch (Exception e) {
