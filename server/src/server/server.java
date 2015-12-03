@@ -4,6 +4,7 @@ import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.File;
@@ -39,6 +40,7 @@ public class server {
 	 public static ArrayList<Group> groups;
 	 public static ArrayList<groupRecords.groupRecord> records;
 	 public static	ArrayList<Socket> activeClients;
+	 public static  HashMap<String, Socket> activeLoggedInClients;
 	 
     public server() throws FileNotFoundException
     {

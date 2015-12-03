@@ -81,6 +81,7 @@ public class clientThread extends Thread {
             			id= String.valueOf(server.users.get(j).getId());
             			server.users.get(j).setStatus(1);
             			server.users.get(j).setIP(c.getLocalAddress().toString().substring(1));
+            			server.activeLoggedInClients.put(id, c);
             			System.out.println( "ip of connected client is "+c.getLocalAddress().toString().substring(1));
             			break;
             		}

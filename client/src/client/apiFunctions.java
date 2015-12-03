@@ -90,6 +90,24 @@ public class apiFunctions {
 		   catch (Exception e) {e.printStackTrace();}		  
 	}
 	   
+	   // BC to active members only of certian group
+	   public static void BCMsgToGroup (String msg, String SenderIP, String GroupIP) {
+
+		   JSONObject obj = new JSONObject();
+		   
+		   try {	
+		   	  obj.put("header", "BCM");
+		      obj.put("msg", msg);
+		      obj.put("SenderIP", InetAddress.getLocalHost().toString());
+		      System.out.println(obj.toJSONString());
+		      Sdos.writeUTF(obj.toJSONString());
+		      System.out.println(Sdis.readUTF());
+			} 
+		   catch (Exception e) {e.printStackTrace();}		  
+	}
+	   
+	   
+	   
 	   //return all registered users in server
 	   public static ArrayList<User> getAllUsers (){
 		
