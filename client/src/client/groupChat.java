@@ -92,8 +92,9 @@ public class groupChat {
 		            	// System.out.println(c.writingArea.getText());
 		            	
 		            	
-		            	apiFunctions bsmFunction = new apiFunctions();
-		  		        bsmFunction.BCMsg(writingArea.getText());
+		            	
+		            	//apiFunctions.connect(ip);
+		  		        apiFunctions.BCMsg(writingArea.getText());
 		                writingArea.setText("");
 		            	
 		            }

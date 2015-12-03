@@ -15,6 +15,10 @@ public class apiFunctions {
 	static DataOutputStream Sdos;
 	static DataInputStream Sdis;
 	static String id;
+	
+	
+	
+   
 
 
 	   public static String Login(String user, String pass){
