@@ -4,6 +4,7 @@ import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.File;
@@ -39,6 +40,7 @@ public class server {
 	 public static ArrayList<Group> groups;
 	 public static ArrayList<groupRecords.groupRecord> records;
 	 public static	ArrayList<Socket> activeClients;
+	 public static  HashMap<String, Socket> activeLoggedInClients;
 	 
     public server() throws FileNotFoundException
     {
@@ -57,7 +59,7 @@ public class server {
     	       users = parser.parseXml(new FileInputStream(xmlFile));
     	       groups = parser.parseGroupsXml(new FileInputStream(xmlGroupsFile));
     	       records = parser.parseRecordsXml(new FileInputStream(xmlGroupRecordsFile));
-    	       
+    	       activeLoggedInClients=  new HashMap();
     	     /* for(int i=0; i<users.size(); i++)
     	       {  
     	           
@@ -79,6 +81,7 @@ public class server {
     	        
     	    
     }
+    
     //destructor
     protected void finalize() throws FileNotFoundException
     {
@@ -246,10 +249,12 @@ public class server {
    
     	
     }
-   
-    
-
-	
+  
+    public static void setAllUsersToOffline(){
+    	for (User temp: users){
+    		temp.setStatus(0);
+    	}
+    }
 
     public static void main(String[] args) throws IOException { 
     	
@@ -258,41 +263,17 @@ public class server {
     	groups.get(0).setGroupName("Minions");
     	records.get(0).setGroupID(65788757);
     	
-    	
-    	
     	s.finalize();
     	
-    	
-
-	    
-        // TODO code application logic here
         try {
-        /*	//initiate list of groups
-        	ArrayList<group> groups= new ArrayList<group>();
-        	groups.add(new group("Test Group 1"));
-        	groups.add(new group("Test Group 2"));
-        	
-        	//initiate list of users
-        	ArrayList<user> users=new ArrayList<user>();
-        	groups.add(new user("Aly","Pass",true,"192.168.1.1"));
-        	groups.add(new user ("AlyElTany","AnwarPass",false,"192.168.1.2"));
-        	groups.add(new user("AlyElTalaet","Shro2Pass",false,"192.168.1.3"));
-        	
-        	//intiate list of admins
-        	ArrayList<admin> admins=new ArrayList<admin>();
-        	admins.add(new admin("hamda","adminPASS",false,"192.168.1.5"));
-       */ 	
         	//list of logged in clients
         	activeClients=new ArrayList<Socket>();
-        	
-        	
-        	
+        
             //1.Create Server Socket
-
             ServerSocket sv = new ServerSocket(1555);
 
-            //ServerSocket sv = new ServerSocket(1243);
-
+            setAllUsersToOffline();
+            
             //Server is always On
             while (true) {
             //2.Listen for Clients
