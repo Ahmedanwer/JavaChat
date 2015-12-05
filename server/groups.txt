@@ -1,12 +1,1 @@
-<groups>
-    <group id="1">
-        <groupName>team</groupName>
-        
-        
-    </group>
-    <group id="2">
-        <groupName>project</groupName>
-        
-    </group>
-    
-</groups>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><groups><group id="1"><groupName>Minions</groupName></group><group id="2"><groupName>project</groupName></group></groups>

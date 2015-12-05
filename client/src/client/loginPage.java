@@ -69,9 +69,9 @@ class loginPage {
 		            	SendUserData(username.getText(),password.getText(),ipAddress.getText());
 		            	perpareUsersData( );
 		            	prepareGroupsData();
-		            	//GetMyGroups(UserID);
+		            	GetMyGroups(UserID);
 		            	mainFrame.setVisible(false);
-		            	new HomePage(users,allGroups,myGroups);
+		            	new HomePage(users,allGroups,myGroups,UserID);
 		            	
 		            
 		            	
@@ -117,6 +117,7 @@ class loginPage {
 	   public void GetMyGroups(String userID)
 	   {
 		   myGroups= apiFunctions.getMyGroups(userID);
+		   
 	   }
 		
 

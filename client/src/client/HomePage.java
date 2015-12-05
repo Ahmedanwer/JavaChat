@@ -29,26 +29,43 @@ public class HomePage {
 	  ArrayList<groupRecords> records;
 	  HashMap<Integer,peerTopeer> PeerChatWindows;
 	  User ThisUser;
+
+	  User myData = new User(0,"","",0,"");
 	  
 	
 
 
-	  public HomePage(ArrayList<User> users, ArrayList<Group> groups, ArrayList<Group> myGroups) {
+	  public HomePage(ArrayList<User> users, ArrayList<Group> groups, ArrayList<Group> myGroups, String UserID) {
 			super();
 			this.users = users;
 			this.groups = groups;
 			this.myGroups = myGroups;
+
+			for (User temp : users){
+				if(temp.getId()== Integer.parseInt(UserID))
+				{   myData.setId(Integer.parseInt(UserID));
+					myData.setUsername(temp.getUsername());
+					myData.setPassword(temp.getPassword());
+					myData.setIP(temp.getIP());
+					myData.setStatus(temp.getStatus());
+					break;
+				}
+
+			}
+			
+			//System.out.println(myData.getUsername());
+
 		
 		receiver myReceiver = new receiver();
 	      myReceiver.start();
 	      
 		
 		 
-		users=new ArrayList<User>();
+		//users=new ArrayList<User>();
 		PeerChatWindows=new   HashMap<Integer,peerTopeer>();
 		
 		
-
+/*
 		 ThisUser=new User(1,"Anwar",1);
 		 ThisUser.setIP("192.168.1.19");
 		User Som3a=new User(2,"Sherouk ",1);
@@ -57,21 +74,16 @@ public class HomePage {
 		
 		users.add(ThisUser);
 		users.add(Som3a);
-		users.add(new User(3,"Hussien",1));
-		users.add(new User(4,"Ashraf",1));
+		*/
 		
 		
 		
 		
-		groups=new ArrayList<Group>();
-		groups.add(new Group(1,"ASU"));
-		groups.add(new Group(2,"BUE"));
-		groups.add(new Group(3,"AUC"));
-		groups.add(new Group(4,"GUC"));
-	     prepareGUI();     
+		
+	     prepareGUI(users,groups,myGroups);     
 	}
 	
-	 private void prepareGUI(){
+	 private void prepareGUI(ArrayList<User> users, ArrayList<Group> groups, ArrayList<Group> myGroups){
 	      mainFrame = new JFrame("Home Page");
 	      mainFrame.setLayout(new GridLayout(1,2));
 	      mainFrame.setSize(600,400);
@@ -98,10 +110,70 @@ public class HomePage {
 	      
 	      JPanel Groups=new JPanel();
 	      Groups.setLayout(new GridLayout(0,1));
+	      JButton leaveGroup = new JButton("Leave Group");
+
+		  JButton JoinGroup = new JButton("Join Group");
 	      for(int i=0;i<groups.size();i++){
+	    	  JPanel groupPanel=new JPanel();
+
+	    	  final Group thisGroup=groups.get(i);
+
 	    	  JButton group=new JButton(groups.get(i).getGroupName());
-	    	  Groups.add(group);
+	    	  groupPanel.add(group);
+	    	  for (Group g : myGroups){
+					if(g.getId()==groups.get(i).getId())
+					{  
+						 groupPanel.add(leaveGroup);
+						}
+					 else{
+							 groupPanel.add(JoinGroup);
+							 group.setEnabled(false);
+			    	  }
+					}
+	    	 
+	    		
+	    	  Groups.add(groupPanel);
+	    	 
 	      }
+	      
+	      JoinGroup.addActionListener(new ActionListener() {
+		    	
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	
+	            	//apiFunctions.enrollInAGroup(groupid, myData.getId());
+	            	
+	            }
+	        }); 
+	      
+	   /*   JPanel MyGroups=new JPanel();
+	      MyGroups.setLayout(new GridLayout(0,1));
+	      for(int k=0;k<myGroups.size();k++){
+	    	  JPanel myGroup= new JPanel();
+	    	  JButton mygroup=new JButton(myGroups.get(k).getGroupName());
+	    	  myGroup.add(mygroup);
+	    	  
+	    	  for (Group g : myGroups){
+					if(g.getId()==groups.get(k).getId())
+					{
+						 myGroup.add(leaveGroup);
+						}
+					}
+	    	  MyGroups.add(mygroup);
+	      }
+	      */
+	      
+	      JButton createGroup = new JButton("Create Group");
+	     // MyGroups.add(createGroup);
+	      createGroup.addActionListener(new ActionListener() {
+		    	
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	
+	            	
+	            	
+	            }
+	        });     
 	      
 	      mainFrame.add(Contacts);
 	      mainFrame.add(Groups);
