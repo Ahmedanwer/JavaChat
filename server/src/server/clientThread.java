@@ -41,7 +41,7 @@ public class clientThread extends Thread {
 	public ArrayList<String> getAllUsersIDInAGroup (String groupid){
 		ArrayList<String> groupUsers=new ArrayList<String>();
 		for (groupRecord temp : server.records){
-    		if (temp.getGroupID()==Integer.parseInt(groupid)) groupUsers.add(String.valueOf(temp.getGroupID()));
+    		if (temp.getGroupID()==Integer.parseInt(groupid)) groupUsers.add(String.valueOf(temp.getUserID()));
     	}
 		return groupUsers;
 	}
@@ -164,7 +164,7 @@ public class clientThread extends Thread {
 	            String group=obj.get("groupID").toString();
 	            String userID =obj.get("SenderID").toString();
 	            String BCMsg=obj.get("msg").toString();
-	            for (String key : getAllUsersIDInAGroup("group")){
+	            for (String key : getAllUsersIDInAGroup(group)){
 	            	Socket  value =server.activeLoggedInClients.get(key);
 	            	if (value != null){
 	            		DataOutputStream Cdos = new DataOutputStream(value.getOutputStream());
