@@ -188,7 +188,7 @@ public class clientThread extends Thread {
             }
             
             
-      /*      
+         
             else if (obj.get("header").toString().equalsIgnoreCase("enroll")){
                 
             	String group=obj.get("groupID").toString();
@@ -214,8 +214,11 @@ public class clientThread extends Thread {
             	}
             	
             	if (userExist && groupExist && !useralreadyEnrolled){
-            		groupRecord x=new groupRecord(Integer.parseInt(group) , Integer.parseInt(user));
-            		server.records.add(x);
+            		groupRecords temp = new groupRecords();
+            		groupRecord temp2;
+            		 temp2 = temp.new groupRecord(Integer.parseInt(group) , Integer.parseInt(user));
+            	
+            		server.records.add(temp2);
             		code="1";msg="Enrollment Successful";
             	}
             	
@@ -233,7 +236,7 @@ public class clientThread extends Thread {
      			   
      		    dos.writeUTF(responseObj.toJSONString());
             }
-           */
+          
             
             else if (obj.get("header").toString().equalsIgnoreCase("leave")){
                 
