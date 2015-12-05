@@ -10,7 +10,7 @@ public class client {
         {
 
         	//new peerTopeer();
-        	new HomePage();
+        	new loginPage();
         }
 
     }
