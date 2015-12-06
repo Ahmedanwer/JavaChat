@@ -1,5 +1,7 @@
 package client;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class client {
 
@@ -10,7 +12,8 @@ public class client {
         {
 
         	//new peerTopeer();
-        	new HomePage();
+        	new loginPage();
+        
         }
 
     }
