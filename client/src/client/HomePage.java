@@ -30,11 +30,7 @@ public class HomePage {
 	  HashMap<Integer,peerTopeer> PeerChatWindows;
 	  User ThisUser;
 	  String serverIP ;
-	  User myData = new User(0,"","",0,"");
-	  
 
-	  
-	
 
 
 
@@ -53,7 +49,9 @@ public class HomePage {
 		
 		receiver myReceiver = new receiver();
 	      myReceiver.start();
-	      
+	   /*   refresh Refresher= new refresh();
+	      Refresher.start();
+	      */
 		
 		 
 
@@ -62,6 +60,9 @@ public class HomePage {
 	     prepareGUI(users,groups,myGroups);     
 
 	}
+	  
+
+
 	
 	 private void prepareGUI(ArrayList<User> users, ArrayList<Group> groups, ArrayList<Group> myGroups){
 	      mainFrame = new JFrame("Home Page");
@@ -73,14 +74,14 @@ public class HomePage {
 	      for(int i=0;i<users.size();i++){
 	    	  JButton contact=new JButton(users.get(i).getUsername());
 	    	  
-	    	  final User thisUser=users.get(i);
+	    	  final User SendTo=users.get(i);
 	    	  contact.addActionListener(new ActionListener() {
 			    	
 		            public void actionPerformed(ActionEvent e)
 		            {
 		            	
-		            	peerTopeer newChat =new peerTopeer(thisUser,ThisUser);
-		            	PeerChatWindows.put(thisUser.getId(), newChat);
+		            	peerTopeer newChat =new peerTopeer(SendTo,ThisUser);
+		            	PeerChatWindows.put(SendTo.getId(), newChat);
 		            	
 		            }
 		        });     
@@ -156,6 +157,28 @@ public class HomePage {
 		 return null;
 	 }
 	 
+
+	 private class refresh extends Thread{
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			super.run();
+			
+			users= apiFunctions.getAllUsers();
+			try {
+				sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		}
+		 
+	 }
+	 
 	 
 	 
 	 private class receiver extends Thread
@@ -216,5 +239,8 @@ public class HomePage {
 				
 			}  
 	  }
+	 
+
+
 	  
 }

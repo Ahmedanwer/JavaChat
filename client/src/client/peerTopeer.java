@@ -32,10 +32,6 @@ public class peerTopeer {
 	   User thisUser;
 	   peerTopeer ThisPeer;
 	 
-	   public peerTopeer(){
-		      prepareGUI();     
-		      ThisPeer=this;
-		   }
 	   
 	   public peerTopeer(User Reciver,User Sender){
 		   ReciverUser=Reciver;

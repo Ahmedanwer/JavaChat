@@ -34,10 +34,10 @@ public class groupChat {
 	   
 	   
 	   public groupChat()
-	   
 	       {
-		      prepareGUI();     
-	       }
+
+		   }
+
 	   
 	   public groupChat(Group group,User user,String serverIP)
 	   
@@ -117,6 +117,7 @@ public class groupChat {
 		            public void actionPerformed(ActionEvent e)
 		            {
 		            	
+
 		  		        chatArea.append(apiFunctions.BCMsgToGroup(writingArea.getText(), userID+"", groupID+"")+"\r\n");
 		  		        
 		                writingArea.setText("");
