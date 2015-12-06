@@ -28,6 +28,7 @@ public class HomePage {
 	  ArrayList<Group> myGroups;
 	  ArrayList<groupRecords> records;
 	  HashMap<Integer,peerTopeer> PeerChatWindows;
+	  HashMap<Integer,groupChat> groupChatWinsows;
 	  JPanel Contacts;
 	  JPanel Groups;
 	  User ThisUser;
@@ -54,10 +55,13 @@ public class HomePage {
 	      refresh Refresher= new refresh();
 	      Refresher.start();
 	   
-		
+	      Groupreceiver myGroupreceiver = new Groupreceiver();
+	      myGroupreceiver.start();
 		 
 
 		PeerChatWindows=new   HashMap<Integer,peerTopeer>();
+
+		groupChatWinsows=new   HashMap<Integer,groupChat>();
 		
 	     prepareGUI(users,groups,myGroups);     
 
@@ -121,8 +125,9 @@ public void updateContacts(){
 	    			  {
 	    		  public void actionPerformed(ActionEvent e)
 	    		  {
-	    			  groupChat newChat = new groupChat(thisGroup2,ThisUser,serverIP);
 	    			  
+	    			  groupChat newChat = new groupChat(thisGroup2,ThisUser,serverIP);
+	    			  groupChatWinsows.put(thisGroup2.getId(), newChat);
 	    		  }
 	    			  });
 	    	  groupPanel.add(group);
@@ -210,7 +215,45 @@ public void updateContacts(){
 		}
 		 
 	 }
+
 	 
+	 private class Groupreceiver extends Thread{
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				super.run();
+				
+				try
+				  {
+					while(true){
+					
+					String incomingMsg=apiFunctions.Sdis.readUTF();
+					 JSONObject obj=(JSONObject) JSONValue.parse(incomingMsg);  
+	                   //HERE i want to know who is the sender 
+	                 
+	                   int GroupID=Integer.valueOf(obj.get("GroupID").toString());
+	                 String  Messge=obj.get("messege").toString();
+	                   
+	                   if(groupChatWinsows.containsKey(GroupID)){
+	                	  groupChatWinsows.get(GroupID).setTextofChat(Messge);
+	                   }else{
+	                	
+	                // TODO open newGroupHere
+	                   }
+					
+					
+					
+					//chatArea.append(+"\r\n");
+					}
+				  }
+				 catch (Exception e) 
+				
+				   {
+			           System.out.println(e.getMessage());
+			       }
+			
+			}
+		}
 	 
 	 
 	 private class receiver extends Thread

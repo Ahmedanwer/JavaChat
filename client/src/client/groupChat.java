@@ -49,33 +49,19 @@ public class groupChat {
 		      this.serverIP =serverIP;
 		      prepareGUI(); 
 		     
-		      receiver myreceiver = new receiver();
-		      myreceiver.start();
+		     
 	          }
 	   
 		      
-	private class receiver extends Thread{
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			super.run();
-			
-			try
-			  {
-				while(true){
-				//apiFunctions.connect(serverIP);
-				chatArea.append(apiFunctions.Sdis.readUTF()+"\r\n");
-				}
-			  }
-			 catch (Exception e) 
-			
-			   {
-		           System.out.println(e.getMessage());
-		       }
-		
-		}
-	}
 	
+	   public void setTextofChat(String Messege){
+			 if(this.chatArea.getText()==""){
+				 this.chatArea.append(Messege);
+			 }else{
+				 this.chatArea.append("\n"+Messege);
+			 }
+			
+		 }
 	
 	
 	   
