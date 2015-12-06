@@ -177,6 +177,20 @@ public void updateContacts(){
 	 }
 	 
 
+	 private void RefreshGroups(){
+		 
+			Groups.removeAll();
+			Groups.revalidate();
+			
+			myGroups= apiFunctions.getMyGroups(ThisUser.getId()+"");
+			
+			
+			 mainFrame.add(Contacts);
+		      mainFrame.add(Groups);
+		      mainFrame.revalidate();
+				mainFrame.repaint();
+		 
+	 }
 	 private class refresh extends Thread{
 
 		@Override
@@ -232,7 +246,7 @@ public void updateContacts(){
 	                   //HERE i want to know who is the sender 
 	                 
 	                   int GroupID=Integer.valueOf(obj.get("GroupID").toString());
-	                 String  Messge=obj.get("messege").toString();
+	                 String  Messge=obj.get("msg").toString();
 	                   
 	                   if(groupChatWinsows.containsKey(GroupID)){
 	                	  groupChatWinsows.get(GroupID).setTextofChat(Messge);
