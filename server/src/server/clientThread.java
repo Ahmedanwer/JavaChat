@@ -103,7 +103,7 @@ public class clientThread extends Thread {
             	String userName, password,ipAdress;
             	userName = obj.get("username").toString();
             	password = obj.get("password").toString();
-            	
+            	ipAdress=obj.get("ipAdress").toString();
             	//System.out.println("User NAme Received: "+userName+" & Password: "+password);
             	String id="0";
             	for (int j=0;j<server.users.size();j++)
@@ -113,8 +113,8 @@ public class clientThread extends Thread {
             			System.out.println("id sent to client is (inner for loop"+id);
                     	
             			server.users.get(j).setStatus(1);
-            			server.users.get(j).setIP(c.getLocalAddress().toString().substring(1));
-            			System.out.println( "ip of connected client is "+c.getLocalAddress().toString().substring(1));
+            			server.users.get(j).setIP(c.getLocalSocketAddress().toString().substring(1));
+            			System.out.println( "ip of connected client is "+c.getLocalSocketAddress().toString().substring(1));
             			server.activeLoggedInClients.put(id, c);
             			break;
             		}
