@@ -63,8 +63,8 @@ public class groupChat {
 			try
 			  {
 				while(true){
+				//apiFunctions.connect(serverIP);
 				chatArea.append(apiFunctions.Sdis.readUTF()+"\r\n");
-				sleep(500);
 				}
 			  }
 			 catch (Exception e) 
@@ -117,7 +117,7 @@ public class groupChat {
 		            public void actionPerformed(ActionEvent e)
 		            {
 		            	
-		            	apiFunctions.connect(serverIP);
+		            	//apiFunctions.connect(serverIP);
 		            	apiFunctions.BCMsgToGroup(writingArea.getText(), userID+"", groupID+"");
 		  		        
 		                writingArea.setText("");
