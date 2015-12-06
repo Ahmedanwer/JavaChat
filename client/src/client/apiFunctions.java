@@ -24,9 +24,8 @@ public class apiFunctions {
 	static DataInputStream Sdis;
 	static String id;
 	static Boolean serverConnectionEstablished;
+	static String serverIP;
 
-
-	
 	
 		//constructor that establishes a server connection and login
 		public apiFunctions(String userName, String password ,String ip ) {
@@ -35,7 +34,7 @@ public class apiFunctions {
 		this.userName = userName;
 		this.password = password;
 		try {
-			
+			serverIP=ip;
 		connect(ip);
 			login(userName, password);
 		} catch (Exception e) {e.printStackTrace();}
@@ -132,27 +131,37 @@ public class apiFunctions {
 	   //return all registered users in server
 	   public static ArrayList<User> getAllUsers (){
 
-			
-		
 		   ArrayList<User> arrayList= new ArrayList<>();
-		   
-		   try {
-
-		   JSONObject obj = new JSONObject();
-	   		
+			
+			try {
+		Socket	serverConnection2 = new Socket (serverIP, 5000); 
+		DataInputStream	Sdis2 =new DataInputStream(serverConnection2.getInputStream());
+		DataOutputStream	Sdos2= new DataOutputStream(serverConnection2.getOutputStream());
+			
+			  JSONObject obj = new JSONObject();
+		   		
 		   	  obj.put("header", "getallusers");
 		      
-				Sdos.writeUTF(obj.toJSONString());
+		   	Sdos2.writeUTF(obj.toJSONString());
 		   
 				Gson gson = new Gson();
-				String json=Sdis.readUTF();
+				String json=Sdis2.readUTF();
 				java.lang.reflect.Type type = new TypeToken<ArrayList<User>>(){}.getType();
 				arrayList = gson.fromJson(json, type);
 				
-
-		   }catch (Exception e){e.printStackTrace();}
-		   
-				return arrayList;
+			
+			
+			} catch (Exception e) {e.printStackTrace();
+			
+			}
+	
+			
+		
+			
+			return arrayList;
+		 
+		 
+			
 	   }
 	
 	   
