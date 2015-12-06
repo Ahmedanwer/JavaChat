@@ -70,12 +70,9 @@ class loginPage {
 		            {
 		            	
 		            	SendUserData(username.getText(),password.getText(),ipAddress.getText());
-		            	if (apiFunctions.serverConnectionEstablished){
-		            		JOptionPane.showMessageDialog(null, "Unable to connect to server, please check server IP", "Alert", JOptionPane.INFORMATION_MESSAGE);
-		            	    
-		            	}
 		            	
-		            	else if (UserID.equalsIgnoreCase("0")){
+		            	
+		            	if (UserID.equalsIgnoreCase("0")){
 		            		JOptionPane.showMessageDialog(null, "Login Failed, please try again later", "Alert", JOptionPane.INFORMATION_MESSAGE);
 		            	    
 		            	}
