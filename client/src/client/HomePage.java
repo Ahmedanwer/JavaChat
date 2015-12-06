@@ -165,8 +165,9 @@ public class HomePage {
 			// TODO Auto-generated method stub
 			super.run();
 			
-			users= apiFunctions.getAllUsers();
+		
 			try {
+				users= apiFunctions.getAllUsers();
 				sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
