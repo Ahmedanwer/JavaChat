@@ -130,7 +130,7 @@ public class peerTopeer {
       try {
       
           //1.Create Client Socket and connect to the server
-          Socket otherClient = new Socket(otherPairIP, 1243);
+          Socket otherClient = new Socket(otherPairIP, 1256);
           //2.if accepted create IO streams
           DataOutputStream dos = new DataOutputStream(otherClient.getOutputStream());
                          //Create a Scanner to read inputs from the user

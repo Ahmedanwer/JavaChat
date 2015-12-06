@@ -191,7 +191,7 @@ public class HomePage {
 				 try 
 					{
 				           //1.Create Server Socket
-				           ServerSocket mySocket = new ServerSocket(1243);
+				           ServerSocket mySocket = new ServerSocket(1256);
 				           //Server is always On
 				          
 				          
