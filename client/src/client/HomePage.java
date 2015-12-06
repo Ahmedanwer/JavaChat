@@ -29,31 +29,40 @@ public class HomePage {
 	  ArrayList<groupRecords> records;
 	  HashMap<Integer,peerTopeer> PeerChatWindows;
 	  User ThisUser;
-	  Group ThisGroup;
 	  String serverIP ;
+	  User myData = new User(0,"","",0,"");
+
 	  
 	
 
 
-	  public HomePage(ArrayList<User> users, ArrayList<Group> groups, ArrayList<Group> myGroups,User thisUser,Group thisGroup,String serverIP) {
+
+	  public HomePage(ArrayList<User> users, ArrayList<Group> groups, ArrayList<Group> myGroups,User thisUser,String serverIP) {
+
 			super();
 			this.users = users;
 			this.groups = groups;
 			this.myGroups = myGroups;
+
 			this.ThisUser =thisUser;
-			this.ThisGroup=thisGroup;
+	
 			this.serverIP = serverIP;
+
+
 		
 		receiver myReceiver = new receiver();
 	      myReceiver.start();
 	      
 		
 		 
-	      PeerChatWindows=new   HashMap<Integer,peerTopeer>();
-	     prepareGUI();     
+
+		PeerChatWindows=new   HashMap<Integer,peerTopeer>();
+		
+	     prepareGUI(users,groups,myGroups);     
+
 	}
 	
-	 private void prepareGUI(){
+	 private void prepareGUI(ArrayList<User> users, ArrayList<Group> groups, ArrayList<Group> myGroups){
 	      mainFrame = new JFrame("Home Page");
 	      mainFrame.setLayout(new GridLayout(1,2));
 	      mainFrame.setSize(600,400);
@@ -80,20 +89,57 @@ public class HomePage {
 	      
 	      JPanel Groups=new JPanel();
 	      Groups.setLayout(new GridLayout(0,1));
+	      JButton leaveGroup = new JButton("Leave Group");
+
+		  JButton JoinGroup = new JButton("Join Group");
 	      for(int i=0;i<groups.size();i++){
+	    	  JPanel groupPanel=new JPanel();
+
+	    	  final Group thisGroup=groups.get(i);
+
 	    	  JButton group=new JButton(groups.get(i).getGroupName());
+
 	    	  
-	    	  final Group thisGroup = groups.get(i);
+	    	  final Group thisGroup2 = groups.get(i);
 	    	  group.addActionListener(new ActionListener()
 	    			  {
 	    		  public void actionPerformed(ActionEvent e)
 	    		  {
-	    			  groupChat newChat = new groupChat(thisGroup,ThisUser,serverIP);
+	    			  groupChat newChat = new groupChat(thisGroup2,ThisUser,serverIP);
 	    			  
 	    		  }
 	    			  });
-	    	  Groups.add(group);
+	    	  groupPanel.add(group);
+	    	 
+
+	    	 
+	    	  for (Group g : myGroups){
+					if(g.getId()==groups.get(i).getId())
+					{  
+						 groupPanel.add(leaveGroup);
+						}
+					 else{
+							 groupPanel.add(JoinGroup);
+							 group.setEnabled(false);
+			    	  }
+					}
+	    	 
+	    		
+	    	  Groups.add(groupPanel);
+
 	      }
+	      
+	      JoinGroup.addActionListener(new ActionListener() {
+		    	
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	
+	            	//apiFunctions.enrollInAGroup(groupid, myData.getId());
+	            	
+	            }
+	        }); 
+	      
+	  
 	      
 	      mainFrame.add(Contacts);
 	      mainFrame.add(Groups);

@@ -2,7 +2,12 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="C:/Users/ShoroukHamed/Desktop/JavaChat Folder/gson-2.5.jar"/>
 	<classpathentry kind="lib" path="C:/Users/ShoroukHamed/Desktop/JavaChat Folder/json-simple-1.1.jar"/>
+=======
+	<classpathentry kind="lib" path="D:/Aya/Downloads/gson-2.5.jar"/>
+	<classpathentry kind="lib" path="D:/Aya/Downloads/json-simple-1.1.1.jar"/>
+>>>>>>> AyaGroup2
 	<classpathentry kind="output" path="bin"/>
 </classpath>

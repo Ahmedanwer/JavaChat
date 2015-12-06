@@ -259,9 +259,9 @@ public class server {
     public static void main(String[] args) throws IOException { 
     	
     	server s = new server();
-    	users.get(0).setUsername("Ahmed Anwar"); //changing certain elements
-    	groups.get(0).setGroupName("Minions");
-    	records.get(0).setGroupID(65788757);
+    //	users.get(0).setUsername("Ahmed Anwar"); //changing certain elements
+    	//groups.get(0).setGroupName("Minions");
+    	//records.get(0).setGroupID(65788757);
     	
     	s.finalize();
     	

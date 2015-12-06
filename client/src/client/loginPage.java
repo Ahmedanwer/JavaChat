@@ -3,7 +3,9 @@ package client;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -69,10 +71,17 @@ class loginPage {
 		            	SendUserData(username.getText(),password.getText(),ipAddress.getText());
 		            	perpareUsersData( );
 		            	prepareGroupsData();
-		            	//GetMyGroups(UserID);
+		            	GetMyGroups(UserID);
 		            	mainFrame.setVisible(false);
-		            	//new HomePage(users,allGroups,myGroups);
-		            	
+		            	User thisUser=new User(Integer.parseInt(UserID),username.getText(),1);
+		            	try {
+							thisUser.setIP(InetAddress.getLocalHost().toString());
+						} catch (UnknownHostException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+		            	new HomePage(users,allGroups,myGroups,thisUser,ipAddress.getText());
+
 		            
 		            	
 		            }
@@ -117,6 +126,7 @@ class loginPage {
 	   public void GetMyGroups(String userID)
 	   {
 		   myGroups= apiFunctions.getMyGroups(userID);
+		   
 	   }
 		
 
