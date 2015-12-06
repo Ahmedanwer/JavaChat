@@ -71,7 +71,7 @@ class loginPage {
 		            	prepareGroupsData();
 		            	GetMyGroups(UserID);
 		            	mainFrame.setVisible(false);
-		            	new HomePage(users,allGroups,myGroups,UserID);
+		            	new HomePage(users,allGroups,myGroups,UserID,ipAddress.getText());
 		            	
 		            
 		            	
