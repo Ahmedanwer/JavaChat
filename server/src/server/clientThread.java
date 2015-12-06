@@ -35,6 +35,12 @@ public class clientThread extends Thread {
 		} return null;
 	}
 	
+public User getUserByID (int x){
+		
+		for (User temp : server.users) {
+			if (temp.getId()==x) return temp;
+		} return null;
+	}
 	
 	
 	public ArrayList<String> getAllUsersIDInAGroup (String groupid){
@@ -171,7 +177,7 @@ public class clientThread extends Thread {
 	            	Socket  value =server.activeLoggedInClients.get(key);
 	            	if (value != null){
 	            		DataOutputStream Cdos = new DataOutputStream(value.getOutputStream());
-	            		Cdos.writeUTF(BCMsg);
+	            		Cdos.writeUTF(getUserByID(Integer.parseInt(userID)).getUsername()+" : "+ BCMsg);
 	            	}
 	            }
             }
