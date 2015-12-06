@@ -140,6 +140,7 @@ public void updateContacts(){
 					if(g.getId()==groups.get(i).getId())
 					{  
 						 groupPanel.add(leaveGroup);
+						 break;
 						}
 					 else{
 							 groupPanel.add(JoinGroup);
