@@ -2,6 +2,7 @@ package server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -103,7 +104,7 @@ public class clientThread extends Thread {
             	String userName, password,ipAdress;
             	userName = obj.get("username").toString();
             	password = obj.get("password").toString();
-            	ipAdress=obj.get("ipAdress").toString();
+            	
             	//System.out.println("User NAme Received: "+userName+" & Password: "+password);
             	String id="0";
             	for (int j=0;j<server.users.size();j++)
@@ -114,8 +115,10 @@ public class clientThread extends Thread {
                     	
             			server.users.get(j).setStatus(1);
             			
-            			server.users.get(j).setIP(c.getRemoteSocketAddress().toString().split(":")[0]);
-            			System.out.println(server.users.get(j).getIP());
+           
+            			
+            			server.users.get(j).setIP(c.getRemoteSocketAddress().toString().split(":")[0].substring(1));
+            			System.out.println("ip adress"+server.users.get(j).getIP());
             			server.activeLoggedInClients.put(id, c);
             			break;
             		}
