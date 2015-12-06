@@ -177,7 +177,14 @@ public User getUserByID (int x){
 	            	Socket  value =server.activeLoggedInClients.get(key);
 	            	if (value != null){
 	            		DataOutputStream Cdos = new DataOutputStream(value.getOutputStream());
-	            		Cdos.writeUTF(getUserByID(Integer.parseInt(userID)).getUsername()+" : "+ BCMsg);
+	            		
+	                 	JSONObject responseObj=new JSONObject();
+	         		    responseObj.put("GroupID", group);
+	         		    responseObj.put("msg", getUserByID(Integer.parseInt(userID)).getUsername()+" : "+ BCMsg);
+	         			   
+	         		    Cdos.writeUTF(responseObj.toJSONString());
+	         		    
+	            		
 	            	}
 	            }
             }
