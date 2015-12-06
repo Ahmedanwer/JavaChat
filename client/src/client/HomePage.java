@@ -47,7 +47,7 @@ public class HomePage {
 	
 			this.serverIP = serverIP;
 
-
+			System.out.println("this user is"+ThisUser.getUsername());
 		
 		receiver myReceiver = new receiver();
 	      myReceiver.start();
@@ -194,7 +194,7 @@ public void updateContacts(){
 			      mainFrame.add(Groups);
 			      mainFrame.revalidate();
 					mainFrame.repaint();
-			      mainFrame.setVisible(true);
+			    //  mainFrame.setVisible(true);
 				
 				System.out.println("refresh");
 				
@@ -250,7 +250,8 @@ public void updateContacts(){
 				                   }else{
 				                	
 				                	peerTopeer newChat =new peerTopeer(GetUserByID(SenderID),ThisUser);
-						            PeerChatWindows.put(SenderID, newChat);   
+				                	newChat.setTextofChat(clientMsg);
+				                	PeerChatWindows.put(SenderID, newChat);   
 				                   }
 				                   System.out.println("B says "+clientMsg);
 				                   
