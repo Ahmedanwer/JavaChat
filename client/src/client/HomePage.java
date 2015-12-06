@@ -28,6 +28,8 @@ public class HomePage {
 	  ArrayList<Group> myGroups;
 	  ArrayList<groupRecords> records;
 	  HashMap<Integer,peerTopeer> PeerChatWindows;
+	  JPanel Contacts;
+	  JPanel Groups;
 	  User ThisUser;
 	  String serverIP ;
 
@@ -49,9 +51,9 @@ public class HomePage {
 		
 		receiver myReceiver = new receiver();
 	      myReceiver.start();
-	   /*   refresh Refresher= new refresh();
+	      refresh Refresher= new refresh();
 	      Refresher.start();
-	      */
+	   
 		
 		 
 
@@ -61,7 +63,33 @@ public class HomePage {
 
 	}
 	  
-
+public void updateContacts(){
+	
+	 for(int i=0;i<users.size();i++){
+   	  JButton contact=new JButton(users.get(i).getUsername());
+   	  
+   	  final User SendTo=users.get(i);
+   	
+   	  if(SendTo.getStatus()==0){
+   		  contact.setEnabled(false);
+   	  }
+   	  System.out.println(SendTo.getUsername()+" "+SendTo.getStatus());
+   	  
+   	  contact.addActionListener(new ActionListener() {
+		    	
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            	
+	            	peerTopeer newChat =new peerTopeer(SendTo,ThisUser);
+	            	PeerChatWindows.put(SendTo.getId(), newChat);
+	            	
+	            }
+	        });     
+   	  
+   	  Contacts.add(contact);
+     }
+	
+}
 
 	
 	 private void prepareGUI(ArrayList<User> users, ArrayList<Group> groups, ArrayList<Group> myGroups){
@@ -69,27 +97,13 @@ public class HomePage {
 	      mainFrame.setLayout(new GridLayout(1,2));
 	      mainFrame.setSize(600,400);
 	      
-	      JPanel Contacts=new JPanel();
+	      Contacts=new JPanel();
 	      Contacts.setLayout(new GridLayout(0,1));
-	      for(int i=0;i<users.size();i++){
-	    	  JButton contact=new JButton(users.get(i).getUsername());
-	    	  
-	    	  final User SendTo=users.get(i);
-	    	  contact.addActionListener(new ActionListener() {
-			    	
-		            public void actionPerformed(ActionEvent e)
-		            {
-		            	
-		            	peerTopeer newChat =new peerTopeer(SendTo,ThisUser);
-		            	PeerChatWindows.put(SendTo.getId(), newChat);
-		            	
-		            }
-		        });     
-	    	  
-	    	  Contacts.add(contact);
-	      }
+	     
+	      updateContacts();
 	      
-	      JPanel Groups=new JPanel();
+	      
+	      Groups=new JPanel();
 	      Groups.setLayout(new GridLayout(0,1));
 	      JButton leaveGroup = new JButton("Leave Group");
 
@@ -166,9 +180,26 @@ public class HomePage {
 			super.run();
 			
 		
+			
 			try {
+			while(true){	
+				sleep(5000);
+				Contacts.removeAll();
+				Contacts.revalidate();
+				
 				users= apiFunctions.getAllUsers();
-				sleep(500);
+				updateContacts();
+				
+				 mainFrame.add(Contacts);
+			      mainFrame.add(Groups);
+			      mainFrame.revalidate();
+					mainFrame.repaint();
+			      mainFrame.setVisible(true);
+				
+				System.out.println("refresh");
+				
+			}
+				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
