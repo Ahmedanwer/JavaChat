@@ -32,7 +32,7 @@ public class HomePage {
 	  String serverIP ;
 	  User myData = new User(0,"","",0,"");
 
-	  
+	  //TODO i want ot make here a function which refresh users each 5 seconds to get the new status of people i am chating with
 	
 
 
@@ -72,14 +72,14 @@ public class HomePage {
 	      for(int i=0;i<users.size();i++){
 	    	  JButton contact=new JButton(users.get(i).getUsername());
 	    	  
-	    	  final User thisUser=users.get(i);
+	    	  final User SendTo=users.get(i);
 	    	  contact.addActionListener(new ActionListener() {
 			    	
 		            public void actionPerformed(ActionEvent e)
 		            {
 		            	
-		            	peerTopeer newChat =new peerTopeer(thisUser,ThisUser);
-		            	PeerChatWindows.put(thisUser.getId(), newChat);
+		            	peerTopeer newChat =new peerTopeer(SendTo,ThisUser);
+		            	PeerChatWindows.put(SendTo.getId(), newChat);
 		            	
 		            }
 		        });     

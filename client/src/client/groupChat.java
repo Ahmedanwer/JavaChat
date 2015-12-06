@@ -34,17 +34,7 @@ public class groupChat {
 	   
 	   
 	   public groupChat()
-	   
 	       {
-		      prepareGUI();     
-		      try{
-			      apiFunctions.Sdis.readUTF();
-		           }
-		          catch(Exception e)
-		          {
-		        	  System.out.println(e.getMessage());
-		          }
-		      
 		   }
 	   
 	   public groupChat(Group group,User user,String serverIP)
@@ -107,12 +97,8 @@ public class groupChat {
 		            public void actionPerformed(ActionEvent e)
 		            {
 		            	
-		            	// System.out.println(c.writingArea.getText());
-		            	
-		            	
-		            	
-		            	apiFunctions.connect("192.168.43.64");
-		            	apiFunctions.login("ahmed", "2222");
+		            	apiFunctions.connect(serverIP);
+
 		  		        chatArea.append(apiFunctions.BCMsgToGroup(writingArea.getText(), userID+"", groupID+"")+"\r\n");
 		  		        
 		                writingArea.setText("");
