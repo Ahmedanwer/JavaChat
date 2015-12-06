@@ -23,19 +23,20 @@ public class apiFunctions {
 	static DataOutputStream Sdos;
 	static DataInputStream Sdis;
 	static String id;
+	static Boolean serverConnectionEstablished;
 
 
 	
 	
 		//constructor that establishes a server connection and login
 		public apiFunctions(String userName, String password ,String ip ) {
-		
+			
+		serverConnectionEstablished=false;
 		this.userName = userName;
 		this.password = password;
 		try {
 			
-		
-			connect(ip);
+		connect(ip);
 			login(userName, password);
 		} catch (Exception e) {e.printStackTrace();}
 	}
@@ -51,10 +52,11 @@ public class apiFunctions {
 		public static void connect (String ip){
 			
 			try {
-			serverConnection = new Socket (ip, 1555);
+			serverConnection = new Socket (ip, 5000); 
 			Sdis =new DataInputStream(serverConnection.getInputStream());
 			Sdos= new DataOutputStream(serverConnection.getOutputStream());
 			} catch (Exception e) {e.printStackTrace();}
+	
 			}
 		
 		

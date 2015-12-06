@@ -270,7 +270,7 @@ public class server {
         	activeClients=new ArrayList<Socket>();
         
             //1.Create Server Socket
-            ServerSocket sv = new ServerSocket(1555);
+            ServerSocket sv = new ServerSocket(5000);
 
             setAllUsersToOffline();
             
