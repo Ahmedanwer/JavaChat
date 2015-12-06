@@ -15,7 +15,6 @@ import org.json.simple.JSONValue;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
-import com.sun.glass.ui.CommonDialogs.Type;
 
 public class apiFunctions {
 

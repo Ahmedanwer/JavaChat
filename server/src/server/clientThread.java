@@ -10,9 +10,7 @@ import org.json.simple.JSONValue;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.sun.javafx.scene.paint.GradientUtils.Parser;
 
-import jdk.nashorn.internal.runtime.Undefined;
 import server.groupRecords.groupRecord;
 
 public class clientThread extends Thread {
