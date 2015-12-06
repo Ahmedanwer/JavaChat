@@ -113,8 +113,8 @@ public class clientThread extends Thread {
             			System.out.println("id sent to client is (inner for loop"+id);
                     	
             			server.users.get(j).setStatus(1);
-            			server.users.get(j).setIP(c.getLocalSocketAddress().toString().substring(1));
-            			System.out.println( "ip of connected client is "+c.getLocalSocketAddress().toString().substring(1));
+            			server.users.get(j).setIP(ipAdress);
+            			System.out.println(ipAdress);
             			server.activeLoggedInClients.put(id, c);
             			break;
             		}
