@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
-
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -109,12 +109,14 @@ public void updateContacts(){
 	      
 	      Groups=new JPanel();
 	      Groups.setLayout(new GridLayout(0,1));
-	      JButton leaveGroup = new JButton("Leave Group");
-
-		  JButton JoinGroup = new JButton("Join Group");
 	      for(int i=0;i<groups.size();i++){
 	    	  JPanel groupPanel=new JPanel();
 
+	    	  
+	    	  JButton leaveGroup = new JButton("Leave Group");
+			  JButton JoinGroup = new JButton("Join Group");
+
+			  
 	    	  final Group thisGroup=groups.get(i);
 
 	    	  JButton group=new JButton(groups.get(i).getGroupName());
@@ -134,7 +136,7 @@ public void updateContacts(){
 	    	 
 
 	    	 
-	    	  for (Group g : myGroups){
+	    	  for (final Group g : myGroups){
 					if(g.getId()==groups.get(i).getId())
 					{  
 						 groupPanel.add(leaveGroup);
@@ -142,6 +144,20 @@ public void updateContacts(){
 					 else{
 							 groupPanel.add(JoinGroup);
 							 group.setEnabled(false);
+							 JoinGroup.addActionListener(new ActionListener() {
+							    	
+						            public void actionPerformed(ActionEvent e)
+						            {
+						            
+						            String resp=apiFunctions.enrollInAGroup(String.valueOf(g.getId()), String.valueOf(ThisUser.getId()));	
+						            if (resp.equalsIgnoreCase("0"))	JOptionPane.showMessageDialog(null, "Enroll In Group Failed", "Alert", JOptionPane.INFORMATION_MESSAGE);
+						            else if (resp.equalsIgnoreCase("1"))	JOptionPane.showMessageDialog(null, "You Successfuly Joind The Group", "Alert", JOptionPane.INFORMATION_MESSAGE);
+						            else if (resp.equalsIgnoreCase("2"))	JOptionPane.showMessageDialog(null, "User ID Or Group Doesnt Exist", "Alert", JOptionPane.INFORMATION_MESSAGE);
+						            else if (resp.equalsIgnoreCase("3"))	JOptionPane.showMessageDialog(null, "You Are Already Enrolled", "Alert", JOptionPane.INFORMATION_MESSAGE);
+						            
+						            }
+						        }); 
+						      
 			    	  }
 					}
 	    	 
@@ -150,15 +166,6 @@ public void updateContacts(){
 
 	      }
 	      
-	      JoinGroup.addActionListener(new ActionListener() {
-		    	
-	            public void actionPerformed(ActionEvent e)
-	            {
-	            	
-	            	//apiFunctions.enrollInAGroup(groupid, myData.getId());
-	            	
-	            }
-	        }); 
 	      
 	  
 	      
