@@ -68,12 +68,7 @@ public class apiFunctions {
 	   	  obj.put("header", "login");
 	      obj.put("username", user);
 	      obj.put("password", pass);
-	      try {
-			obj.put("ipAdress", InetAddress.getLocalHost().getHostAddress().toString());
-		} catch (UnknownHostException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+	     
 	      
 	      try {
 				Sdos.writeUTF(obj.toJSONString());
