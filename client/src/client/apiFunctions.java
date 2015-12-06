@@ -112,7 +112,7 @@ public class apiFunctions {
 	   
 	   
 	   // BC to active members only of certian group and return either the msg sent or "Something went wrong"
-	   public static String BCMsgToGroup (String msg, String SenderID, String GroupIP) {
+	   public static void BCMsgToGroup (String msg, String SenderID, String GroupIP) {
 
 		   JSONObject obj = new JSONObject();
 		   
@@ -123,10 +123,11 @@ public class apiFunctions {
 		      obj.put("groupID", GroupIP);
 		      System.out.println(obj.toJSONString());
 		      Sdos.writeUTF(obj.toJSONString());
-		      return  Sdis.readUTF();
+		     // return  Sdis.readUTF();
+		     
 			} 
 		   catch (Exception e) {e.printStackTrace();}
-		return "Something went wrong";		  
+			  
 	}
 	   
 	   

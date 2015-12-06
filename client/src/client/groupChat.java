@@ -48,7 +48,7 @@ public class groupChat {
 		      userName=user.getUsername();
 		      this.serverIP =serverIP;
 		      prepareGUI(); 
-		      
+		     
 		      receiver myreceiver = new receiver();
 		      myreceiver.start();
 	          }
@@ -62,8 +62,10 @@ public class groupChat {
 			
 			try
 			  {
-				chatArea.append(apiFunctions.Sdis.readUTF()+"/r/n");
+				while(true){
+				chatArea.append(apiFunctions.Sdis.readUTF()+"\r\n");
 				sleep(500);
+				}
 			  }
 			 catch (Exception e) 
 			
@@ -110,19 +112,20 @@ public class groupChat {
 		    		   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		      
 		      sendButton = new JButton("Send");
-
-		      
 		      sendButton.addActionListener(new ActionListener() {
-		    	
+			    	
 		            public void actionPerformed(ActionEvent e)
 		            {
 		            	
-
-		  		        chatArea.append(apiFunctions.BCMsgToGroup(writingArea.getText(), userID+"", groupID+"")+"\r\n");
+		            	apiFunctions.connect(serverIP);
+		            	apiFunctions.BCMsgToGroup(writingArea.getText(), userID+"", groupID+"");
 		  		        
 		                writingArea.setText("");
 		            }
 		        });      		    
+		      
+		      
+		      		    
 		      
 		     
 		     
@@ -140,7 +143,7 @@ public class groupChat {
 		      myPanel.add(writingArea,gBC); 
 		      gBC.gridx = 1;
 		      gBC.gridy = 1;
-			  myPanel.add(sendButton,gBC); ;
+			 myPanel.add(sendButton,gBC); 
 			   
 		     
 		      mainFrame.add(myPanel);
