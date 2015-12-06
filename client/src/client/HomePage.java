@@ -31,6 +31,7 @@ public class HomePage {
 	  User ThisUser;
 	  String serverIP ;
 	  User myData = new User(0,"","",0,"");
+	  
 
 	  
 	

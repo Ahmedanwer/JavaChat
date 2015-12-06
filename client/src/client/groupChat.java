@@ -37,15 +37,7 @@ public class groupChat {
 	   
 	       {
 		      prepareGUI();     
-		      try{
-			      apiFunctions.Sdis.readUTF();
-		           }
-		          catch(Exception e)
-		          {
-		        	  System.out.println(e.getMessage());
-		          }
-		      
-		   }
+	       }
 	   
 	   public groupChat(Group group,User user,String serverIP)
 	   
@@ -56,16 +48,34 @@ public class groupChat {
 		      userName=user.getUsername();
 		      this.serverIP =serverIP;
 		      prepareGUI(); 
-		      try{
-		      apiFunctions.Sdis.readUTF();
-	           }
-	          catch(Exception e)
-	          {
-	        	  System.out.println(e.getMessage());
+		      
+		      receiver myreceiver = new receiver();
+		      myreceiver.start();
 	          }
 	   
 		      
-		   }
+	private class receiver extends Thread{
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			super.run();
+			
+			try
+			  {
+				chatArea.append(apiFunctions.Sdis.readUTF()+"/r/n");
+				sleep(500);
+			  }
+			 catch (Exception e) 
+			
+			   {
+		           System.out.println(e.getMessage());
+		       }
+		
+		}
+	}
+	
+	
+	
 	   
 	   private void prepareGUI()
 	   
@@ -107,12 +117,6 @@ public class groupChat {
 		            public void actionPerformed(ActionEvent e)
 		            {
 		            	
-		            	// System.out.println(c.writingArea.getText());
-		            	
-		            	
-		            	
-		            	apiFunctions.connect("192.168.43.64");
-		            	apiFunctions.login("ahmed", "2222");
 		  		        chatArea.append(apiFunctions.BCMsgToGroup(writingArea.getText(), userID+"", groupID+"")+"\r\n");
 		  		        
 		                writingArea.setText("");
@@ -144,6 +148,7 @@ public class groupChat {
 		     
 		      mainFrame.setVisible(true);  
 		   }
+	   
 	   
 	  
 
