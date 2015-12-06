@@ -30,11 +30,9 @@ public class HomePage {
 	  HashMap<Integer,peerTopeer> PeerChatWindows;
 	  User ThisUser;
 	  String serverIP ;
-	  User myData = new User(0,"","",0,"");
 
 	  //TODO i want ot make here a function which refresh users each 5 seconds to get the new status of people i am chating with
 	
-
 
 
 	  public HomePage(ArrayList<User> users, ArrayList<Group> groups, ArrayList<Group> myGroups,User thisUser,String serverIP) {
@@ -52,6 +50,8 @@ public class HomePage {
 		
 		receiver myReceiver = new receiver();
 	      myReceiver.start();
+	      refresh Refresher= new refresh();
+	      Refresher.start();
 	      
 		
 		 
@@ -61,6 +61,9 @@ public class HomePage {
 	     prepareGUI(users,groups,myGroups);     
 
 	}
+	  
+
+
 	
 	 private void prepareGUI(ArrayList<User> users, ArrayList<Group> groups, ArrayList<Group> myGroups){
 	      mainFrame = new JFrame("Home Page");
@@ -155,6 +158,28 @@ public class HomePage {
 		 return null;
 	 }
 	 
+
+	 private class refresh extends Thread{
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			super.run();
+			
+			users= apiFunctions.getAllUsers();
+			try {
+				sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		}
+		 
+	 }
+	 
 	 
 	 
 	 private class receiver extends Thread
@@ -215,5 +240,8 @@ public class HomePage {
 				
 			}  
 	  }
+	 
+
+
 	  
 }

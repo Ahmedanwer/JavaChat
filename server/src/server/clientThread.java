@@ -100,9 +100,10 @@ public class clientThread extends Thread {
             else if (obj.get("header").toString().equalsIgnoreCase("login")){
             	
             	//System.out.println("if conditon of login enterd");
-            	String userName, password;
+            	String userName, password,ipAdress;
             	userName = obj.get("username").toString();
             	password = obj.get("password").toString();
+            	ipAdress=obj.get("myIp").toString();
             	//System.out.println("User NAme Received: "+userName+" & Password: "+password);
             	String id="0";
             	for (int j=0;j<server.users.size();j++)
