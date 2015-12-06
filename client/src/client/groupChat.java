@@ -27,6 +27,9 @@ public class groupChat {
 	   JButton sendButton;
 	   int groupID;
 	   Group receiverGroup;
+	   int userID;
+	   String userName;
+	   String serverIP ;
 	   
 	   
 	   
@@ -34,19 +37,34 @@ public class groupChat {
 	   
 	       {
 		      prepareGUI();     
-		      receiver myReceiver = new receiver();
-		      myReceiver.start();
+		      try{
+			      apiFunctions.Sdis.readUTF();
+		           }
+		          catch(Exception e)
+		          {
+		        	  System.out.println(e.getMessage());
+		          }
 		      
 		   }
 	   
-	   public groupChat(Group group)
+	   public groupChat(Group group,User user,String serverIP)
 	   
 	       {
 		      receiverGroup=group;
 		      groupID=group.getId();
-		      prepareGUI();     
-		      receiver myReceiver = new receiver();
-		      myReceiver.start();
+		      userID=user.getId();
+		      userName=user.getUsername();
+		      this.serverIP =serverIP;
+		      prepareGUI(); 
+		      try{
+		      apiFunctions.Sdis.readUTF();
+	           }
+	          catch(Exception e)
+	          {
+	        	  System.out.println(e.getMessage());
+	          }
+	   
+		      
 		   }
 	   
 	   private void prepareGUI()
@@ -93,10 +111,11 @@ public class groupChat {
 		            	
 		            	
 		            	
-		            	//apiFunctions.connect(ip);
-		  		        apiFunctions.BCMsg(writingArea.getText());
+		            	apiFunctions.connect("192.168.43.64");
+		            	apiFunctions.login("ahmed", "2222");
+		  		        chatArea.append(apiFunctions.BCMsgToGroup(writingArea.getText(), userID+"", groupID+"")+"\r\n");
+		  		        
 		                writingArea.setText("");
-		            	
 		            }
 		        });      		    
 		      
@@ -126,48 +145,7 @@ public class groupChat {
 		      mainFrame.setVisible(true);  
 		   }
 	   
-	   private class receiver extends Thread
-	   {
-	 	   @Override
-	 		public void run() {
-	 			// TODO Auto-generated method stub
-	 			super.run();
-	 			
-	 			 try 
-	 				{
-	 			           //1.Create Server Socket
-	 			           ServerSocket mySocket = new ServerSocket(1243);
-	 			           //Server is always On
-	 			          
-	 			          
-	 			        	   Socket c;
-	 				        
-	 			               //4.Perform IO Operations with the client
-	 			               while (true) {
-	 			            	   c = mySocket.accept();       
-	 				               DataInputStream dis = new DataInputStream(c.getInputStream());
-	 			                   String clientMsg;
-	 			                   System.out.println("Before");
-	 			                   clientMsg = dis.readUTF();//read from the client
-	 			                   chatArea.append("\n"+clientMsg);
-	 			                   System.out.println("B says "+clientMsg);
-	 			                   if (clientMsg.equalsIgnoreCase("Bye")) {
-	 			                        break;
-	 			                    }
-	 			                   System.out.println("after");
-
-	 				               dis.close();
-	 			               }
-	 			             
-	 			               c.close();
-	 			           
-
-	 			       } catch (Exception e) {
-	 			           System.out.println(e.getMessage());
-	 			       }
-	 			
-	 		}  
-	   }
+	  
 
 	   
 	   

@@ -29,45 +29,27 @@ public class HomePage {
 	  ArrayList<groupRecords> records;
 	  HashMap<Integer,peerTopeer> PeerChatWindows;
 	  User ThisUser;
+	  Group ThisGroup;
+	  String serverIP ;
 	  
 	
 
 
-	  public HomePage(ArrayList<User> users, ArrayList<Group> groups, ArrayList<Group> myGroups) {
+	  public HomePage(ArrayList<User> users, ArrayList<Group> groups, ArrayList<Group> myGroups,User thisUser,Group thisGroup,String serverIP) {
 			super();
 			this.users = users;
 			this.groups = groups;
 			this.myGroups = myGroups;
+			this.ThisUser =thisUser;
+			this.ThisGroup=thisGroup;
+			this.serverIP = serverIP;
 		
 		receiver myReceiver = new receiver();
 	      myReceiver.start();
 	      
 		
 		 
-		users=new ArrayList<User>();
-		PeerChatWindows=new   HashMap<Integer,peerTopeer>();
-		
-		
-
-		 ThisUser=new User(1,"Anwar",1);
-		 ThisUser.setIP("192.168.1.19");
-		User Som3a=new User(2,"Sherouk ",1);
-		Som3a.setIP("192.168.1.21");
-		 
-		
-		users.add(ThisUser);
-		users.add(Som3a);
-		users.add(new User(3,"Hussien",1));
-		users.add(new User(4,"Ashraf",1));
-		
-		
-		
-		
-		groups=new ArrayList<Group>();
-		groups.add(new Group(1,"ASU"));
-		groups.add(new Group(2,"BUE"));
-		groups.add(new Group(3,"AUC"));
-		groups.add(new Group(4,"GUC"));
+	      PeerChatWindows=new   HashMap<Integer,peerTopeer>();
 	     prepareGUI();     
 	}
 	
@@ -100,6 +82,16 @@ public class HomePage {
 	      Groups.setLayout(new GridLayout(0,1));
 	      for(int i=0;i<groups.size();i++){
 	    	  JButton group=new JButton(groups.get(i).getGroupName());
+	    	  
+	    	  final Group thisGroup = groups.get(i);
+	    	  group.addActionListener(new ActionListener()
+	    			  {
+	    		  public void actionPerformed(ActionEvent e)
+	    		  {
+	    			  groupChat newChat = new groupChat(thisGroup,ThisUser,serverIP);
+	    			  
+	    		  }
+	    			  });
 	    	  Groups.add(group);
 	      }
 	      
