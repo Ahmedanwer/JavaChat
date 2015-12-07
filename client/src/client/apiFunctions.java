@@ -208,15 +208,14 @@ public class apiFunctions {
 				Sdos.writeUTF(obj.toJSONString());
 				
 				Gson gson = new Gson();
-				System.out.println("before json");
-				String json=Sdis.readUTF();
-				System.out.println("bbefore Reflect");
-				java.lang.reflect.Type type = new TypeToken<ArrayList<Group>>(){}.getType();
-				System.out.println("before array list");
-				arrayList = gson.fromJson(json, type);
-		   }catch (Exception e){e.printStackTrace();}
-				return arrayList;
-		   
+			   	   String json=Sdis.readUTF();
+					System.out.println("my groups recevied as json"+ json);
+			   	   java.lang.reflect.Type type = new TypeToken<ArrayList<Group>>(){}.getType();
+			   	   arrayList = gson.fromJson(json, type);
+			   }catch (Exception e){e.printStackTrace();}
+			   
+					return arrayList;
+
 	   }
 	   
 	   
@@ -395,4 +394,27 @@ public class apiFunctions {
 		   return "0";  
 	   }
 	   
+	   public static String update(){
+
+		   JSONObject obj = new JSONObject();
+		   		
+	   	  obj.put("header", "update");
+
+	      
+	      try {
+				Sdos.writeUTF(obj.toJSONString());
+			String 	result=Sdis.readUTF();
+
+				if (!(result.equals("0"))) {
+					System.out.println("update Successful");
+					return result;
+				}
+			} catch (Exception e) {e.printStackTrace();}
+	      
+		      System.out.println("update failed" );
+			return "0";  
+	   }
+
+
+
 }

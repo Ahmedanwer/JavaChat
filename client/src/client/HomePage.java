@@ -77,7 +77,7 @@ public void updateContacts(){
    	  if(SendTo.getStatus()==0){
    		  contact.setEnabled(false);
    	  }
-   	  System.out.println(SendTo.getUsername()+" "+SendTo.getStatus());
+   	//  System.out.println(SendTo.getUsername()+" "+SendTo.getStatus());
    	  
    	  contact.addActionListener(new ActionListener() {
 		    	
@@ -133,7 +133,8 @@ public void prepareGroups(){
             else if (resp.equalsIgnoreCase("1"))	JOptionPane.showMessageDialog(null, "You Successfuly Left The Group", "Alert", JOptionPane.INFORMATION_MESSAGE);
             else if (resp.equalsIgnoreCase("2"))	JOptionPane.showMessageDialog(null, "You Are Not Enrolled In This Group", "Alert", JOptionPane.INFORMATION_MESSAGE);
             else if (resp.equalsIgnoreCase("3"))	JOptionPane.showMessageDialog(null, "User ID Or Group Doesnt Exist", "Alert", JOptionPane.INFORMATION_MESSAGE);
-            RefreshGroups();
+           // RefreshGroups();
+            apiFunctions.update();
             }
    			}); 
    	  }else{
@@ -148,7 +149,8 @@ public void prepareGroups(){
 	            else if (resp.equalsIgnoreCase("1"))	JOptionPane.showMessageDialog(null, "You Successfuly Joind The Group", "Alert", JOptionPane.INFORMATION_MESSAGE);
 	            else if (resp.equalsIgnoreCase("2"))	JOptionPane.showMessageDialog(null, "You Are Already Enrolled", "Alert", JOptionPane.INFORMATION_MESSAGE);
 	            else if (resp.equalsIgnoreCase("3"))	JOptionPane.showMessageDialog(null, "User ID Or Group Doesnt Exist", "Alert", JOptionPane.INFORMATION_MESSAGE);
-	            RefreshGroups();
+	        //    RefreshGroups();
+	            apiFunctions.update();
 	            }
 	        }); 
 	      
@@ -210,12 +212,12 @@ public void prepareGroups(){
 
 	 private void RefreshGroups(){
 		 
-		 	System.out.println("before"+myGroups);
+		 	System.out.println("before in refreshGroup: "+myGroups);
 			Groups.removeAll();
 			Groups.revalidate();
 			
 			myGroups= apiFunctions.getMyGroups(ThisUser.getId()+"");
-		 	System.out.println("after "+myGroups);
+		 	System.out.println("after in refreshGroup: "+myGroups);
 			prepareGroups();
 			
 			 mainFrame.add(Contacts);
@@ -247,8 +249,8 @@ public void prepareGroups(){
 			      mainFrame.revalidate();
 					mainFrame.repaint();
 			    //  mainFrame.setVisible(true);
+					RefreshGroups();
 				
-				System.out.println("refresh");
 				
 			}
 				
