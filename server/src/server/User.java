@@ -10,12 +10,19 @@ class User {
     private String password;
     private int status;
     private String IP;
+    private String admin;  //if 1->admin , 0->not admin
  
     public int getId() {
         return id;
     }
     public void setId(int id) {
         this.id = id;
+    }
+    public String getAdmin() {
+        return admin;
+    }
+   public void setAdmin(String admin) {
+        this.admin = admin;
     }
     public String getUsername() {
         return username;
@@ -46,7 +53,7 @@ class User {
  
     @Override
     public String toString() {
-        return this.id + ":" + this.username +  ":" +this.password +  ":" +this.status + "\n" ;
+        return this.id + ":" + this.username +  ":" +this.password +  ":" +this.status +" :"+ this.admin + "\n" ;
     }
 
 }

@@ -10,6 +10,7 @@ class User {
     private String password;
     private int status;
     private String IP;
+    private String admin;  //if 1->admin , 0->not admin
     public User(){}
     public User(int id, String username, String password, int status, String iP) {
 		super();
@@ -19,6 +20,15 @@ class User {
 		this.status = status;
 		IP = iP;
 	}
+    public User(int id, String username, String password, int status, String iP,String admin) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.status = status;
+		IP = iP;
+		this.admin=admin;
+	}
     public User(int id, String username, int status) {
   		super();
   		this.id = id;
@@ -26,6 +36,12 @@ class User {
   		this.status = status;
   	
   	}
+    public String getAdmin() {
+        return admin;
+    }
+   public void setAdmin(String admin) {
+        this.admin = admin;
+    }
 	public int getId() {
         return id;
     }

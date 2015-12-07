@@ -337,44 +337,38 @@ public User getUserByID (int x){
             
             else if (obj.get("header").toString().equalsIgnoreCase("kick")){
                 
-            	String group=obj.get("groupID").toString();
             	String user=obj.get("userID").toString();
             	
-            	int recordIndex=0;
+            	
             	
             	Boolean userExist=false;
-            	Boolean groupExist=false;
-            	Boolean useralreadyEnrolled=false;
                 	
             	String code="0";
             	String msg="Kicking User Failed";
+            	int userIndex=0;
             	
             	for (User temp :server.users){
             		if ( String.valueOf(temp.getId()).equals(user) ) userExist=true;
             	}
             	
-            	for (Group temp :server.groups){
-            		if ( String.valueOf(temp.getId()).equals(group) ) groupExist=true;
-            	}
             	
-            	for (groupRecord temp: server.records){
-            		if ( ( String.valueOf(temp.getGroupID()).equals(group)) && ( String.valueOf(temp.getUserID()).equals(group)) ) {
-            			useralreadyEnrolled=true;
-            			recordIndex=server.records.indexOf(temp);
+            	
+            	for (User temp: server.users){
+            		if (  ( String.valueOf(temp.getId()).equals(user)) ) {
+            			
+            			userIndex=server.users.indexOf(temp);
             			}
             	}
             	
-            	if (userExist && groupExist && !useralreadyEnrolled){
-            		code="2";msg="User Not Enrolled in this Group";
-            	}
             	
-            	if ( (!(userExist)) || (!(groupExist)) ) {
-            		code="3";msg="User Or Group Doesn't Exist";
-            	}
             	
-            	if (userExist && groupExist && useralreadyEnrolled ){
-            		server.records.remove(recordIndex);
+            	
+            	
+            	if (userExist ){
+            		server.users.remove(userIndex);
             		code="1";msg="Kicking User From Group Was Successful";
+            		System.out.println("user " + server.users.get(userIndex).getUsername() + " is kicked");
+            		code ="1";
             	}
             	
             	JSONObject responseObj=new JSONObject();

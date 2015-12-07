@@ -60,21 +60,21 @@ public class server {
     	       groups = parser.parseGroupsXml(new FileInputStream(xmlGroupsFile));
     	       records = parser.parseRecordsXml(new FileInputStream(xmlGroupRecordsFile));
     	       activeLoggedInClients=  new HashMap();
-    	     /* for(int i=0; i<users.size(); i++)
+    	      for(int i=0; i<users.size(); i++)
     	       {  
     	           
     	          System.out.print((users.get(i).toString()));
     	       }
-    	      for(int i=0; i<groups.size(); i++)
+    	     /* for(int i=0; i<groups.size(); i++)
     	       {  
     	           
     	          System.out.print((groups.get(i).toString()));
-    	       }*/
+    	       }
     	      for(int i=0; i<records.size(); i++)
     	       {  
     	           
     	          System.out.print((records.get(i).toString()));
-    	       }
+    	       }*/
     	              
     	 
     	        //Verify the result
@@ -137,6 +137,10 @@ public class server {
     		Element status = usersFile.createElement("status");
     		status.appendChild(usersFile.createTextNode(String.valueOf(users.get(i).getStatus())));
     		user.appendChild(status);
+    		
+    		Element admin = usersFile.createElement("admin");
+    		admin.appendChild(usersFile.createTextNode(users.get(i).getAdmin()));
+    		user.appendChild(admin);
 
     		
 
@@ -263,7 +267,7 @@ public class server {
     	//groups.get(0).setGroupName("Minions");
     	//records.get(0).setGroupID(65788757);
     	
-    	s.finalize();
+    	//s.finalize();
     	
         try {
         	//list of logged in clients

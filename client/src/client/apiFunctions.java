@@ -376,12 +376,11 @@ public class apiFunctions {
 	   
 	   
 	   //kick off another user from a group,  return "0" for failed, "1" for success,  "2" for user not enrolled, and "3" if user or group doesnt exist;;msg is printed to the console
-	   public static String kickOff (String groupid,String clientid){
+	   public static String kickOff (String clientid){
 
 		   try {
 			   JSONObject obj=new JSONObject();
 			   obj.put("header", "kick");
-			   obj.put("groupID", groupid);
 			   obj.put("userID", clientid);
 		   	   Sdos.writeUTF(obj.toJSONString());
 		   

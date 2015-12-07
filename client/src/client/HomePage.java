@@ -49,6 +49,8 @@ public class HomePage {
 			this.serverIP = serverIP;
 
 			System.out.println("this user is"+ThisUser.getUsername());
+			System.out.println(ThisUser.getId());
+		//	System.out.println(users.get(1).getAdmin());
 		
 		receiver myReceiver = new receiver();
 	      myReceiver.start();
@@ -64,19 +66,27 @@ public class HomePage {
 		groupChatWinsows=new   HashMap<Integer,groupChat>();
 		
 	     prepareGUI(users,groups,myGroups);     
+	     
 
 	}
 	  
 public void updateContacts(){
 	
 	 for(int i=0;i<users.size();i++){
+		 JPanel contactPanel=new JPanel();
    	  JButton contact=new JButton(users.get(i).getUsername());
+   	  JButton kickOff = new JButton("kick off");
+   	  
    	  
    	  final User SendTo=users.get(i);
    	
    	  if(SendTo.getStatus()==0){
    		  contact.setEnabled(false);
    	  }
+   	  if(SendTo.getId()==100){
+   		  kickOff.setVisible(false);
+   	  }
+   	  
    	//  System.out.println(SendTo.getUsername()+" "+SendTo.getStatus());
    	  
    	  contact.addActionListener(new ActionListener() {
@@ -88,9 +98,26 @@ public void updateContacts(){
 	            	PeerChatWindows.put(SendTo.getId(), newChat);
 	            	
 	            }
-	        });     
+	        });  
+   	  contactPanel.add(contact);
+   	 if( ThisUser.getId()==100 ){
+   		 contactPanel.add(kickOff); 
+   		kickOff.addActionListener(new ActionListener() {
+	    	
+            public void actionPerformed(ActionEvent e)
+            {
+            String resp=apiFunctions.kickOff( String.valueOf(SendTo.getId()));	
+            if (resp.equalsIgnoreCase("0"))	JOptionPane.showMessageDialog(null, "Kicking User Failed", "Alert", JOptionPane.INFORMATION_MESSAGE);
+            else if (resp.equalsIgnoreCase("1"))	JOptionPane.showMessageDialog(null, "Kicking User From Group Was Successful", "Alert", JOptionPane.INFORMATION_MESSAGE);
+           // RefreshGroups();
+            apiFunctions.update();
+            }
+   			}); 
+   	  }
+   	   
    	  
-   	  Contacts.add(contact);
+   	  Contacts.add(contactPanel);
+   	
      }
 	
 }
