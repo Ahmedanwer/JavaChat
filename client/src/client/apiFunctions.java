@@ -277,7 +277,7 @@ public class apiFunctions {
 		   	  String response = Sdis2.readUTF();//read from the server
 	          JSONObject responseObj=(JSONObject) JSONValue.parse(response);
 	          
-	          System.out.println(responseObj.get("msg").toString());
+	         // System.out.println(responseObj.get("msg").toString());
 	          Sdos2.close();
 	          Sdis2.close();
 	          serverConnection2.close();
@@ -398,6 +398,20 @@ public class apiFunctions {
 		   
 		   System.out.println("Kicking User Failed");
 		   return "0";  
+	   }
+	   
+	   public static void updateWithout(){
+
+		   JSONObject obj = new JSONObject();
+		   		
+	   	  obj.put("header", "update");
+
+	      
+	      try {
+				Sdos.writeUTF(obj.toJSONString());
+			
+			} catch (Exception e) {e.printStackTrace();}
+	       
 	   }
 	   
 	   public static String update(){

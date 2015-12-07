@@ -164,8 +164,8 @@ public void prepareGroups(){
             else if (resp.equalsIgnoreCase("1"))	JOptionPane.showMessageDialog(null, "You Successfuly Left The Group", "Alert", JOptionPane.INFORMATION_MESSAGE);
             else if (resp.equalsIgnoreCase("2"))	JOptionPane.showMessageDialog(null, "You Are Not Enrolled In This Group", "Alert", JOptionPane.INFORMATION_MESSAGE);
             else if (resp.equalsIgnoreCase("3"))	JOptionPane.showMessageDialog(null, "User ID Or Group Doesnt Exist", "Alert", JOptionPane.INFORMATION_MESSAGE);
-           // RefreshGroups();
-            apiFunctions.update();
+            RefreshGroups();
+            apiFunctions.updateWithout();
             }
    			}); 
    	  }else{
@@ -180,8 +180,8 @@ public void prepareGroups(){
 	            else if (resp.equalsIgnoreCase("1"))	JOptionPane.showMessageDialog(null, "You Successfuly Joind The Group", "Alert", JOptionPane.INFORMATION_MESSAGE);
 	            else if (resp.equalsIgnoreCase("2"))	JOptionPane.showMessageDialog(null, "You Are Already Enrolled", "Alert", JOptionPane.INFORMATION_MESSAGE);
 	            else if (resp.equalsIgnoreCase("3"))	JOptionPane.showMessageDialog(null, "User ID Or Group Doesnt Exist", "Alert", JOptionPane.INFORMATION_MESSAGE);
-	        //    RefreshGroups();
-	            apiFunctions.update();
+	         RefreshGroups();
+	         apiFunctions.updateWithout();
 	            }
 	        }); 
 	      
