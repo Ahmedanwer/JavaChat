@@ -135,6 +135,7 @@ public void prepareGroups(){
             else if (resp.equalsIgnoreCase("3"))	JOptionPane.showMessageDialog(null, "User ID Or Group Doesnt Exist", "Alert", JOptionPane.INFORMATION_MESSAGE);
             RefreshGroups();
             }
+   			}); 
    	  }else{
    		 groupPanel.add(JoinGroup);
    		 JoinGroup.addActionListener(new ActionListener() {
@@ -209,10 +210,12 @@ public void prepareGroups(){
 
 	 private void RefreshGroups(){
 		 
+		 	System.out.println("before"+myGroups);
 			Groups.removeAll();
 			Groups.revalidate();
 			
 			myGroups= apiFunctions.getMyGroups(ThisUser.getId()+"");
+		 	System.out.println("after "+myGroups);
 			prepareGroups();
 			
 			 mainFrame.add(Contacts);

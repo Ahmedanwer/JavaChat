@@ -160,7 +160,7 @@ public User getUserByID (int x){
             		if (temp.getUserID()==userID) myGroups.add(getGroupByID(temp.getGroupID()));
             	}
             	System.out.println("grorup size "+ myGroups.size());
-            	
+            	System.out.println("grorup is "+ myGroups);
             	Gson gson = new Gson();
      		    String json = gson.toJson(myGroups);
     		    dos.writeUTF(json);
@@ -292,14 +292,16 @@ public User getUserByID (int x){
             	}
             	
             	if (userExist && groupExist && useralreadyEnrolled ){
+            		System.out.println("before"+server.records);
             		server.records.remove(recordIndex);
+            		System.out.println("before"+server.records);
             		code="1";msg="Leaving Group Was Successful";
             	}
             	
             	JSONObject responseObj=new JSONObject();
      		    responseObj.put("code", code);
      		    responseObj.put("msg", msg);
-     			   
+     		   System.out.println(responseObj.toJSONString());
      		    dos.writeUTF(responseObj.toJSONString());
             }
             

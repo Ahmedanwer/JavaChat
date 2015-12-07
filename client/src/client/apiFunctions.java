@@ -208,9 +208,11 @@ public class apiFunctions {
 				Sdos.writeUTF(obj.toJSONString());
 				
 				Gson gson = new Gson();
+				System.out.println("before json");
 				String json=Sdis.readUTF();
-
+				System.out.println("bbefore Reflect");
 				java.lang.reflect.Type type = new TypeToken<ArrayList<Group>>(){}.getType();
+				System.out.println("before array list");
 				arrayList = gson.fromJson(json, type);
 		   }catch (Exception e){e.printStackTrace();}
 				return arrayList;
@@ -256,18 +258,25 @@ public class apiFunctions {
 		   
 		   
 		   try {
+				Socket	serverConnection2 = new Socket (serverIP, 5000); 
+				DataInputStream	Sdis2 =new DataInputStream(serverConnection2.getInputStream());
+				DataOutputStream	Sdos2= new DataOutputStream(serverConnection2.getOutputStream());
+			
 			   JSONObject obj=new JSONObject();
 			   obj.put("header", "enroll");
 			   obj.put("groupID", groupid);
 			   obj.put("userID", userid);
-		   	   Sdos.writeUTF(obj.toJSONString());
+		   	   Sdos2.writeUTF(obj.toJSONString());
 		   
 
 
-		   	  String response = Sdis.readUTF();//read from the server
+		   	  String response = Sdis2.readUTF();//read from the server
 	          JSONObject responseObj=(JSONObject) JSONValue.parse(response);
 	          
 	          System.out.println(responseObj.get("msg").toString());
+	          Sdos2.close();
+	          Sdis2.close();
+	          serverConnection2.close();
 	      	  return responseObj.get("code").toString();
 	         
 		   }catch (Exception e){e.printStackTrace();}
@@ -283,19 +292,30 @@ public class apiFunctions {
 	   public static String leaveGroup (String groupid, String userid){
 		   
 		   try {
+			   
+			
+					Socket	serverConnection2 = new Socket (serverIP, 5000); 
+					DataInputStream	Sdis2 =new DataInputStream(serverConnection2.getInputStream());
+					DataOutputStream	Sdos2= new DataOutputStream(serverConnection2.getOutputStream());
+						
+			   
 			   JSONObject obj=new JSONObject();
 			   obj.put("header", "leave");
 			   obj.put("groupID", groupid);
 			   obj.put("userID", userid);
-		   	   Sdos.writeUTF(obj.toJSONString());
+		   	   Sdos2.writeUTF(obj.toJSONString());
 		   
 
 
-		   	  String response = Sdis.readUTF();//read from the server
+		   	  String response = Sdis2.readUTF();//read from the server
 	          JSONObject responseObj=(JSONObject) JSONValue.parse(response);
 	          
 	          System.out.println(responseObj.get("msg").toString());
+	          Sdos2.close();
+	          Sdis2.close();
+	          serverConnection2.close();
 	      	  return responseObj.get("code").toString();
+	      	
 	         
 		   }catch (Exception e){e.printStackTrace();}
 		   
