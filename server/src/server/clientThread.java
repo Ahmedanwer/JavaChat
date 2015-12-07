@@ -107,7 +107,7 @@ public User getUserByID (int x){
             
             else if (obj.get("header").toString().equalsIgnoreCase("BCM")) {
             	
-            	System.out.println("if conditon of bcm enterd");
+            	//System.out.println("if conditon of bcm enterd");
             	clientMsg = obj.get("msg").toString();
             	System.out.println("recevied msg and commencing BC-ing "+clientMsg);
             	System.out.println("Sender IP = "+obj.get("SenderIP").toString());
@@ -130,14 +130,14 @@ public User getUserByID (int x){
             	{
             		if (server.users.get(j).getUsername().equals(userName) && server.users.get(j).getPassword().equals(password)){
             			id= String.valueOf(server.users.get(j).getId());
-            			System.out.println("id sent to client is (inner for loop"+id);
+            			//System.out.println("id sent to client is (inner for loop"+id);
                     	
             			server.users.get(j).setStatus(1);
             			
            
             			
             			server.users.get(j).setIP(c.getRemoteSocketAddress().toString().split(":")[0].substring(1));
-            			System.out.println("ip adress"+server.users.get(j).getIP());
+            			//System.out.println("ip adress"+server.users.get(j).getIP());
             			server.activeLoggedInClients.put(id, c);
             			break;
             		}
@@ -168,7 +168,7 @@ public User getUserByID (int x){
             	
             	ArrayList<Group> myGroups =new ArrayList<Group>();
             	int userID=Integer.parseInt(obj.get("id").toString());
-            	System.out.println(String.valueOf(userID));
+            	//System.out.println(String.valueOf(userID));
             	for (groupRecord temp : server.records){
             		if (temp.getUserID()==userID) myGroups.add(getGroupByID(temp.getGroupID()));
             	}
@@ -176,7 +176,7 @@ public User getUserByID (int x){
             	Gson gson = new Gson();
      		    String json = gson.toJson(myGroups);
     		    dos.writeUTF(json);
-    		    System.out.println(json);
+    		   // System.out.println(json);
             }
             
             
@@ -219,7 +219,7 @@ public User getUserByID (int x){
             
          
             else if (obj.get("header").toString().equalsIgnoreCase("enroll")){
-                 System.out.println(clientMsg);
+               //  System.out.println(clientMsg);
             	String group=obj.get("groupID").toString();
             	String user=obj.get("userID").toString();
             	
@@ -305,16 +305,16 @@ public User getUserByID (int x){
             	}
             	
             	if (userExist && groupExist && useralreadyEnrolled ){
-            		System.out.println("before"+server.records);
+            		//System.out.println("before"+server.records);
             		server.records.remove(recordIndex);
-            		System.out.println("before"+server.records);
+            		//System.out.println("before"+server.records);
             		code="1";msg="Leaving Group Was Successful";
             	}
             	
             	JSONObject responseObj=new JSONObject();
      		    responseObj.put("code", code);
      		    responseObj.put("msg", msg);
-     		   System.out.println(responseObj.toJSONString());
+     		  // System.out.println(responseObj.toJSONString());
      		    dos.writeUTF(responseObj.toJSONString());
             }
             
@@ -338,6 +338,7 @@ public User getUserByID (int x){
             else if (obj.get("header").toString().equalsIgnoreCase("kick")){
                 
             	String user=obj.get("userID").toString();
+
             	
             	
             	
@@ -365,11 +366,17 @@ public User getUserByID (int x){
             	
             	
             	if (userExist ){
-            		server.users.remove(userIndex);
-            		code="1";msg="Kicking User From Group Was Successful";
+
             		System.out.println("user " + server.users.get(userIndex).getUsername() + " is kicked");
-            		code ="1";
+            		server.users.remove(userIndex);
+            		code="2";
+            		msg="Kicking User From Group Was Successful";
+            		
             	}
+            	
+            	/*for (User temp :server.users){
+            		System.out.println(temp.toString());
+            	}*/
             	
             	JSONObject responseObj=new JSONObject();
      		    responseObj.put("code", code);
@@ -433,6 +440,10 @@ public User getUserByID (int x){
             		Element status = usersFile.createElement("status");
             		status.appendChild(usersFile.createTextNode(String.valueOf(server.users.get(i).getStatus())));
             		user.appendChild(status);
+            		
+            		Element admin = usersFile.createElement("admin");
+            		admin.appendChild(usersFile.createTextNode(String.valueOf(server.users.get(i).getAdmin())));
+            		user.appendChild(admin);
 
             		
 
@@ -542,6 +553,7 @@ public User getUserByID (int x){
             	  } catch (TransformerException tfe) {
             		tfe.printStackTrace();
             	  }
+            	code ="1";
             	 dos.writeUTF(code);
             }
 

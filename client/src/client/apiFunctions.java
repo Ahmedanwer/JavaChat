@@ -383,6 +383,7 @@ public class apiFunctions {
 			   obj.put("header", "kick");
 			   obj.put("userID", clientid);
 		   	   Sdos.writeUTF(obj.toJSONString());
+		   	   
 		   
 
 
@@ -391,6 +392,7 @@ public class apiFunctions {
 	          
 	          System.out.println(responseObj.get("msg").toString());
 	      	  return responseObj.get("code").toString();
+	      	  
 	         
 		   }catch (Exception e){e.printStackTrace();}
 		   
@@ -409,7 +411,7 @@ public class apiFunctions {
 				Sdos.writeUTF(obj.toJSONString());
 			String 	result=Sdis.readUTF();
 
-				if (!(result.equals("0"))) {
+				if (!(result.equals("1"))) {
 					System.out.println("update Successful");
 					return result;
 				}

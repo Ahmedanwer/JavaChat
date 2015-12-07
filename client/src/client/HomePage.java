@@ -106,9 +106,10 @@ public void updateContacts(){
 	    	
             public void actionPerformed(ActionEvent e)
             {
+            	System.out.println("kicked member : " + SendTo.getUsername());
             String resp=apiFunctions.kickOff( String.valueOf(SendTo.getId()));	
             if (resp.equalsIgnoreCase("0"))	JOptionPane.showMessageDialog(null, "Kicking User Failed", "Alert", JOptionPane.INFORMATION_MESSAGE);
-            else if (resp.equalsIgnoreCase("1"))	JOptionPane.showMessageDialog(null, "Kicking User From Group Was Successful", "Alert", JOptionPane.INFORMATION_MESSAGE);
+            else if (resp.equalsIgnoreCase("2"))	JOptionPane.showMessageDialog(null, "Kicking User From Group Was Successful", "Alert", JOptionPane.INFORMATION_MESSAGE);
            // RefreshGroups();
             apiFunctions.update();
             }
