@@ -47,6 +47,7 @@ public class HomePage {
 			this.ThisUser =thisUser;
 	
 			this.serverIP = serverIP;
+			System.out.println(thisUser);
 
 			System.out.println("this user is"+ThisUser.getUsername());
 			System.out.println(ThisUser.getId());
@@ -69,6 +70,18 @@ public class HomePage {
 	     
 
 	}
+	  
+	  public Boolean isAdmin(int ID){
+		  for(int i=0;i<users.size();i++){
+			  if(users.get(i).getId()==ID){
+				
+				  if(users.get(i).getAdmin().equals("1")){
+					  return true;
+				  }
+			  }
+		  }
+		  return false;
+	  }
 	  
 public void updateContacts(){
 	
@@ -100,7 +113,7 @@ public void updateContacts(){
 	            }
 	        });  
    	  contactPanel.add(contact);
-   	 if( ThisUser.getId()==100 ){
+   	 if(isAdmin(ThisUser.getId())){
    		 contactPanel.add(kickOff); 
    		kickOff.addActionListener(new ActionListener() {
 	    	
@@ -110,7 +123,7 @@ public void updateContacts(){
             String resp=apiFunctions.kickOff( String.valueOf(SendTo.getId()));	
             if (resp.equalsIgnoreCase("0"))	JOptionPane.showMessageDialog(null, "Kicking User Failed", "Alert", JOptionPane.INFORMATION_MESSAGE);
             else if (resp.equalsIgnoreCase("2"))	JOptionPane.showMessageDialog(null, "Kicking User From Group Was Successful", "Alert", JOptionPane.INFORMATION_MESSAGE);
-           // RefreshGroups();
+           
             apiFunctions.update();
             }
    			}); 

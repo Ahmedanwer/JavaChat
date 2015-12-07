@@ -383,6 +383,8 @@ public User getUserByID (int x){
      		    responseObj.put("msg", msg);
      			   
      		    dos.writeUTF(responseObj.toJSONString());
+     		    
+     		    //TODO  find all active users and broadcast the user that it is kicked off
             }
             
  else if (obj.get("header").toString().equalsIgnoreCase("update")){

@@ -385,14 +385,14 @@ public class apiFunctions {
 		   	   Sdos.writeUTF(obj.toJSONString());
 		   	   
 		   
-
-
+		   	   return "2";
+		   	   /*
 		   	  String response = Sdis.readUTF();//read from the server
 	          JSONObject responseObj=(JSONObject) JSONValue.parse(response);
 	          
 	          System.out.println(responseObj.get("msg").toString());
 	      	  return responseObj.get("code").toString();
-	      	  
+	      	  */
 	         
 		   }catch (Exception e){e.printStackTrace();}
 		   
