@@ -94,6 +94,75 @@ public void updateContacts(){
      }
 	
 }
+public void prepareGroups(){
+	
+	
+
+	 for(int i=0;i<groups.size();i++){
+   	  JPanel groupPanel=new JPanel();
+
+   	  
+   	  JButton leaveGroup = new JButton("Leave Group");
+   	  JButton JoinGroup = new JButton("Join Group");
+
+   	  JButton group=new JButton(groups.get(i).getGroupName());
+
+   	  
+   	  final Group thisGroup = groups.get(i);
+   	  
+   	  group.addActionListener(new ActionListener()
+   			  {
+   		  public void actionPerformed(ActionEvent e)
+   		  {
+   			  
+   			  groupChat newChat = new groupChat(thisGroup,ThisUser,serverIP);
+   			  groupChatWinsows.put(thisGroup.getId(), newChat);
+   		  }
+   			  });
+   	
+   	  if(isJoind(thisGroup.getId())){
+   		 groupPanel.add(leaveGroup); 
+   		 
+   		leaveGroup.addActionListener(new ActionListener() {
+	    	
+            public void actionPerformed(ActionEvent e)
+            {
+            
+            String resp=apiFunctions.leaveGroup(String.valueOf(thisGroup.getId()), String.valueOf(ThisUser.getId()));	
+            if (resp.equalsIgnoreCase("0"))	JOptionPane.showMessageDialog(null, "Leaving Group Failed", "Alert", JOptionPane.INFORMATION_MESSAGE);
+            else if (resp.equalsIgnoreCase("1"))	JOptionPane.showMessageDialog(null, "You Successfuly Left The Group", "Alert", JOptionPane.INFORMATION_MESSAGE);
+            else if (resp.equalsIgnoreCase("2"))	JOptionPane.showMessageDialog(null, "You Are Not Enrolled In This Group", "Alert", JOptionPane.INFORMATION_MESSAGE);
+            else if (resp.equalsIgnoreCase("3"))	JOptionPane.showMessageDialog(null, "User ID Or Group Doesnt Exist", "Alert", JOptionPane.INFORMATION_MESSAGE);
+            RefreshGroups();
+            }
+   	  }else{
+   		 groupPanel.add(JoinGroup);
+   		 JoinGroup.addActionListener(new ActionListener() {
+		    	
+	            public void actionPerformed(ActionEvent e)
+	            {
+	            
+	            String resp=apiFunctions.enrollInAGroup(String.valueOf(thisGroup.getId()), String.valueOf(ThisUser.getId()));	
+	            if (resp.equalsIgnoreCase("0"))	JOptionPane.showMessageDialog(null, "Enroll In Group Failed", "Alert", JOptionPane.INFORMATION_MESSAGE);
+	            else if (resp.equalsIgnoreCase("1"))	JOptionPane.showMessageDialog(null, "You Successfuly Joind The Group", "Alert", JOptionPane.INFORMATION_MESSAGE);
+	            else if (resp.equalsIgnoreCase("2"))	JOptionPane.showMessageDialog(null, "You Are Already Enrolled", "Alert", JOptionPane.INFORMATION_MESSAGE);
+	            else if (resp.equalsIgnoreCase("3"))	JOptionPane.showMessageDialog(null, "User ID Or Group Doesnt Exist", "Alert", JOptionPane.INFORMATION_MESSAGE);
+	            RefreshGroups();
+	            }
+	        }); 
+	      
+   		 
+   		  group.setEnabled(false);
+   	  }
+   	  
+   	  
+   	 groupPanel.add(group);
+   	  Groups.add(groupPanel);
+
+     }
+	
+	
+}
 
 	
 	 private void prepareGUI(ArrayList<User> users, ArrayList<Group> groups, ArrayList<Group> myGroups){
@@ -109,64 +178,8 @@ public void updateContacts(){
 	      
 	      Groups=new JPanel();
 	      Groups.setLayout(new GridLayout(0,1));
-	      for(int i=0;i<groups.size();i++){
-	    	  JPanel groupPanel=new JPanel();
-
-	    	  
-	    	  JButton leaveGroup = new JButton("Leave Group");
-			  JButton JoinGroup = new JButton("Join Group");
-
-			  
-	    	  final Group thisGroup=groups.get(i);
-
-	    	  JButton group=new JButton(groups.get(i).getGroupName());
-
-	    	  
-	    	  final Group thisGroup2 = groups.get(i);
-	    	  group.addActionListener(new ActionListener()
-	    			  {
-	    		  public void actionPerformed(ActionEvent e)
-	    		  {
-	    			  
-	    			  groupChat newChat = new groupChat(thisGroup2,ThisUser,serverIP);
-	    			  groupChatWinsows.put(thisGroup2.getId(), newChat);
-	    		  }
-	    			  });
-	    	  groupPanel.add(group);
-	    	 
-
-	    	 
-	    	  for (final Group g : myGroups){
-					if(g.getId()==groups.get(i).getId())
-					{  
-						 groupPanel.add(leaveGroup);
-						 break;
-						}
-					 else{
-							 groupPanel.add(JoinGroup);
-							 group.setEnabled(false);
-							 JoinGroup.addActionListener(new ActionListener() {
-							    	
-						            public void actionPerformed(ActionEvent e)
-						            {
-						            
-						            String resp=apiFunctions.enrollInAGroup(String.valueOf(g.getId()), String.valueOf(ThisUser.getId()));	
-						            if (resp.equalsIgnoreCase("0"))	JOptionPane.showMessageDialog(null, "Enroll In Group Failed", "Alert", JOptionPane.INFORMATION_MESSAGE);
-						            else if (resp.equalsIgnoreCase("1"))	JOptionPane.showMessageDialog(null, "You Successfuly Joind The Group", "Alert", JOptionPane.INFORMATION_MESSAGE);
-						            else if (resp.equalsIgnoreCase("2"))	JOptionPane.showMessageDialog(null, "User ID Or Group Doesnt Exist", "Alert", JOptionPane.INFORMATION_MESSAGE);
-						            else if (resp.equalsIgnoreCase("3"))	JOptionPane.showMessageDialog(null, "You Are Already Enrolled", "Alert", JOptionPane.INFORMATION_MESSAGE);
-						            
-						            }
-						        }); 
-						      
-			    	  }
-					}
-	    	 
-	    		
-	    	  Groups.add(groupPanel);
-
-	      }
-	      
+	
+	      prepareGroups();
 	      
 	  
 	      
@@ -175,6 +188,15 @@ public void updateContacts(){
 	      
 	      mainFrame.setVisible(true);  
 	 }
+	 public Boolean isJoind(int groupID){
+		 for(int i=0;i<myGroups.size();i++){
+			 if(myGroups.get(i).getId()==groupID){
+				 return true;
+			 }
+		 }
+		 return false;
+	 }
+	 
 	 public User GetUserByID(int id){
 		 for(int i=0;i<users.size();i++){
 			 if(users.get(i).getId()==id){
@@ -191,7 +213,7 @@ public void updateContacts(){
 			Groups.revalidate();
 			
 			myGroups= apiFunctions.getMyGroups(ThisUser.getId()+"");
-			
+			prepareGroups();
 			
 			 mainFrame.add(Contacts);
 		      mainFrame.add(Groups);

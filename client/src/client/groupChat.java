@@ -22,8 +22,8 @@ public class groupChat {
 	
 	
 	   private JFrame mainFrame;
-	   static JTextArea writingArea;
-	   static JTextArea chatArea;
+	   private JTextArea writingArea;
+	   private JTextArea chatArea;
 	   JButton sendButton;
 	   int groupID;
 	   Group receiverGroup;
@@ -49,7 +49,7 @@ public class groupChat {
 		      this.serverIP =serverIP;
 		      prepareGUI(); 
 		     
-		     
+		  
 	          }
 	   
 		      
