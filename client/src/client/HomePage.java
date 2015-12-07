@@ -120,9 +120,12 @@ public void prepareGroups(){
    		  }
    			  });
    	
+
+    	 groupPanel.add(group);
+    	 
    	  if(isJoind(thisGroup.getId())){
    		 groupPanel.add(leaveGroup); 
-   		 
+   		group.setEnabled(true);
    		leaveGroup.addActionListener(new ActionListener() {
 	    	
             public void actionPerformed(ActionEvent e)
@@ -159,7 +162,6 @@ public void prepareGroups(){
    	  }
    	  
    	  
-   	 groupPanel.add(group);
    	  Groups.add(groupPanel);
 
      }
@@ -240,16 +242,21 @@ public void prepareGroups(){
 				sleep(5000);
 				Contacts.removeAll();
 				Contacts.revalidate();
+				Groups.removeAll();
+				Groups.revalidate();
 				
 				users= apiFunctions.getAllUsers();
 				updateContacts();
+				myGroups= apiFunctions.getMyGroups(ThisUser.getId()+"");
+			 	System.out.println("after in refreshGroup: "+myGroups);
+				prepareGroups();
 				
 				 mainFrame.add(Contacts);
 			      mainFrame.add(Groups);
 			      mainFrame.revalidate();
 					mainFrame.repaint();
 			    //  mainFrame.setVisible(true);
-					RefreshGroups();
+			
 				
 				
 			}

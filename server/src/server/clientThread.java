@@ -176,7 +176,7 @@ public User getUserByID (int x){
             	Gson gson = new Gson();
      		    String json = gson.toJson(myGroups);
     		    dos.writeUTF(json);
-    		    System.out.println(myGroups);
+    		    System.out.println(json);
             }
             
             

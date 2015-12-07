@@ -202,13 +202,18 @@ public class apiFunctions {
 		   ArrayList<Group> arrayList= new ArrayList<>();
 		   try {
 
+			   
+			   Socket	serverConnection2 = new Socket (serverIP, 5000); 
+				DataInputStream	Sdis2 =new DataInputStream(serverConnection2.getInputStream());
+				DataOutputStream	Sdos2= new DataOutputStream(serverConnection2.getOutputStream());
+				
 			    JSONObject obj = new JSONObject();
 		   	  	obj.put("header", "getmygroups"); 
 		   	  	obj.put("id", userID);
-				Sdos.writeUTF(obj.toJSONString());
+				Sdos2.writeUTF(obj.toJSONString());
 				
 				Gson gson = new Gson();
-			   	   String json=Sdis.readUTF();
+			   	   String json=Sdis2.readUTF();
 					System.out.println("my groups recevied as json"+ json);
 			   	   java.lang.reflect.Type type = new TypeToken<ArrayList<Group>>(){}.getType();
 			   	   arrayList = gson.fromJson(json, type);
