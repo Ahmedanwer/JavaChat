@@ -22,8 +22,8 @@ public class groupChat {
 	
 	
 	   private JFrame mainFrame;
-	   static JTextArea writingArea;
-	   static JTextArea chatArea;
+	   private JTextArea writingArea;
+	   private JTextArea chatArea;
 	   JButton sendButton;
 	   int groupID;
 	   Group receiverGroup;
@@ -34,18 +34,10 @@ public class groupChat {
 	   
 	   
 	   public groupChat()
-	   
 	       {
-		      prepareGUI();     
-		      try{
-			      apiFunctions.Sdis.readUTF();
-		           }
-		          catch(Exception e)
-		          {
-		        	  System.out.println(e.getMessage());
-		          }
-		      
+
 		   }
+
 	   
 	   public groupChat(Group group,User user,String serverIP)
 	   
@@ -56,16 +48,22 @@ public class groupChat {
 		      userName=user.getUsername();
 		      this.serverIP =serverIP;
 		      prepareGUI(); 
-		      try{
-		      apiFunctions.Sdis.readUTF();
-	           }
-	          catch(Exception e)
-	          {
-	        	  System.out.println(e.getMessage());
+		     
+		  
 	          }
 	   
 		      
-		   }
+	
+	   public void setTextofChat(String Messege){
+			 if(this.chatArea.getText()==""){
+				 this.chatArea.append(Messege);
+			 }else{
+				 this.chatArea.append("\n"+Messege);
+			 }
+			
+		 }
+	
+	
 	   
 	   private void prepareGUI()
 	   
@@ -100,24 +98,20 @@ public class groupChat {
 		    		   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		      
 		      sendButton = new JButton("Send");
-
-		      
 		      sendButton.addActionListener(new ActionListener() {
-		    	
+			    	
 		            public void actionPerformed(ActionEvent e)
 		            {
 		            	
-		            	// System.out.println(c.writingArea.getText());
-		            	
-		            	
-		            	
-		            	apiFunctions.connect("192.168.43.64");
-		            	apiFunctions.login("ahmed", "2222");
-		  		        chatArea.append(apiFunctions.BCMsgToGroup(writingArea.getText(), userID+"", groupID+"")+"\r\n");
+		            	//apiFunctions.connect(serverIP);
+		            	apiFunctions.BCMsgToGroup(writingArea.getText(), userID+"", groupID+"");
 		  		        
 		                writingArea.setText("");
 		            }
 		        });      		    
+		      
+		      
+		      		    
 		      
 		     
 		     
@@ -135,7 +129,7 @@ public class groupChat {
 		      myPanel.add(writingArea,gBC); 
 		      gBC.gridx = 1;
 		      gBC.gridy = 1;
-			  myPanel.add(sendButton,gBC); ;
+			 myPanel.add(sendButton,gBC); 
 			   
 		     
 		      mainFrame.add(myPanel);
@@ -144,6 +138,7 @@ public class groupChat {
 		     
 		      mainFrame.setVisible(true);  
 		   }
+	   
 	   
 	  
 

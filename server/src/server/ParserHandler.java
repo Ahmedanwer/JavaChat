@@ -26,6 +26,7 @@ public class ParserHandler extends DefaultHandler
     boolean username = false;
     boolean password = false;
     boolean status = false;
+    boolean admin = false;
     boolean groupName = false;
     boolean userID = false;
     boolean groupID = false;
@@ -73,6 +74,10 @@ public class ParserHandler extends DefaultHandler
         { 
             password = true;
         }
+         else if(qName.equals("admin"))
+         { 
+             admin = true;
+         }
          else if(qName.equals("status"))
         { 
             status = true;
@@ -158,6 +163,10 @@ public class ParserHandler extends DefaultHandler
         } else if (password) {
             user.setPassword(value);
             password = false;
+        }
+        else if (admin) {
+            user.setAdmin(value);
+            admin = false;
         }
          else if (status) {
            

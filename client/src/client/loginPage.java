@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -69,6 +70,13 @@ class loginPage {
 		            {
 		            	
 		            	SendUserData(username.getText(),password.getText(),ipAddress.getText());
+		            	
+		            	
+		            	if (UserID.equalsIgnoreCase("0")){
+		            		JOptionPane.showMessageDialog(null, "Login Failed, please try again later", "Alert", JOptionPane.INFORMATION_MESSAGE);
+		            	    
+		            	}
+		            	else {
 		            	perpareUsersData( );
 		            	prepareGroupsData();
 		            	GetMyGroups(UserID);
@@ -82,7 +90,7 @@ class loginPage {
 						}
 		            	new HomePage(users,allGroups,myGroups,thisUser,ipAddress.getText());
 
-		            
+		            	}
 		            	
 		            }
 		        });  
@@ -98,6 +106,7 @@ class loginPage {
 		          //1.Create Client Socket and connect to the server
 		         
 		          apiFunctions login = new apiFunctions(username,password,ip);
+		          
 		          UserID= apiFunctions.id;
 		    
 		          
