@@ -334,6 +334,30 @@ public User getUserByID (int x){
     		    dos.writeUTF(server.activeLoggedInClients.get(user).getLocalAddress().toString().substring(1));
             }
             
+            else if (obj.get("header").toString().equalsIgnoreCase("LogOut")){
+            	
+            	
+            String	userName = obj.get("userName").toString();
+            	
+            	
+            	//System.out.println("User NAme Received: "+userName+" & Password: "+password);
+            	String id="0";
+            	for (int j=0;j<server.users.size();j++)
+            	{
+            		if (server.users.get(j).getUsername().equals(userName)){
+            			id= String.valueOf(server.users.get(j).getId());
+            			//System.out.println("id sent to client is (inner for loop"+id);
+                    	
+            			server.users.get(j).setStatus(0);
+            			server.activeLoggedInClients.remove(id);
+            			break;
+            		}
+            	}     	
+            	
+            	
+            	
+            	
+            }
             
             else if (obj.get("header").toString().equalsIgnoreCase("kick")){
                 

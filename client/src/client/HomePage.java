@@ -4,6 +4,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.DataInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -226,8 +228,15 @@ public void prepareGroups(){
 	      Groups.setLayout(new GridLayout(0,1));
 	
 	      prepareGroups();
-	      
-	  
+	    final  String userName=ThisUser.getUsername();
+	    mainFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		      
+		    	
+			   apiFunctions.LogOut(userName);
+		    }
+		});
 	      
 	      mainFrame.add(Contacts);
 	      mainFrame.add(Groups);

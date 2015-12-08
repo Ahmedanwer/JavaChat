@@ -372,6 +372,23 @@ public class apiFunctions {
 		return "Something Went Wrong While Retreiving IP For Client: "+otherClientid;
 	   }
 	   
+	   public static void LogOut (String UserName){
+			
+		   
+			 JSONObject obj = new JSONObject();
+			   
+			   try {	
+				   
+			   	  obj.put("header", "LogOut");
+			   	  obj.put("userName", UserName);
+			      Sdos.writeUTF(obj.toJSONString());
+			      System.out.println("logingOut");
+			     // return Sdis.readUTF();
+				} 
+			   catch (Exception e) {e.printStackTrace();}
+			   
+		   }
+	   
 	   
 	   
 	   
