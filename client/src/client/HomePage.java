@@ -235,6 +235,7 @@ public void prepareGroups(){
 		      
 		    	
 			   apiFunctions.LogOut(userName);
+			   System.exit(0);
 		    }
 		});
 	      
@@ -343,9 +344,10 @@ public void prepareGroups(){
 					while(true){
 					
 					String incomingMsg=apiFunctions.Sdis.readUTF();
+					System.out.println("this is #########################"+incomingMsg);
 					 JSONObject obj=(JSONObject) JSONValue.parse(incomingMsg);  
 	                   //HERE i want to know who is the sender 
-	                 
+					 
 	                   int GroupID=Integer.valueOf(obj.get("GroupID").toString());
 	                 String  Messge=obj.get("msg").toString();
 	                   
