@@ -24,6 +24,7 @@ import org.w3c.dom.Element;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.sun.swing.internal.plaf.synth.resources.synth;
 
 import server.groupRecords.groupRecord;
 
@@ -186,15 +187,26 @@ public User getUserByID (int x){
 	            String group=obj.get("groupID").toString();
 	            String userID =obj.get("SenderID").toString();
 	            String BCMsg=obj.get("msg").toString();
+	            
+	            System.out.println(clientMsg);
+	            System.out.println("Bcing, all user of group :"+getAllUsersIDInAGroup(group));
+            	System.out.println("BCing, all logged in users "+server.activeLoggedInClients);
+            	
 	            for (String key : getAllUsersIDInAGroup(group)){
+	            	
 	            	Socket  value =server.activeLoggedInClients.get(key);
+	            	
 	            	if (value != null){
+	            		
+	            		System.out.println("for this iteration, groupUser"+key+"value of socket"+value+" conditin evaluation "+(value != null));
+	            		
 	            		DataOutputStream Cdos = new DataOutputStream(value.getOutputStream());
 	            		
 	                 	JSONObject responseObj=new JSONObject();
 	         		    responseObj.put("GroupID", group);
 	         		    responseObj.put("msg", getUserByID(Integer.parseInt(userID)).getUsername()+" : "+ BCMsg);
 	         			   
+	         		    System.out.println(responseObj.toJSONString());
 	         		    Cdos.writeUTF(responseObj.toJSONString());
 	         		    
 	            		
@@ -334,6 +346,30 @@ public User getUserByID (int x){
     		    dos.writeUTF(server.activeLoggedInClients.get(user).getLocalAddress().toString().substring(1));
             }
             
+            else if (obj.get("header").toString().equalsIgnoreCase("LogOut")){
+            	
+            	
+            String	userName = obj.get("userName").toString();
+            	
+            	
+            	//System.out.println("User NAme Received: "+userName+" & Password: "+password);
+            	String id="0";
+            	for (int j=0;j<server.users.size();j++)
+            	{
+            		if (server.users.get(j).getUsername().equals(userName)){
+            			id= String.valueOf(server.users.get(j).getId());
+            			//System.out.println("id sent to client is (inner for loop"+id);
+                    	
+            			server.users.get(j).setStatus(0);
+            			server.activeLoggedInClients.remove(id);
+            			break;
+            		}
+            	}     	
+            	
+            	
+            	
+            	
+            }
             
             else if (obj.get("header").toString().equalsIgnoreCase("kick")){
                 

@@ -4,6 +4,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.DataInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -226,8 +228,16 @@ public void prepareGroups(){
 	      Groups.setLayout(new GridLayout(0,1));
 	
 	      prepareGroups();
-	      
-	  
+	    final  String userName=ThisUser.getUsername();
+	    mainFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		      
+		    	
+			   apiFunctions.LogOut(userName);
+			   System.exit(0);
+		    }
+		});
 	      
 	      mainFrame.add(Contacts);
 	      mainFrame.add(Groups);
@@ -334,9 +344,10 @@ public void prepareGroups(){
 					while(true){
 					
 					String incomingMsg=apiFunctions.Sdis.readUTF();
+					System.out.println("this is #########################"+incomingMsg);
 					 JSONObject obj=(JSONObject) JSONValue.parse(incomingMsg);  
 	                   //HERE i want to know who is the sender 
-	                 
+					 
 	                   int GroupID=Integer.valueOf(obj.get("GroupID").toString());
 	                 String  Messge=obj.get("msg").toString();
 	                   

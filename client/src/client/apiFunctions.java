@@ -372,6 +372,23 @@ public class apiFunctions {
 		return "Something Went Wrong While Retreiving IP For Client: "+otherClientid;
 	   }
 	   
+	   public static void LogOut (String UserName){
+			
+		   
+			 JSONObject obj = new JSONObject();
+			   
+			   try {	
+				   
+			   	  obj.put("header", "LogOut");
+			   	  obj.put("userName", UserName);
+			      Sdos.writeUTF(obj.toJSONString());
+			      System.out.println("logingOut");
+			     // return Sdis.readUTF();
+				} 
+			   catch (Exception e) {e.printStackTrace();}
+			   
+		   }
+	   
 	   
 	   
 	   
@@ -422,8 +439,19 @@ public class apiFunctions {
 
 	      
 	      try {
-				Sdos.writeUTF(obj.toJSONString());
-			String 	result=Sdis.readUTF();
+	    	  
+	    		Socket	serverConnection2 = new Socket (serverIP, 5000); 
+				DataInputStream	Sdis2 =new DataInputStream(serverConnection2.getInputStream());
+				DataOutputStream	Sdos2= new DataOutputStream(serverConnection2.getOutputStream());
+					
+	    	  
+				Sdos2.writeUTF(obj.toJSONString());
+			String 	result=Sdis2.readUTF();
+			
+			
+			  Sdos2.close();
+	          Sdis2.close();
+	          serverConnection2.close();
 
 				if (!(result.equals("1"))) {
 					System.out.println("update Successful");
