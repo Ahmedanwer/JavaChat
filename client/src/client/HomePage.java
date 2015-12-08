@@ -287,6 +287,15 @@ public void prepareGroups(){
 				Groups.revalidate();
 				
 				users= apiFunctions.getAllUsers();
+				
+				if(GetUserByID(ThisUser.getId())==null){
+					//you have been kicked off 
+					JOptionPane.showMessageDialog(null, "You Have Been Kicked Of The Program", "Alert"
+							, JOptionPane.INFORMATION_MESSAGE);
+					System.exit(NORM_PRIORITY);
+					break;
+				}
+				
 				updateContacts();
 				myGroups= apiFunctions.getMyGroups(ThisUser.getId()+"");
 			 	System.out.println("after in refreshGroup: "+myGroups);
@@ -331,6 +340,7 @@ public void prepareGroups(){
 	                   int GroupID=Integer.valueOf(obj.get("GroupID").toString());
 	                 String  Messge=obj.get("msg").toString();
 	                   
+	                
 	                   if(groupChatWinsows.containsKey(GroupID)){
 	                	  groupChatWinsows.get(GroupID).setTextofChat(Messge);
 	                   }else{
@@ -341,6 +351,7 @@ public void prepareGroups(){
 					
 					
 					//chatArea.append(+"\r\n");
+					
 					}
 				  }
 				 catch (Exception e) 

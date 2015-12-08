@@ -368,6 +368,7 @@ public User getUserByID (int x){
             	if (userExist ){
 
             		System.out.println("user " + server.users.get(userIndex).getUsername() + " is kicked");
+            		
             		server.users.remove(userIndex);
             		code="2";
             		msg="Kicking User From Group Was Successful";
